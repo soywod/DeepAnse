@@ -5,6 +5,12 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.sql.SQLException;
+import java.util.GregorianCalendar;
+
+import fr.deepanse.soywod.deepanse.model.DeepAnse;
+import fr.deepanse.soywod.deepanse.model.DeepAnseGroup;
+import fr.deepanse.soywod.deepanse.database.DeepAnseSQLiteOpenHelper;
 
 public class MainActivity extends ActionBarActivity {
 
@@ -12,6 +18,29 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        DeepAnseSQLiteOpenHelper deepAnseSQLiteOpenHelper = new DeepAnseSQLiteOpenHelper(this);
+        fr.deepanse.soywod.deepanse.database.DeepAnseGroup group = new fr.deepanse.soywod.deepanse.database.DeepAnseGroup(deepAnseSQLiteOpenHelper);
+        fr.deepanse.soywod.deepanse.database.DeepAnse deepAnse = new fr.deepanse.soywod.deepanse.database.DeepAnse(deepAnseSQLiteOpenHelper);
+
+        try
+        {
+            group.open();
+            deepAnse.open();
+        }catch(SQLException e){e.printStackTrace();}
+
+        /*
+        DeepAnseGroup g1 = group.select(1);
+
+        DeepAnse d1 = new DeepAnse(0, 15.5, new GregorianCalendar(), g1, "achat d'un gros cochon", false);
+        d1.setId(deepAnse.insert(d1));
+
+        System.out.println(d1.toString());
+
+        */
+
+        group.close();
+        deepAnse.close();
     }
 
 

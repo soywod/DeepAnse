@@ -2,6 +2,8 @@ package fr.deepanse.soywod.deepanse.model;
 
 import java.util.GregorianCalendar;
 
+import fr.deepanse.soywod.deepanse.Conversion;
+
 /**
  * Created by soywod on 05/02/2015.
  *
@@ -23,16 +25,16 @@ public class DeepAnse {
     /**
      *  L'id de la dépense
      *  @see fr.deepanse.soywod.deepanse.model.DeepAnse#DeepAnse()
-     *  @see fr.deepanse.soywod.deepanse.model.DeepAnse#DeepAnse(int, double, java.util.GregorianCalendar, fr.deepanse.soywod.deepanse.model.DeepAnseGroup, java.lang.String, boolean)
+     *  @see fr.deepanse.soywod.deepanse.model.DeepAnse#DeepAnse(long, double, java.util.GregorianCalendar, fr.deepanse.soywod.deepanse.model.DeepAnseGroup, java.lang.String, boolean)
      *  @see fr.deepanse.soywod.deepanse.model.DeepAnse#getId()
-     *  @see fr.deepanse.soywod.deepanse.model.DeepAnse#setId(int)
+     *  @see fr.deepanse.soywod.deepanse.model.DeepAnse#setId(long)
      */
-    private int id;
+    private long id;
 
     /**
      *  Le montant de la dépense
      *  @see fr.deepanse.soywod.deepanse.model.DeepAnse#DeepAnse()
-     *  @see fr.deepanse.soywod.deepanse.model.DeepAnse#DeepAnse(int, double, java.util.GregorianCalendar, fr.deepanse.soywod.deepanse.model.DeepAnseGroup, java.lang.String, boolean)
+     *  @see fr.deepanse.soywod.deepanse.model.DeepAnse#DeepAnse(long, double, java.util.GregorianCalendar, fr.deepanse.soywod.deepanse.model.DeepAnseGroup, java.lang.String, boolean)
      *  @see fr.deepanse.soywod.deepanse.model.DeepAnse#getAmount()
      *  @see fr.deepanse.soywod.deepanse.model.DeepAnse#setAmount(double)
      */
@@ -41,7 +43,7 @@ public class DeepAnse {
     /**
      *  La date de la dépense
      *  @see fr.deepanse.soywod.deepanse.model.DeepAnse#DeepAnse()
-     *  @see fr.deepanse.soywod.deepanse.model.DeepAnse#DeepAnse(int, double, java.util.GregorianCalendar, fr.deepanse.soywod.deepanse.model.DeepAnseGroup, java.lang.String, boolean)
+     *  @see fr.deepanse.soywod.deepanse.model.DeepAnse#DeepAnse(long, double, java.util.GregorianCalendar, fr.deepanse.soywod.deepanse.model.DeepAnseGroup, java.lang.String, boolean)
      *  @see fr.deepanse.soywod.deepanse.model.DeepAnse#getDate()
      *  @see fr.deepanse.soywod.deepanse.model.DeepAnse#setDate(java.util.GregorianCalendar)
      */
@@ -50,8 +52,8 @@ public class DeepAnse {
     /**
      *  La rubrique de la dépense
      *  @see fr.deepanse.soywod.deepanse.model.DeepAnse#DeepAnse()
-     *  @see fr.deepanse.soywod.deepanse.model.DeepAnse#DeepAnse(int, double, java.util.GregorianCalendar, fr.deepanse.soywod.deepanse.model.DeepAnseGroup, java.lang.String, boolean)
-     *  @see fr.deepanse.soywod.deepanse.model.DeepAnseGroup#DeepAnseGroup(int, java.lang.String)
+     *  @see fr.deepanse.soywod.deepanse.model.DeepAnse#DeepAnse(long, double, java.util.GregorianCalendar, fr.deepanse.soywod.deepanse.model.DeepAnseGroup, java.lang.String, boolean)
+     *  @see fr.deepanse.soywod.deepanse.model.DeepAnseGroup#DeepAnseGroup(long, java.lang.String)
      *  @see fr.deepanse.soywod.deepanse.model.DeepAnse#getGroup()
      *  @see fr.deepanse.soywod.deepanse.model.DeepAnse#setGroup(fr.deepanse.soywod.deepanse.model.DeepAnseGroup)
      */
@@ -60,7 +62,7 @@ public class DeepAnse {
     /**
      *  Le commentaire de la dépense
      *  @see fr.deepanse.soywod.deepanse.model.DeepAnse#DeepAnse()
-     *  @see fr.deepanse.soywod.deepanse.model.DeepAnse#DeepAnse(int, double, java.util.GregorianCalendar, fr.deepanse.soywod.deepanse.model.DeepAnseGroup, java.lang.String, boolean)
+     *  @see fr.deepanse.soywod.deepanse.model.DeepAnse#DeepAnse(long, double, java.util.GregorianCalendar, fr.deepanse.soywod.deepanse.model.DeepAnseGroup, java.lang.String, boolean)
      *  @see fr.deepanse.soywod.deepanse.model.DeepAnse#getComment()
      *  @see fr.deepanse.soywod.deepanse.model.DeepAnse#setComment(java.lang.String)
      */
@@ -69,7 +71,7 @@ public class DeepAnse {
     /**
      *  La récursivité ou non de la dépense
      *  @see fr.deepanse.soywod.deepanse.model.DeepAnse#DeepAnse()
-     *  @see fr.deepanse.soywod.deepanse.model.DeepAnse#DeepAnse(int, double, java.util.GregorianCalendar, fr.deepanse.soywod.deepanse.model.DeepAnseGroup, java.lang.String, boolean)
+     *  @see fr.deepanse.soywod.deepanse.model.DeepAnse#DeepAnse(long, double, java.util.GregorianCalendar, fr.deepanse.soywod.deepanse.model.DeepAnseGroup, java.lang.String, boolean)
      *  @see fr.deepanse.soywod.deepanse.model.DeepAnse#isRecursive()
      *  @see fr.deepanse.soywod.deepanse.model.DeepAnse#setRecursive(boolean)
      */
@@ -92,14 +94,14 @@ public class DeepAnse {
     /**
      *  Constructeur DeepAnse standard
      *
-     *  @param id           L'id de la dépense de type int
+     *  @param id           L'id de la dépense de type long
      *  @param amount       Le montant de la dépense de type double
      *  @param date         La date de la dépense de type GregorianCalendar
      *  @param group        La rubrique de la dépense de type DeepAnseGroup
      *  @param comment      Le commentaire de la dépense de type String
      *  @param recursive    La récursivité ou non de la dépense de type boolean
      */
-    public DeepAnse(int id, double amount, GregorianCalendar date, DeepAnseGroup group, String comment, boolean recursive) {
+    public DeepAnse(long id, double amount, GregorianCalendar date, DeepAnseGroup group, String comment, boolean recursive) {
         this.id = id;
         this.amount = amount;
         this.date = date;
@@ -120,9 +122,9 @@ public class DeepAnse {
     /**
      *  Getter de l'id de la dépense
      *
-     *  @return L'id de la dépense de type int
+     *  @return L'id de la dépense de type long
      */
-    public int getId() {
+    public long getId() {
         return id;
     }
 
@@ -184,9 +186,9 @@ public class DeepAnse {
      *  Setter de l'id de la dépense
      *
      *  @param id
-     *      L'id de la dépense de type int
+     *      L'id de la dépense de type long
      */
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -238,5 +240,18 @@ public class DeepAnse {
      */
     public void setRecursive(boolean recursive) {
         this.recursive = recursive;
+    }
+
+
+    @Override
+    public String toString() {
+        return "DeepAnse{" +
+                "id=" + id +
+                ", amount=" + amount +
+                ", date=" + Conversion.dateToString(date) +
+                ", group=" + group.toString() +
+                ", comment='" + comment + '\'' +
+                ", recursive=" + recursive +
+                '}';
     }
 }

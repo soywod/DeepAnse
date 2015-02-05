@@ -17,17 +17,17 @@ public class DeepAnseGroup {
     /**
      *  L'id de la rubrique
      *  @see fr.deepanse.soywod.deepanse.model.DeepAnseGroup#DeepAnseGroup()
-     *  @see fr.deepanse.soywod.deepanse.model.DeepAnseGroup#DeepAnseGroup(int, java.lang.String)
+     *  @see fr.deepanse.soywod.deepanse.model.DeepAnseGroup#DeepAnseGroup(long, java.lang.String)
      *  @see fr.deepanse.soywod.deepanse.model.DeepAnseGroup#getId()
-     *  @see fr.deepanse.soywod.deepanse.model.DeepAnseGroup#setId(int)
+     *  @see fr.deepanse.soywod.deepanse.model.DeepAnseGroup#setId(long)
      */
-    private int id;
+    private long id;
 
     /**
      *  Le nom de la rubrique
      *  @see fr.deepanse.soywod.deepanse.model.DeepAnseGroup#DeepAnseGroup()
-     *  @see fr.deepanse.soywod.deepanse.model.DeepAnseGroup#DeepAnseGroup(int, java.lang.String)
-     *  @see fr.deepanse.soywod.deepanse.model.DeepAnse#DeepAnse(int, double, java.util.GregorianCalendar, fr.deepanse.soywod.deepanse.model.DeepAnseGroup, java.lang.String, boolean)
+     *  @see fr.deepanse.soywod.deepanse.model.DeepAnseGroup#DeepAnseGroup(long, java.lang.String)
+     *  @see fr.deepanse.soywod.deepanse.model.DeepAnse#DeepAnse(long, double, java.util.GregorianCalendar, fr.deepanse.soywod.deepanse.model.DeepAnseGroup, java.lang.String, boolean)
      *  @see fr.deepanse.soywod.deepanse.model.DeepAnseGroup#getName()
      *  @see fr.deepanse.soywod.deepanse.model.DeepAnseGroup#setName(java.lang.String)
      */
@@ -50,10 +50,10 @@ public class DeepAnseGroup {
     /**
      *  Constructeur DeepAnseGroup standard
      *
-     *  @param id           L'id de la rubrique de type int
+     *  @param id           L'id de la rubrique de type long
      *  @param name         Le nom de la rubrique de type String
      */
-    public DeepAnseGroup(int id, String name) {
+    public DeepAnseGroup(long id, String name) {
         this.id = id;
         this.name = name;
     }
@@ -70,9 +70,9 @@ public class DeepAnseGroup {
     /**
      *  Getter de l'id de la rubrique
      *
-     *  @return L'id de la rubrique de type int
+     *  @return L'id de la rubrique de type long
      */
-    public int getId() {
+    public long getId() {
         return id;
     }
 
@@ -98,9 +98,9 @@ public class DeepAnseGroup {
      *  Setter de l'id de la dépense
      *
      *  @param id
-     *      L'id de la rubrique de type int
+     *      L'id de la rubrique de type long
      */
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -112,5 +112,14 @@ public class DeepAnseGroup {
      */
     public void setName(String name) {
         this.name = name;
+    }
+
+
+    @Override
+    public String toString() {
+        return "DeepAnseGroup{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
     }
 }
