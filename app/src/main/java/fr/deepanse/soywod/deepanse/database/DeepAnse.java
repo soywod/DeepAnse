@@ -5,8 +5,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import fr.deepanse.soywod.deepanse.Conversion;
+import fr.deepanse.soywod.deepanse.model.*;
 
 /**
  * Created by soywod on 05/02/2015.
@@ -110,5 +112,32 @@ public class DeepAnse {
         cursorDeepAnse.close();
 
         return deepAnse;
+    }
+
+    /**
+     *  Sélectionne toutes les dépenses de la BDD
+     *
+     *  @return
+     *      La liste des dépenses de la BDD de type ArrayList
+     */
+    public ArrayList<fr.deepanse.soywod.deepanse.model.DeepAnse> selectAll()
+    {
+        Cursor cursorDeepAnse = sqLiteDatabase.rawQuery("SELECT * FROM " + DeepAnseSQLiteOpenHelper.TABLE_DEEPANSE, null);
+        ArrayList<fr.deepanse.soywod.deepanse.model.DeepAnse> arrayDeepAnse = new ArrayList<>();
+
+        for(cursorDeepAnse.moveToFirst(); !cursorDeepAnse.isAfterLast(); cursorDeepAnse.moveToNext())
+        {
+            Cursor cursorGroup = sqLiteDatabase.rawQuery("SELECT * FROM " + DeepAnseSQLiteOpenHelper.TABLE_DEEPANSE_GROUP +" WHERE " + DeepAnseSQLiteOpenHelper.ID + " = ?" , new String[]{String.valueOf(cursorDeepAnse.getInt(3))});
+
+            cursorGroup.moveToFirst();
+
+            arrayDeepAnse.add(Conversion.cursorToDeepAnse(cursorDeepAnse, Conversion.cursorToDeepAnseGroup(cursorGroup)));
+
+            cursorGroup.close();
+        }
+
+        cursorDeepAnse.close();
+
+        return arrayDeepAnse;
     }
 }
