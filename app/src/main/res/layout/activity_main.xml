@@ -1,11 +1,74 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
 
-    <TextView android:text="@string/hello_world" android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/button_add"
+        android:layout_width="fill_parent"
+        android:layout_height="70dp"
+        android:text="Ajouter une dépense"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:id="@+id/text_total"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Total : "
+        android:gravity="center"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/button_add" />
+
+    <ExpandableListView
+        android:id="@+id/list_view"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/text_total"
+        android:layout_below="@+id/layout_date"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <RelativeLayout
+        android:id="@+id/layout_date"
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="70dp"
+        android:layout_alignParentTop="true" >
+
+        <Button
+            android:id="@+id/button_left"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:text="&lt;"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:id="@+id/text_date"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Mois / Année"
+            android:gravity="center"
+            android:layout_toRightOf="@+id/button_left"
+            android:layout_toStartOf="@+id/button_left"
+            android:layout_toLeftOf="@+id/button_right"
+            android:layout_toEndOf="@+id/button_right" />
+
+        <Button
+            android:id="@+id/button_right"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:text=">"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+    </RelativeLayout>
 
 </RelativeLayout>
