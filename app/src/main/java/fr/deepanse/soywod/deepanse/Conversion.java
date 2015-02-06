@@ -2,6 +2,8 @@ package fr.deepanse.soywod.deepanse;
 
 import android.database.Cursor;
 
+import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
 import fr.deepanse.soywod.deepanse.model.DeepAnse;
@@ -101,8 +103,7 @@ public class Conversion {
      *  @return
      *      La date convertie en GregorianCalendar
      */
-    public static GregorianCalendar stringToDate(String date)
-    {
+    public static GregorianCalendar stringToDate(String date) {
         GregorianCalendar tmpDate = new GregorianCalendar();
 
         String[] splitDate = date.replace(" ", "-").replace(":", "-").split("-");
@@ -112,5 +113,70 @@ public class Conversion {
         tmpDate.set(GregorianCalendar.DAY_OF_MONTH, Integer.parseInt(splitDate[2]));
 
         return tmpDate;
+    }
+
+    public static String spellOutToNumber(String phrase) {
+        String[] splitPhrase = phrase.replace("-", " ").split(" ");
+        ArrayList<Integer> arrayNumber = new ArrayList<>();
+        ArrayList<String> arrayString = new ArrayList<>();
+        int total = 0;
+
+        int numberNumeric;
+
+        for(String word : splitPhrase)
+        {
+            if ((numberNumeric = Number.findNumberNumeric(word)) != -1)
+                arrayNumber.add(numberNumeric);
+            else if(arrayNumber.size() > 0)
+            {
+                for(int i=0 ; i<arrayNumber.size() ; i++)
+                {
+                    if(arrayNumber.get(i) == 4 && arrayNumber.get(i+1) == 20)
+                    {
+                        total += 80;
+                        i++;
+                    }
+                    else
+                        total += arrayNumber.get(i);
+                }
+
+                arrayString.add(total+"");
+                arrayString.add(word);
+                total = 0;
+                arrayNumber.clear();
+            }
+            else
+                arrayString.add(word);
+        }
+
+        if(arrayNumber.size() > 0)
+        {
+            for(int amount : arrayNumber)
+                total += amount;
+            arrayString.add(total+"");
+        }
+
+        if(arrayString.size() > 2)
+        {
+            for(int i=1 ; i<arrayString.size()-1 ; i++)
+            {
+                boolean isNumbers = true;
+                try
+                {
+                    Integer.parseInt(arrayString.get(i-1));
+                    Integer.parseInt(arrayString.get(i+1));
+                }
+                catch(NumberFormatException e){isNumbers = false;}
+
+                if(arrayString.get(i).equals("et") && isNumbers)
+                {
+                    arrayString.set(i-1, Integer.parseInt(arrayString.get(i-1))+Integer.parseInt(arrayString.get(i+1))+"");
+                    arrayString.remove(i+1);
+                    arrayString.remove(i);
+                }
+            }
+        }
+
+        return arrayString.toString().replace("[", "").replace("]", "").replace(",", "");
     }
 }

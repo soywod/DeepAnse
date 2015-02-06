@@ -101,6 +101,27 @@ public class DeepAnseGroup {
     }
 
     /**
+     *  Sélectionne une rubrique de la BDD
+     *
+     *  @param name     Le nom de la rubrique de la BDD de type String
+     *
+     *  @return
+     *      La rubrique sélectionnée de la BDD de type DeepAnseGroup
+     */
+    public fr.deepanse.soywod.deepanse.model.DeepAnseGroup selectByName(String name) {
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM " + DeepAnseSQLiteOpenHelper.TABLE_DEEPANSE_GROUP +" WHERE " + DeepAnseSQLiteOpenHelper.NAME + " = ?" , new String[]{name});
+        fr.deepanse.soywod.deepanse.model.DeepAnseGroup group;
+
+        cursor.moveToFirst();
+
+        group = Conversion.cursorToDeepAnseGroup(cursor);
+
+        cursor.close();
+
+        return group;
+    }
+
+    /**
      *  Sélectionne toutes les rubriques de la BDD
      *
      *  @return

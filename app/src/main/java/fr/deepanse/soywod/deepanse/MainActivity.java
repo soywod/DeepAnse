@@ -3,6 +3,8 @@ package fr.deepanse.soywod.deepanse;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.speech.RecognizerIntent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.DragEvent;
@@ -17,14 +19,21 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.sql.SQLException;
+import java.text.NumberFormat;
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.GregorianCalendar;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import fr.deepanse.soywod.deepanse.model.AlertBox;
 import fr.deepanse.soywod.deepanse.model.DeepAnse;
 import fr.deepanse.soywod.deepanse.database.DeepAnseSQLiteOpenHelper;
+import fr.deepanse.soywod.deepanse.model.DeepAnseGroup;
 
 public class MainActivity extends ActionBarActivity {
+
 
     private AlertBox alertBox;
     private Activity context;
@@ -37,6 +46,9 @@ public class MainActivity extends ActionBarActivity {
 
     private  ArrayList<DeepAnse> arrayDeepAnse;
     private fr.deepanse.soywod.deepanse.adapter.DeepAnse adapterDeepAnse;
+
+    private static Pattern regexAmount;
+    private static Pattern regexGroup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,13 +71,17 @@ public class MainActivity extends ActionBarActivity {
             deepAnseDb.open();
         }catch(SQLException e){e.printStackTrace();}
 
-
-        //deepAnseDb.insert(new DeepAnse(0, 20.5, new GregorianCalendar(), groupDb.select(1), "test", false));
+        System.out.println(groupDb.selectAll());
+        //groupDb.insert(new DeepAnseGroup(0, "professionnel"));
+        //deepAnseDb.insert(new DeepAnse(0, 9999.99, new GregorianCalendar(), groupDb.select(5), "efzfzgfzgqergerghqethqaethjqthjrthqergqzeryqethyqe", false));
 
         arrayDeepAnse = deepAnseDb.selectAll();
         adapterDeepAnse = new fr.deepanse.soywod.deepanse.adapter.DeepAnse(this, arrayDeepAnse);
 
         listViewDeepAnse.setAdapter(adapterDeepAnse);
+
+        regexAmount = Pattern.compile(".*?([0-9]+?)( euro | euros |0|h)([0-9]*).*?");
+        regexGroup = Pattern.compile(getRegexGroup(groupDb.selectAll()));
 
         listViewDeepAnse.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 
@@ -131,6 +147,12 @@ public class MainActivity extends ActionBarActivity {
         addMonth(1);
     }
 
+    public void eventAddDeepAnse(View v) {
+        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, R.string.prompt_recognizer);
+        startActivityForResult(intent, 0);
+    }
+
     public void addMonth(int count) {
         mainDate.add(GregorianCalendar.MONTH, count);
         TextView textViewDate = (TextView) findViewById(R.id.text_date);
@@ -143,5 +165,64 @@ public class MainActivity extends ActionBarActivity {
         builder.setPositiveButton("Oui", alertBox);
         builder.setNegativeButton("Non", null);
         builder.show();
+    }
+
+    public String getRegexGroup(ArrayList<DeepAnseGroup> array)
+    {
+        String regex = ".*?(";
+        for(int i=0 ; i<array.size() ; i++)
+        {
+            if(i > 0)
+                regex += "|";
+            regex += array.get(i).getName();
+        }
+        regex += ").*?";
+
+        return regex;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+
+        if (requestCode == 0 && resultCode == RESULT_OK) {
+            String bestMatch = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS).get(0).toLowerCase();
+
+            System.out.println(bestMatch);
+
+            bestMatch = Conversion.spellOutToNumber(bestMatch);
+
+            System.out.println(bestMatch);
+
+            Matcher matcherAmount = regexAmount.matcher(bestMatch);
+            Matcher matcherGroup = regexGroup.matcher(bestMatch);
+
+            double amount = 0;
+            String group = "";
+
+            if(matcherAmount.matches())
+            {
+
+                if(!matcherAmount.group(1).isEmpty())
+                    amount = Double.parseDouble(matcherAmount.group(1));
+
+                if(!matcherAmount.group(3).isEmpty())
+                    amount += (Double.parseDouble(matcherAmount.group(3))/100);
+            }
+
+            if(matcherGroup.matches())
+            {
+                group = matcherGroup.group(1);
+            }
+
+            if(amount !=0 && group != "")
+            {
+                DeepAnse deepAnse = new DeepAnse(0, amount, new GregorianCalendar(), groupDb.selectByName(group), "test", false);
+                deepAnse.setId(deepAnseDb.insert(deepAnse));
+                arrayDeepAnse.add(deepAnse);
+                adapterDeepAnse.notifyDataSetChanged();
+            }
+        }
     }
 }
