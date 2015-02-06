@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.speech.RecognizerIntent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -71,16 +72,18 @@ public class MainActivity extends ActionBarActivity {
             deepAnseDb.open();
         }catch(SQLException e){e.printStackTrace();}
 
-        System.out.println(groupDb.selectAll());
-        //groupDb.insert(new DeepAnseGroup(0, "professionnel"));
+        //groupDb.update(1, new DeepAnseGroup(0, "bouffe", Color.parseColor("#AAFE8801")));
+        //groupDb.insert(new DeepAnseGroup(0, "travail", Color.parseColor("#AA017FFE")));
         //deepAnseDb.insert(new DeepAnse(0, 9999.99, new GregorianCalendar(), groupDb.select(5), "efzfzgfzgqergerghqethqaethjqthjrthqergqzeryqethyqe", false));
+
+        System.out.println(groupDb.selectAll());
 
         arrayDeepAnse = deepAnseDb.selectAll();
         adapterDeepAnse = new fr.deepanse.soywod.deepanse.adapter.DeepAnse(this, arrayDeepAnse);
 
         listViewDeepAnse.setAdapter(adapterDeepAnse);
 
-        regexAmount = Pattern.compile(".*?([0-9]+?)( euro | euros |[^0-9])([0-9]*).*?");
+        regexAmount = Pattern.compile(".*?(([0-9]+?)( euro | euros |[^0-9])([0-9]*)).*?");
         regexGroup = Pattern.compile(getRegexGroup(groupDb.selectAll()));
 
         listViewDeepAnse.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -199,16 +202,19 @@ public class MainActivity extends ActionBarActivity {
             Matcher matcherGroup = regexGroup.matcher(bestMatch);
 
             double amount = 0;
+            String amoutFull = "";
             String group = "";
 
             if(matcherAmount.matches())
             {
-
                 if(!matcherAmount.group(1).isEmpty())
-                    amount = Double.parseDouble(matcherAmount.group(1));
+                    amoutFull = matcherAmount.group(1);
+                System.out.println(amoutFull);
+                if(!matcherAmount.group(2).isEmpty())
+                    amount = Double.parseDouble(matcherAmount.group(2));
 
-                if(!matcherAmount.group(3).isEmpty())
-                    amount += (Double.parseDouble(matcherAmount.group(3))/100);
+                if(!matcherAmount.group(4).isEmpty())
+                    amount += (Double.parseDouble(matcherAmount.group(4))/100);
             }
 
             if(matcherGroup.matches())
@@ -216,9 +222,10 @@ public class MainActivity extends ActionBarActivity {
                 group = matcherGroup.group(1);
             }
 
-            if(amount !=0 && group != "")
+            if(amount != 0 && group != "")
             {
-                DeepAnse deepAnse = new DeepAnse(0, amount, new GregorianCalendar(), groupDb.selectByName(group), "test", false);
+                String comment = bestMatch.replace(amoutFull, "").replace(group, "").trim();
+                DeepAnse deepAnse = new DeepAnse(0, amount, new GregorianCalendar(), groupDb.selectByName(group), comment, false);
                 deepAnse.setId(deepAnseDb.insert(deepAnse));
                 arrayDeepAnse.add(deepAnse);
                 adapterDeepAnse.notifyDataSetChanged();

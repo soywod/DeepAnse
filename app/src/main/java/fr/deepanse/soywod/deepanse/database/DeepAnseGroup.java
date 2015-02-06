@@ -46,6 +46,7 @@ public class DeepAnseGroup {
         ContentValues values = new ContentValues();
 
         values.put(DeepAnseSQLiteOpenHelper.NAME, group.getName());
+        values.put(DeepAnseSQLiteOpenHelper.COLOR, group.getColor());
 
         return sqLiteDatabase.insert(DeepAnseSQLiteOpenHelper.TABLE_DEEPANSE_GROUP, null, values);
     }
@@ -63,6 +64,7 @@ public class DeepAnseGroup {
         ContentValues values = new ContentValues();
 
         values.put(DeepAnseSQLiteOpenHelper.NAME, group.getName());
+        values.put(DeepAnseSQLiteOpenHelper.COLOR, group.getColor());
 
         return sqLiteDatabase.update(DeepAnseSQLiteOpenHelper.TABLE_DEEPANSE_GROUP, values, DeepAnseSQLiteOpenHelper.ID + " = " + id, null);
     }

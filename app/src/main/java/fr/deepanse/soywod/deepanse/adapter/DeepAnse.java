@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -33,12 +34,14 @@ public class DeepAnse extends ArrayAdapter<fr.deepanse.soywod.deepanse.model.Dee
         }
 
         // Lookup view for data population
+        RelativeLayout layout = (RelativeLayout) convertView.findViewById(R.id.layout_deepanse);
         TextView textDate = (TextView) convertView.findViewById(R.id.text_date);
         TextView textGroup = (TextView) convertView.findViewById(R.id.text_group);
         TextView textComment = (TextView) convertView.findViewById(R.id.text_comment);
         TextView textAmount = (TextView) convertView.findViewById(R.id.text_amount);
 
         // Populate the data into the template view using the data object
+        layout.setBackgroundColor(deepAnse.getGroup().getColor());
         textDate.setText("le " + deepAnse.getDate().get(GregorianCalendar.DAY_OF_MONTH));
         textGroup.setText("[" + deepAnse.getGroup().getName() + "]");
         textComment.setText((deepAnse.getComment().length() > 18)?(deepAnse.getComment().substring(0, 15)+"..."):(deepAnse.getComment()));

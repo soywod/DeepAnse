@@ -10,9 +10,10 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DeepAnseSQLiteOpenHelper extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "DeepAnse.db";
-    public static final int VERSION = 1;
+    public static final int VERSION = 2;
 
     public static final String AMOUNT = "amount";
+    public static final String COLOR = "color";
     public static final String COMMENT = "comment";
     public static final String DATE = "date";
     public static final String ID = "_id";
@@ -33,7 +34,8 @@ public class DeepAnseSQLiteOpenHelper extends SQLiteOpenHelper {
 
     public static final String CREATE_TABLE_DEEPANSE_GROUP = "CREATE TABLE IF NOT EXISTS " + TABLE_DEEPANSE_GROUP + " (" +
             ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-            NAME + " TEXT NOT NULL);";
+            NAME + " TEXT UNIQUE NOT NULL, " +
+            COLOR + " INTEGER);";
 
     public DeepAnseSQLiteOpenHelper(Context context) {
         super(context, DATABASE_NAME, null, VERSION);

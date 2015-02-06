@@ -50,6 +50,7 @@ public class Conversion {
 
         group.setId(cursor.getInt(0));
         group.setName(cursor.getString(1));
+        group.setColor(cursor.getInt(2));
 
         return group;
     }
