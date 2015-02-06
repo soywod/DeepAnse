@@ -80,7 +80,7 @@ public class MainActivity extends ActionBarActivity {
 
         listViewDeepAnse.setAdapter(adapterDeepAnse);
 
-        regexAmount = Pattern.compile(".*?([0-9]+?)( euro | euros |0|h)([0-9]*).*?");
+        regexAmount = Pattern.compile(".*?([0-9]+?)( euro | euros |[^0-9])([0-9]*).*?");
         regexGroup = Pattern.compile(getRegexGroup(groupDb.selectAll()));
 
         listViewDeepAnse.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
