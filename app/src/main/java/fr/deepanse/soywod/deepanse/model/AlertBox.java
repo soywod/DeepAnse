@@ -2,17 +2,18 @@ package fr.deepanse.soywod.deepanse.model;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 
 /**
  * Created by soywod on 05/02/2015.
  */
-public class AlertBox extends AlertDialog.Builder {
+abstract public class AlertBox implements DialogInterface.OnClickListener {
 
-    public AlertBox(Context context) {
-        super(context);
+    @Override
+    public final void onClick(DialogInterface dialog, int which) {
+        execute();
+        dialog.dismiss();
     }
 
-    public AlertBox(Context context, int theme) {
-        super(context, theme);
-    }
+    abstract public void execute();
 }

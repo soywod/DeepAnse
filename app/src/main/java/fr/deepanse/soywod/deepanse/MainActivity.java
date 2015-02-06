@@ -1,5 +1,6 @@
 package fr.deepanse.soywod.deepanse;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.support.v7.app.ActionBarActivity;
@@ -18,31 +19,35 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
+import fr.deepanse.soywod.deepanse.model.AlertBox;
 import fr.deepanse.soywod.deepanse.model.DeepAnse;
-import fr.deepanse.soywod.deepanse.model.DeepAnseGroup;
 import fr.deepanse.soywod.deepanse.database.DeepAnseSQLiteOpenHelper;
 
 public class MainActivity extends ActionBarActivity {
 
-    private ListView listViewDeepAnse;
-    private ArrayList<DeepAnse> arrayDeepAnse;
+    private AlertBox alertBox;
+    private Activity context;
+    private int selectedId;
+
+    private DeepAnseSQLiteOpenHelper deepAnseSQLiteOpenHelper;
+    private fr.deepanse.soywod.deepanse.database.DeepAnseGroup groupDb;
+    private fr.deepanse.soywod.deepanse.database.DeepAnse deepAnseDb;
+
+    private  ArrayList<DeepAnse> arrayDeepAnse;
     private fr.deepanse.soywod.deepanse.adapter.DeepAnse adapterDeepAnse;
-    private float historicX = Float.NaN;
-    private View selectedView;
-    private int selectedPosition;
-    private AlertDialog.Builder builder;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        context = this;
+        selectedId = -1;
         setContentView(R.layout.activity_main);
 
-        builder = new AlertDialog.Builder(this, 2);
+        deepAnseSQLiteOpenHelper = new DeepAnseSQLiteOpenHelper(this);
+        groupDb = new fr.deepanse.soywod.deepanse.database.DeepAnseGroup(deepAnseSQLiteOpenHelper);
+        deepAnseDb = new fr.deepanse.soywod.deepanse.database.DeepAnse(deepAnseSQLiteOpenHelper);
 
-        DeepAnseSQLiteOpenHelper deepAnseSQLiteOpenHelper = new DeepAnseSQLiteOpenHelper(this);
-        fr.deepanse.soywod.deepanse.database.DeepAnseGroup groupDb = new fr.deepanse.soywod.deepanse.database.DeepAnseGroup(deepAnseSQLiteOpenHelper);
-        fr.deepanse.soywod.deepanse.database.DeepAnse deepAnseDb = new fr.deepanse.soywod.deepanse.database.DeepAnse(deepAnseSQLiteOpenHelper);
-
-        listViewDeepAnse = (ListView) findViewById(R.id.list_view);
+        ListView listViewDeepAnse = (ListView) findViewById(R.id.list_view);
 
         try
         {
@@ -50,68 +55,45 @@ public class MainActivity extends ActionBarActivity {
             deepAnseDb.open();
         }catch(SQLException e){e.printStackTrace();}
 
+
         //deepAnseDb.insert(new DeepAnse(0, 20.5, new GregorianCalendar(), groupDb.select(1), "test", false));
 
         arrayDeepAnse = deepAnseDb.selectAll();
         adapterDeepAnse = new fr.deepanse.soywod.deepanse.adapter.DeepAnse(this, arrayDeepAnse);
+
         listViewDeepAnse.setAdapter(adapterDeepAnse);
 
-        groupDb.close();
-        deepAnseDb.close();
-
         listViewDeepAnse.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 
+                selectedId = position;
+                displayYesNoDialog();
 
-                builder.setMessage("Voulez-vous vraiment supprimer cette dépense ?");
-                builder.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        System.out.println("YES");
-                    }
-                });
-                builder.setNegativeButton("Non", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        System.out.println("NO");
-                    }
-                });
-                builder.show();
                 return false;
             }
         });
 
-        listViewDeepAnse.setOnTouchListener(new View.OnTouchListener() {
+        alertBox = new AlertBox() {
+
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        historicX = event.getX();
-                        break;
-
-                    case MotionEvent.ACTION_MOVE:
-                        //selectedView.setX(event.getX()-historicX);
-                        break;
-
-                    case MotionEvent.ACTION_UP:
-                        if (event.getX() - historicX < - 50) {
-                            System.out.println("ACTION");
-                            return true;
-                        } else if (event.getX() - historicX > 50) {
-
-                            return true;
-                        }
-                        break;
-                    default:
-                        return false;
-                }
-                return false;
+            public void execute() {
+                deepAnseDb.delete(arrayDeepAnse.get(selectedId).getId());
+                arrayDeepAnse.remove(selectedId);
+                adapterDeepAnse.notifyDataSetChanged();
+                selectedId = -1;
             }
-        });
+        };
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        groupDb.close();
+        deepAnseDb.close();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -133,5 +115,13 @@ public class MainActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void displayYesNoDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context, 2);
+        builder.setMessage("Voulez-vous vraiment supprimer cette dépense ?");
+        builder.setPositiveButton("Oui", alertBox);
+        builder.setNegativeButton("Non", null);
+        builder.show();
     }
 }
