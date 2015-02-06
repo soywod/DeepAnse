@@ -14,6 +14,7 @@ import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -28,6 +29,7 @@ public class MainActivity extends ActionBarActivity {
     private AlertBox alertBox;
     private Activity context;
     private int selectedId;
+    private GregorianCalendar mainDate;
 
     private DeepAnseSQLiteOpenHelper deepAnseSQLiteOpenHelper;
     private fr.deepanse.soywod.deepanse.database.DeepAnseGroup groupDb;
@@ -39,9 +41,11 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
         context = this;
         selectedId = -1;
-        setContentView(R.layout.activity_main);
+        mainDate = new GregorianCalendar();
 
         deepAnseSQLiteOpenHelper = new DeepAnseSQLiteOpenHelper(this);
         groupDb = new fr.deepanse.soywod.deepanse.database.DeepAnseGroup(deepAnseSQLiteOpenHelper);
@@ -85,6 +89,8 @@ public class MainActivity extends ActionBarActivity {
                 selectedId = -1;
             }
         };
+
+        addMonth(0);
     }
 
     @Override
@@ -115,6 +121,20 @@ public class MainActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void eventRemoveMonth(View v) {
+        addMonth(-1);
+    }
+
+    public void eventAddMonth(View v) {
+        addMonth(1);
+    }
+
+    public void addMonth(int count) {
+        mainDate.add(GregorianCalendar.MONTH, count);
+        TextView textViewDate = (TextView) findViewById(R.id.text_date);
+        textViewDate.setText(Conversion.dateToStringMonthYearFr(mainDate));
     }
 
     public void displayYesNoDialog() {
