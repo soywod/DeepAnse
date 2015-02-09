@@ -2,12 +2,10 @@ package fr.deepanse.soywod.deepanse;
 
 import android.database.Cursor;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
-import fr.deepanse.soywod.deepanse.model.DeepAnse;
-import fr.deepanse.soywod.deepanse.model.DeepAnseGroup;
+import fr.deepanse.soywod.deepanse.model.*;
 
 /**
  * Created by soywod on 05/02/2015.
@@ -126,7 +124,7 @@ public class Conversion {
 
         for(String word : splitPhrase)
         {
-            if ((numberNumeric = Number.findNumberNumeric(word)) != -1)
+            if ((numberNumeric = NumberFR.findNumberNumeric(word)) != -1)
                 arrayNumber.add(numberNumeric);
             else if(arrayNumber.size() > 0)
             {

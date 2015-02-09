@@ -2,35 +2,27 @@ package fr.deepanse.soywod.deepanse;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
+import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
-import android.view.DragEvent;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.TranslateAnimation;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import java.sql.SQLException;
-import java.text.NumberFormat;
-import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import fr.deepanse.soywod.deepanse.model.AlertBox;
-import fr.deepanse.soywod.deepanse.model.DeepAnse;
 import fr.deepanse.soywod.deepanse.database.DeepAnseSQLiteOpenHelper;
+import fr.deepanse.soywod.deepanse.model.AlertBox;
+import fr.deepanse.soywod.deepanse.model.DateFR;
+import fr.deepanse.soywod.deepanse.model.DeepAnse;
 import fr.deepanse.soywod.deepanse.model.DeepAnseGroup;
 
 public class MainActivity extends ActionBarActivity {
@@ -48,8 +40,7 @@ public class MainActivity extends ActionBarActivity {
     private  ArrayList<DeepAnse> arrayDeepAnse;
     private fr.deepanse.soywod.deepanse.adapter.DeepAnse adapterDeepAnse;
 
-    private static Pattern regexAmount;
-    private static Pattern regexGroup;
+    private static Pattern regexAmount, regexGroup, regexDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +73,22 @@ public class MainActivity extends ActionBarActivity {
         adapterDeepAnse = new fr.deepanse.soywod.deepanse.adapter.DeepAnse(this, arrayDeepAnse);
 
         listViewDeepAnse.setAdapter(adapterDeepAnse);
+
+        regexDate = Pattern.compile(
+                                    ".*?" +
+                                    "(" +
+                                        "(aujourd\'hui)|" +
+                                        "(demain)|" +
+                                        "(après.demain)|" +
+                                        "(hier)|" +
+                                        "(avant.hier)|" +
+                                    "(" +
+                                        "(lundi|mardi|mercredi|jeudi|vendredi|samedi|dimanche) (dernier|prochain))|" +
+                                    "(" +
+                                        "([0-9]{1,2}) " +
+                                        "(janvier|février|mars|avril|mai|juin|juillet|août|septembre|octobre|novembre|décembre) " +
+                                        "([0-9]{4})))" +
+                                    ".*?");
 
         regexAmount = Pattern.compile(".*?(([0-9]+?)( euro | euros |[^0-9])([0-9]*)).*?");
         regexGroup = Pattern.compile(getRegexGroup(groupDb.selectAll()));
@@ -192,40 +199,87 @@ public class MainActivity extends ActionBarActivity {
         if (requestCode == 0 && resultCode == RESULT_OK) {
             String bestMatch = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS).get(0).toLowerCase();
 
-            System.out.println(bestMatch);
+            System.out.println("BRUT : " + bestMatch);
 
             bestMatch = Conversion.spellOutToNumber(bestMatch);
 
-            System.out.println(bestMatch);
+            System.out.println("CONVERT : " + bestMatch);
 
-            Matcher matcherAmount = regexAmount.matcher(bestMatch);
-            Matcher matcherGroup = regexGroup.matcher(bestMatch);
+            Matcher matcherDate = regexDate.matcher(bestMatch);
 
             double amount = 0;
             String amoutFull = "";
             String group = "";
+            GregorianCalendar date = new GregorianCalendar();
+
+
+            if(matcherDate.matches())
+            {
+                if (matcherDate.group(1) != null)
+                    bestMatch = bestMatch.replace(matcherDate.group(1), "");
+
+                if (matcherDate.group(3) != null)
+                    date.add(GregorianCalendar.DATE, 1);
+
+                if (matcherDate.group(4) != null)
+                    date.add(GregorianCalendar.DATE, 2);
+
+                if (matcherDate.group(5) != null)
+                    date.add(GregorianCalendar.DATE, -1);
+
+                if (matcherDate.group(6) != null)
+                    date.add(GregorianCalendar.DATE, -2);
+
+                if (matcherDate.group(7) != null)
+                {
+                    int tmpDiffDay = DateFR.findDateNumeric(matcherDate.group(8)) - date.get(GregorianCalendar.DAY_OF_WEEK);
+
+                    if(matcherDate.group(9).equals("prochain")) {
+                        if (tmpDiffDay < 1) tmpDiffDay += 7;
+                    }
+                    else if(matcherDate.group(9).equals("dernier")) {
+                        if (tmpDiffDay > -1) tmpDiffDay -= 7;
+                    }
+
+                    date.add(GregorianCalendar.DATE, tmpDiffDay);
+                }
+
+                if (matcherDate.group(10) != null)
+                    date.set(Integer.parseInt(matcherDate.group(13)), DateFR.findDateNumeric(matcherDate.group(12)), Integer.parseInt(matcherDate.group(11)));
+
+                System.out.println("DATE : "+Conversion.dateToStringFr(date));
+            }
+
+            Matcher matcherAmount = regexAmount.matcher(bestMatch);
 
             if(matcherAmount.matches())
             {
-                if(!matcherAmount.group(1).isEmpty())
-                    amoutFull = matcherAmount.group(1);
-                System.out.println(amoutFull);
-                if(!matcherAmount.group(2).isEmpty())
+                if(matcherAmount.group(1) != null)
+                    bestMatch = bestMatch.replace(matcherAmount.group(1), "").trim();
+
+                if(matcherAmount.group(2) != null)
                     amount = Double.parseDouble(matcherAmount.group(2));
 
                 if(!matcherAmount.group(4).isEmpty())
                     amount += (Double.parseDouble(matcherAmount.group(4))/100);
+
+                System.out.println("MONTANT : "+amount);
             }
+
+            Matcher matcherGroup = regexGroup.matcher(bestMatch);
 
             if(matcherGroup.matches())
             {
                 group = matcherGroup.group(1);
+                bestMatch = bestMatch.replace(group, "").trim();
+                System.out.println("RUBRIQUE : "+group);
             }
+
+            System.out.println("COMMENT : " + bestMatch);
 
             if(amount != 0 && group != "")
             {
-                String comment = bestMatch.replace(amoutFull, "").replace(group, "").trim();
-                DeepAnse deepAnse = new DeepAnse(0, amount, new GregorianCalendar(), groupDb.selectByName(group), comment, false);
+                DeepAnse deepAnse = new DeepAnse(0, amount, date, groupDb.selectByName(group), bestMatch, false);
                 deepAnse.setId(deepAnseDb.insert(deepAnse));
                 arrayDeepAnse.add(deepAnse);
                 adapterDeepAnse.notifyDataSetChanged();

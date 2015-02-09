@@ -1,9 +1,9 @@
-package fr.deepanse.soywod.deepanse;
+package fr.deepanse.soywod.deepanse.model;
 
 /**
  * Created by soywod on 06/02/2015.
  */
-public enum Number {
+public enum NumberFR {
     un("un", 1),
     deux("deux", 2),
     trois("trois", 3),
@@ -34,7 +34,7 @@ public enum Number {
     private String numberLitteral;
     private int numberNumeric;
 
-    private Number(String numberLitteral, int numberNumeric) {
+    private NumberFR(String numberLitteral, int numberNumeric) {
         this.numberLitteral = numberLitteral;
         this.numberNumeric = numberNumeric;
     }
@@ -50,7 +50,7 @@ public enum Number {
     public static int findNumberNumeric(String numberLitteral) {
 
         int numberNumeric = -1;
-        for (Number type : Number.values())
+        for (NumberFR type : NumberFR.values())
         {
             if (numberLitteral.equals(type.getNumberLitteral()))
             {
