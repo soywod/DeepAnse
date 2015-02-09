@@ -90,8 +90,10 @@ public class Conversion {
      */
     public static String dateToStringMonthYearFr(GregorianCalendar date)
     {
-        return ((date.get(GregorianCalendar.MONTH) < 9)?("0" + (date.get(GregorianCalendar.MONTH)+1)):("" + (date.get(GregorianCalendar.MONTH)+1))) + "/" +
-                date.get(GregorianCalendar.YEAR);
+        String month = DateFR.findDateLitteral(date.get(GregorianCalendar.MONTH));
+        int year = date.get(GregorianCalendar.YEAR);
+
+        return month.replaceFirst(".", month.substring(0, 1).toUpperCase()) + " " + year;
     }
 
     /**

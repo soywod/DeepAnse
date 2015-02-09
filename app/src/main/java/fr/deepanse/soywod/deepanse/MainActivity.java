@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -69,7 +70,7 @@ public class MainActivity extends ActionBarActivity {
 
         System.out.println(groupDb.selectAll());
 
-        arrayDeepAnse = deepAnseDb.selectAll();
+        arrayDeepAnse = new ArrayList<>();
         adapterDeepAnse = new fr.deepanse.soywod.deepanse.adapter.DeepAnse(this, arrayDeepAnse);
 
         listViewDeepAnse.setAdapter(adapterDeepAnse);
@@ -90,7 +91,7 @@ public class MainActivity extends ActionBarActivity {
                                         "([0-9]{4})))" +
                                     ".*?");
 
-        regexAmount = Pattern.compile(".*?(([0-9]+?)( euro | euros |[^0-9])([0-9]*)).*?");
+        regexAmount = Pattern.compile(".*?(([0-9]+?)( euro[s]?[ ]?|[^0-9])([0-9]*)).*?");
         regexGroup = Pattern.compile(getRegexGroup(groupDb.selectAll()));
 
         listViewDeepAnse.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -113,6 +114,7 @@ public class MainActivity extends ActionBarActivity {
                 arrayDeepAnse.remove(selectedId);
                 adapterDeepAnse.notifyDataSetChanged();
                 selectedId = -1;
+                refreshTotal();
             }
         };
 
@@ -149,6 +151,16 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void refreshTotal() {
+        TextView textViewTotal = (TextView) findViewById(R.id.text_total);
+        textViewTotal.setText("Total : " + deepAnseDb.selectSumByDate(mainDate));
+    }
+
+    public void refreshMainDate() {
+        TextView textViewDate = (TextView) findViewById(R.id.text_main_date);
+        textViewDate.setText(Conversion.dateToStringMonthYearFr(mainDate));
+    }
+
     public void eventRemoveMonth(View v) {
         addMonth(-1);
     }
@@ -165,8 +177,17 @@ public class MainActivity extends ActionBarActivity {
 
     public void addMonth(int count) {
         mainDate.add(GregorianCalendar.MONTH, count);
-        TextView textViewDate = (TextView) findViewById(R.id.text_date);
-        textViewDate.setText(Conversion.dateToStringMonthYearFr(mainDate));
+        arrayDeepAnse.clear();
+
+        for(DeepAnse item : deepAnseDb.selectAllByDate(mainDate))
+            arrayDeepAnse.add(item);
+
+        Collections.sort(arrayDeepAnse);
+
+        adapterDeepAnse.notifyDataSetChanged();
+
+        refreshMainDate();
+        refreshTotal();
     }
 
     public void displayYesNoDialog() {
@@ -208,7 +229,6 @@ public class MainActivity extends ActionBarActivity {
             Matcher matcherDate = regexDate.matcher(bestMatch);
 
             double amount = 0;
-            String amoutFull = "";
             String group = "";
             GregorianCalendar date = new GregorianCalendar();
 
@@ -247,7 +267,7 @@ public class MainActivity extends ActionBarActivity {
                 if (matcherDate.group(10) != null)
                     date.set(Integer.parseInt(matcherDate.group(13)), DateFR.findDateNumeric(matcherDate.group(12)), Integer.parseInt(matcherDate.group(11)));
 
-                System.out.println("DATE : "+Conversion.dateToStringFr(date));
+                System.out.println("DATE : " + Conversion.dateToStringFr(date));
             }
 
             Matcher matcherAmount = regexAmount.matcher(bestMatch);
@@ -263,7 +283,7 @@ public class MainActivity extends ActionBarActivity {
                 if(!matcherAmount.group(4).isEmpty())
                     amount += (Double.parseDouble(matcherAmount.group(4))/100);
 
-                System.out.println("MONTANT : "+amount);
+                System.out.println("MONTANT : " + amount);
             }
 
             Matcher matcherGroup = regexGroup.matcher(bestMatch);
@@ -272,7 +292,7 @@ public class MainActivity extends ActionBarActivity {
             {
                 group = matcherGroup.group(1);
                 bestMatch = bestMatch.replace(group, "").trim();
-                System.out.println("RUBRIQUE : "+group);
+                System.out.println("RUBRIQUE : " + group);
             }
 
             System.out.println("COMMENT : " + bestMatch);
@@ -281,8 +301,9 @@ public class MainActivity extends ActionBarActivity {
             {
                 DeepAnse deepAnse = new DeepAnse(0, amount, date, groupDb.selectByName(group), bestMatch, false);
                 deepAnse.setId(deepAnseDb.insert(deepAnse));
-                arrayDeepAnse.add(deepAnse);
-                adapterDeepAnse.notifyDataSetChanged();
+                mainDate.set(GregorianCalendar.YEAR, date.get(GregorianCalendar.YEAR));
+                mainDate.set(GregorianCalendar.MONTH, date.get(GregorianCalendar.MONTH));
+                addMonth(0);
             }
         }
     }

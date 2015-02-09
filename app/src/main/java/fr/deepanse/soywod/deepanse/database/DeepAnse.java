@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 
 import fr.deepanse.soywod.deepanse.Conversion;
 import fr.deepanse.soywod.deepanse.model.*;
@@ -139,5 +140,56 @@ public class DeepAnse {
         cursorDeepAnse.close();
 
         return arrayDeepAnse;
+    }
+
+    /**
+     *  Sélectionne toutes les dépenses de la BDD du mois et année donnés en paramètre
+     *
+     *  @param date     La date de la dépense de la BDD de type GregorianCalendar
+     *
+     *  @return
+     *      La liste des dépenses de la BDD de type ArrayList
+     */
+    public ArrayList<fr.deepanse.soywod.deepanse.model.DeepAnse> selectAllByDate(GregorianCalendar date)
+    {
+        Cursor cursorDeepAnse = sqLiteDatabase.rawQuery("SELECT * FROM " + DeepAnseSQLiteOpenHelper.TABLE_DEEPANSE + " " +
+                                                        "WHERE strftime('%Y', " + DeepAnseSQLiteOpenHelper.DATE + ") = '" + date.get(GregorianCalendar.YEAR) + "' " +
+                                                        "AND strftime('%m', "+DeepAnseSQLiteOpenHelper.DATE+") = '"+((date.get(GregorianCalendar.MONTH) < 10)?("0" + date.get(GregorianCalendar.MONTH)):("" + date.get(GregorianCalendar.MONTH)))+"'", null);
+
+        ArrayList<fr.deepanse.soywod.deepanse.model.DeepAnse> arrayDeepAnse = new ArrayList<>();
+
+        for(cursorDeepAnse.moveToFirst(); !cursorDeepAnse.isAfterLast(); cursorDeepAnse.moveToNext())
+        {
+            Cursor cursorGroup = sqLiteDatabase.rawQuery("SELECT * FROM " + DeepAnseSQLiteOpenHelper.TABLE_DEEPANSE_GROUP +" WHERE " + DeepAnseSQLiteOpenHelper.ID + " = ?" , new String[]{String.valueOf(cursorDeepAnse.getInt(3))});
+
+            cursorGroup.moveToFirst();
+
+            arrayDeepAnse.add(Conversion.cursorToDeepAnse(cursorDeepAnse, Conversion.cursorToDeepAnseGroup(cursorGroup)));
+
+            cursorGroup.close();
+        }
+
+        cursorDeepAnse.close();
+
+        return arrayDeepAnse;
+    }
+
+    /**
+     *  Sélectionne le total des dépenses de la BDD du mois et année donnés en paramètre
+     *
+     *  @param date     La date de la dépense de la BDD de type GregorianCalendar
+     *
+     *  @return
+     *      Le total des dépenses de type double
+     */
+    public double selectSumByDate(GregorianCalendar date)
+    {
+        Cursor cursorDeepAnse = sqLiteDatabase.rawQuery("SELECT SUM(" + DeepAnseSQLiteOpenHelper.AMOUNT + ") FROM " + DeepAnseSQLiteOpenHelper.TABLE_DEEPANSE + " " +
+                                                        "WHERE strftime('%Y', " + DeepAnseSQLiteOpenHelper.DATE + ") = '" + date.get(GregorianCalendar.YEAR) + "' " +
+                                                        "AND strftime('%m', "+DeepAnseSQLiteOpenHelper.DATE+") = '"+((date.get(GregorianCalendar.MONTH) < 10)?("0" + date.get(GregorianCalendar.MONTH)):("" + date.get(GregorianCalendar.MONTH)))+"'", null);
+
+        cursorDeepAnse.moveToFirst();
+
+        return cursorDeepAnse.getDouble(0);
     }
 }

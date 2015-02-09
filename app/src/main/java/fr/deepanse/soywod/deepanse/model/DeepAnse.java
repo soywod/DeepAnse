@@ -20,7 +20,7 @@ import fr.deepanse.soywod.deepanse.Conversion;
  * @author soywod
  * @version 1.0
  */
-public class DeepAnse {
+public class DeepAnse implements Comparable{
 
     /**
      *  L'id de la dépense
@@ -53,7 +53,7 @@ public class DeepAnse {
      *  La rubrique de la dépense
      *  @see fr.deepanse.soywod.deepanse.model.DeepAnse#DeepAnse()
      *  @see fr.deepanse.soywod.deepanse.model.DeepAnse#DeepAnse(long, double, java.util.GregorianCalendar, fr.deepanse.soywod.deepanse.model.DeepAnseGroup, java.lang.String, boolean)
-     *  @see fr.deepanse.soywod.deepanse.model.DeepAnseGroup#DeepAnseGroup(long, java.lang.String)
+     *  @see fr.deepanse.soywod.deepanse.model.DeepAnseGroup#DeepAnseGroup(long, java.lang.String, int)
      *  @see fr.deepanse.soywod.deepanse.model.DeepAnse#getGroup()
      *  @see fr.deepanse.soywod.deepanse.model.DeepAnse#setGroup(fr.deepanse.soywod.deepanse.model.DeepAnseGroup)
      */
@@ -253,5 +253,34 @@ public class DeepAnse {
                 ", comment='" + comment + '\'' +
                 ", recursive=" + recursive +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Object deepAnse)
+    {
+        int chYear = this.date.get(GregorianCalendar.YEAR);
+        int chMonth = this.date.get(GregorianCalendar.MONTH);
+        int parYear = ((DeepAnse) deepAnse).getDate().get(GregorianCalendar.YEAR);
+        int parMonth = ((DeepAnse) deepAnse).getDate().get(GregorianCalendar.MONTH);
+
+        if ((parYear > chYear) || (parYear == chYear && parMonth > chMonth)) {
+            return -1;
+        }
+        else if ((parYear < chYear) || (parYear == chYear && parMonth < chMonth)) {
+            return 1;
+        }
+        else
+        {
+            if(((DeepAnse) deepAnse).getAmount() > (this.amount)) {
+                return -1;
+            }
+            else if(((DeepAnse) deepAnse).getAmount() < (this.amount)) {
+                return 1;
+            }
+            else {
+                return this.group.getName().compareToIgnoreCase(((DeepAnse) deepAnse).getGroup().getName());
+            }
+        }
+
     }
 }
