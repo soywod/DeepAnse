@@ -35,6 +35,52 @@ public class Conversion {
     }
 
     /**
+     *  Convertit un curseur en report ReportByYear
+     *
+     *  @param cursor   Le curseur à convertir de type Cursor
+     *
+     *  @return
+     *      Le curseur converti en report de type ReportByYear
+     */
+    public static Report cursorToReportByYear(Cursor cursor)
+    {
+        Report report = new Report();
+        GregorianCalendar date = new GregorianCalendar();
+
+        date.set(GregorianCalendar.MONTH, cursor.getInt(0)-1);
+        date.set(GregorianCalendar.YEAR, cursor.getInt(1));
+
+        report.setDate(date);
+        report.setTotal(cursor.getDouble(2));
+
+        return report;
+    }
+
+    /**
+     *  Convertit un curseur en report ReportByYear
+     *
+     *  @param cursor   Le curseur à convertir de type Cursor
+     *
+     *  @return
+     *      Le curseur converti en report de type ReportByYear
+     */
+    public static Report cursorToReportByMonth(Cursor cursor)
+    {
+        Report report = new Report();
+
+        GregorianCalendar date = new GregorianCalendar();
+
+        date.set(GregorianCalendar.DAY_OF_MONTH, cursor.getInt(0));
+        date.set(GregorianCalendar.MONTH, cursor.getInt(1)-1);
+        date.set(GregorianCalendar.YEAR, cursor.getInt(2));
+
+        report.setDate(date);
+        report.setTotal(cursor.getDouble(3));
+
+        return report;
+    }
+
+    /**
      *  Convertit un curseur en rubrique DeepAnseGroup
      *
      *  @param cursor   Le curseur à convertir de type Cursor
@@ -63,7 +109,7 @@ public class Conversion {
     public static String dateToString(GregorianCalendar date)
     {
         return date.get(GregorianCalendar.YEAR) + "-" +
-                ((date.get(GregorianCalendar.MONTH) < 10)?("0" + date.get(GregorianCalendar.MONTH)):("" + date.get(GregorianCalendar.MONTH))) + "-" +
+                ((date.get(GregorianCalendar.MONTH) < 9)?("0" + (date.get(GregorianCalendar.MONTH)+1)):("" + (date.get(GregorianCalendar.MONTH)+1))) + "-" +
                 ((date.get(GregorianCalendar.DAY_OF_MONTH) < 10)?("0" + date.get(GregorianCalendar.DAY_OF_MONTH)):("" + date.get(GregorianCalendar.DAY_OF_MONTH)));
     }
 
@@ -90,10 +136,14 @@ public class Conversion {
      */
     public static String dateToStringMonthYearFr(GregorianCalendar date)
     {
-        String month = DateFR.findDateLitteral(date.get(GregorianCalendar.MONTH));
+        String month = firstCharToUpperCase(DateFR.findDateLitteral(date.get(GregorianCalendar.MONTH)));
         int year = date.get(GregorianCalendar.YEAR);
 
-        return month.replaceFirst(".", month.substring(0, 1).toUpperCase()) + " " + year;
+        return month + " " + year;
+    }
+
+    public static String firstCharToUpperCase(String word) {
+        return word.toLowerCase().replaceFirst(".", word.substring(0, 1).toUpperCase());
     }
 
     /**
@@ -110,7 +160,7 @@ public class Conversion {
         String[] splitDate = date.replace(" ", "-").replace(":", "-").split("-");
 
         tmpDate.set(GregorianCalendar.YEAR, Integer.parseInt(splitDate[0]));
-        tmpDate.set(GregorianCalendar.MONTH, Integer.parseInt(splitDate[1]));
+        tmpDate.set(GregorianCalendar.MONTH, Integer.parseInt(splitDate[1])-1);
         tmpDate.set(GregorianCalendar.DAY_OF_MONTH, Integer.parseInt(splitDate[2]));
 
         return tmpDate;

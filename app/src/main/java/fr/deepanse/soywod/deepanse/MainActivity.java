@@ -20,80 +20,67 @@ import java.util.GregorianCalendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import fr.deepanse.soywod.deepanse.adapter.ReportByMonth;
+import fr.deepanse.soywod.deepanse.adapter.ReportByYear;
 import fr.deepanse.soywod.deepanse.database.DeepAnseSQLiteOpenHelper;
 import fr.deepanse.soywod.deepanse.model.AlertBox;
 import fr.deepanse.soywod.deepanse.model.DateFR;
 import fr.deepanse.soywod.deepanse.model.DeepAnse;
 import fr.deepanse.soywod.deepanse.model.DeepAnseGroup;
+import fr.deepanse.soywod.deepanse.model.Report;
 
 public class MainActivity extends ActionBarActivity {
 
+    private final static int CODE_ACTIVITY_BY_YEAR = 0;
+    private final static int CODE_ACTIVITY_BY_MONTH = 1;
+    private final static int CODE_ACTIVITY_BY_DAY = 2;
 
     private AlertBox alertBox;
     private Activity context;
     private int selectedId;
-    private GregorianCalendar mainDate;
+    private int activityActive;
+    private GregorianCalendar mainDate = new GregorianCalendar();
 
     private DeepAnseSQLiteOpenHelper deepAnseSQLiteOpenHelper;
     private fr.deepanse.soywod.deepanse.database.DeepAnseGroup groupDb;
     private fr.deepanse.soywod.deepanse.database.DeepAnse deepAnseDb;
 
     private  ArrayList<DeepAnse> arrayDeepAnse;
+    private  ArrayList<Report> arrayReport;
     private fr.deepanse.soywod.deepanse.adapter.DeepAnse adapterDeepAnse;
+    private ReportByYear adapterReportByYear;
+    private ReportByMonth adapterReportByMonth;
 
-    private static Pattern regexAmount, regexGroup, regexDate;
+    private Pattern regexGroup;
+    private final Pattern regexAmount = Pattern.compile(".*?(([0-9]+?)( euro[s]?[ ]?|[^0-9])([0-9]*)).*?");
+    private final Pattern regexDate = Pattern.compile(
+    ".*?" +
+    "(" +
+        "(aujourd\'hui)|" +
+        "(demain)|" +
+        "(après.demain)|" +
+        "(hier)|" +
+        "(avant.hier)|" +
+        "(" +
+            "(lundi|mardi|mercredi|jeudi|vendredi|samedi|dimanche) (dernier|prochain))|" +
+        "(" +
+            "([0-9]{1,2}) " +
+            "(janvier|février|mars|avril|mai|juin|juillet|août|septembre|octobre|novembre|décembre) " +
+            "([0-9]{4})))" +
+    ".*?");
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
-        context = this;
-        selectedId = -1;
-        mainDate = new GregorianCalendar();
-
-        deepAnseSQLiteOpenHelper = new DeepAnseSQLiteOpenHelper(this);
-        groupDb = new fr.deepanse.soywod.deepanse.database.DeepAnseGroup(deepAnseSQLiteOpenHelper);
-        deepAnseDb = new fr.deepanse.soywod.deepanse.database.DeepAnse(deepAnseSQLiteOpenHelper);
-
-        ListView listViewDeepAnse = (ListView) findViewById(R.id.list_view);
-
-        try
-        {
-            groupDb.open();
-            deepAnseDb.open();
-        }catch(SQLException e){e.printStackTrace();}
+        startViewByYearActivity();
 
         //groupDb.update(1, new DeepAnseGroup(0, "bouffe", Color.parseColor("#AAFE8801")));
         //groupDb.insert(new DeepAnseGroup(0, "travail", Color.parseColor("#AA017FFE")));
         //deepAnseDb.insert(new DeepAnse(0, 9999.99, new GregorianCalendar(), groupDb.select(5), "efzfzgfzgqergerghqethqaethjqthjrthqergqzeryqethyqe", false));
 
-        System.out.println(groupDb.selectAll());
-
-        arrayDeepAnse = new ArrayList<>();
-        adapterDeepAnse = new fr.deepanse.soywod.deepanse.adapter.DeepAnse(this, arrayDeepAnse);
-
-        listViewDeepAnse.setAdapter(adapterDeepAnse);
-
-        regexDate = Pattern.compile(
-                                    ".*?" +
-                                    "(" +
-                                        "(aujourd\'hui)|" +
-                                        "(demain)|" +
-                                        "(après.demain)|" +
-                                        "(hier)|" +
-                                        "(avant.hier)|" +
-                                    "(" +
-                                        "(lundi|mardi|mercredi|jeudi|vendredi|samedi|dimanche) (dernier|prochain))|" +
-                                    "(" +
-                                        "([0-9]{1,2}) " +
-                                        "(janvier|février|mars|avril|mai|juin|juillet|août|septembre|octobre|novembre|décembre) " +
-                                        "([0-9]{4})))" +
-                                    ".*?");
-
-        regexAmount = Pattern.compile(".*?(([0-9]+?)( euro[s]?[ ]?|[^0-9])([0-9]*)).*?");
-        regexGroup = Pattern.compile(getRegexGroup(groupDb.selectAll()));
-
+        /*
         listViewDeepAnse.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 
             @Override
@@ -117,8 +104,7 @@ public class MainActivity extends ActionBarActivity {
                 refreshTotal();
             }
         };
-
-        addMonth(0);
+        */
     }
 
     @Override
@@ -151,14 +137,117 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void openDatabases() {
+        try
+        {
+            groupDb.open();
+            deepAnseDb.open();
+        }catch(SQLException e){e.printStackTrace();}
+    }
+
+    public void startViewByYearActivity() {
+        setContentView(R.layout.activity_view_deepanse);
+
+        activityActive = CODE_ACTIVITY_BY_YEAR;
+        context = this;
+        selectedId = -1;
+        deepAnseSQLiteOpenHelper = new DeepAnseSQLiteOpenHelper(this);
+        groupDb = new fr.deepanse.soywod.deepanse.database.DeepAnseGroup(deepAnseSQLiteOpenHelper);
+        deepAnseDb = new fr.deepanse.soywod.deepanse.database.DeepAnse(deepAnseSQLiteOpenHelper);
+        arrayReport = new ArrayList<>();
+        adapterReportByYear = new ReportByYear(this, arrayReport);
+
+        ListView listViewDeepAnse = (ListView) findViewById(R.id.list_view);
+        listViewDeepAnse.setAdapter(adapterReportByYear);
+        listViewDeepAnse.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                mainDate.set(GregorianCalendar.MONTH, arrayReport.get(position).getDate().get(GregorianCalendar.MONTH));
+                mainDate.set(GregorianCalendar.YEAR, arrayReport.get(position).getDate().get(GregorianCalendar.YEAR));
+                startViewByMonthActivity();
+            }
+        });
+
+        openDatabases();
+
+        for(Report total : deepAnseDb.selectAllByYear(mainDate))
+            arrayReport.add(total);
+
+        adapterReportByYear.notifyDataSetChanged();
+        refreshMainDate(mainDate.get(GregorianCalendar.YEAR)+"");
+    }
+
+    public void startViewByMonthActivity() {
+        setContentView(R.layout.activity_view_deepanse);
+
+        activityActive = CODE_ACTIVITY_BY_MONTH;
+        context = this;
+        selectedId = -1;
+        deepAnseSQLiteOpenHelper = new DeepAnseSQLiteOpenHelper(this);
+        groupDb = new fr.deepanse.soywod.deepanse.database.DeepAnseGroup(deepAnseSQLiteOpenHelper);
+        deepAnseDb = new fr.deepanse.soywod.deepanse.database.DeepAnse(deepAnseSQLiteOpenHelper);
+        arrayReport = new ArrayList<>();
+        adapterReportByMonth = new ReportByMonth(this, arrayReport);
+
+        ListView listViewDeepAnse = (ListView) findViewById(R.id.list_view);
+        listViewDeepAnse.setAdapter(adapterReportByMonth);
+        listViewDeepAnse.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                mainDate.set(GregorianCalendar.DAY_OF_MONTH, arrayReport.get(position).getDate().get(GregorianCalendar.DAY_OF_MONTH));
+                mainDate.set(GregorianCalendar.MONTH, arrayReport.get(position).getDate().get(GregorianCalendar.MONTH));
+                mainDate.set(GregorianCalendar.YEAR, arrayReport.get(position).getDate().get(GregorianCalendar.YEAR));
+                startViewByDayActivity();
+            }
+        });
+
+        openDatabases();
+
+        for(Report total : deepAnseDb.selectAllByMonth(mainDate))
+        {
+            //System.out.println(total.getName());
+            arrayReport.add(total);
+        }
+
+
+        adapterReportByMonth.notifyDataSetChanged();
+        refreshMainDate(Conversion.dateToStringMonthYearFr(mainDate));
+    }
+
+    public void startViewByDayActivity() {
+        setContentView(R.layout.activity_add_deepanse);
+
+        activityActive = CODE_ACTIVITY_BY_DAY;
+        context = this;
+        selectedId = -1;
+        deepAnseSQLiteOpenHelper = new DeepAnseSQLiteOpenHelper(this);
+        groupDb = new fr.deepanse.soywod.deepanse.database.DeepAnseGroup(deepAnseSQLiteOpenHelper);
+        deepAnseDb = new fr.deepanse.soywod.deepanse.database.DeepAnse(deepAnseSQLiteOpenHelper);
+        arrayDeepAnse = new ArrayList<>();
+        adapterDeepAnse = new fr.deepanse.soywod.deepanse.adapter.DeepAnse(this, arrayDeepAnse);
+
+        ListView listViewDeepAnse = (ListView) findViewById(R.id.list_view);
+        listViewDeepAnse.setAdapter(adapterDeepAnse);
+
+        openDatabases();
+
+        for(DeepAnse deppAnse : deepAnseDb.selectAllByDate(mainDate))
+            arrayDeepAnse.add(deppAnse);
+
+        adapterDeepAnse.notifyDataSetChanged();
+        refreshMainDate(Conversion.dateToStringFr(mainDate));
+    }
+
     public void refreshTotal() {
         TextView textViewTotal = (TextView) findViewById(R.id.text_total);
         textViewTotal.setText("Total : " + deepAnseDb.selectSumByDate(mainDate));
     }
 
-    public void refreshMainDate() {
+    public void refreshMainDate(String date) {
         TextView textViewDate = (TextView) findViewById(R.id.text_main_date);
-        textViewDate.setText(Conversion.dateToStringMonthYearFr(mainDate));
+        textViewDate.setText(date);
     }
 
     public void eventRemoveMonth(View v) {
@@ -186,7 +275,7 @@ public class MainActivity extends ActionBarActivity {
 
         adapterDeepAnse.notifyDataSetChanged();
 
-        refreshMainDate();
+        //refreshMainDate();
         refreshTotal();
     }
 

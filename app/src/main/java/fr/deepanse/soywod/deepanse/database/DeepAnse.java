@@ -47,6 +47,7 @@ public class DeepAnse {
     public long insert(fr.deepanse.soywod.deepanse.model.DeepAnse deepAnse) {
         ContentValues values = new ContentValues();
 
+        System.out.println(Conversion.dateToString(deepAnse.getDate()));
         values.put(DeepAnseSQLiteOpenHelper.AMOUNT, deepAnse.getAmount());
         values.put(DeepAnseSQLiteOpenHelper.DATE, Conversion.dateToString(deepAnse.getDate()));
         values.put(DeepAnseSQLiteOpenHelper.ID_GROUP, deepAnse.getGroup().getId());
@@ -154,7 +155,8 @@ public class DeepAnse {
     {
         Cursor cursorDeepAnse = sqLiteDatabase.rawQuery("SELECT * FROM " + DeepAnseSQLiteOpenHelper.TABLE_DEEPANSE + " " +
                                                         "WHERE strftime('%Y', " + DeepAnseSQLiteOpenHelper.DATE + ") = '" + date.get(GregorianCalendar.YEAR) + "' " +
-                                                        "AND strftime('%m', "+DeepAnseSQLiteOpenHelper.DATE+") = '"+((date.get(GregorianCalendar.MONTH) < 10)?("0" + date.get(GregorianCalendar.MONTH)):("" + date.get(GregorianCalendar.MONTH)))+"'", null);
+                                                        "AND strftime('%m', "+DeepAnseSQLiteOpenHelper.DATE+") = '"+((date.get(GregorianCalendar.MONTH) < 10)?("0" + date.get(GregorianCalendar.MONTH)):("" + date.get(GregorianCalendar.MONTH)))+"' " +
+                                                        "AND strftime('%d', "+DeepAnseSQLiteOpenHelper.DATE+") = '"+date.get(GregorianCalendar.DAY_OF_MONTH)+"'", null);
 
         ArrayList<fr.deepanse.soywod.deepanse.model.DeepAnse> arrayDeepAnse = new ArrayList<>();
 
@@ -172,6 +174,55 @@ public class DeepAnse {
         cursorDeepAnse.close();
 
         return arrayDeepAnse;
+    }
+
+    /**
+     *  Sélectionne toutes les dépenses de la BDD du mois et année donnés en paramètre
+     *
+     *  @param date     La date de la dépense de la BDD de type GregorianCalendar
+     *
+     *  @return
+     *      La liste des dépenses de la BDD de type ArrayList
+     */
+    public ArrayList<fr.deepanse.soywod.deepanse.model.Report> selectAllByYear(GregorianCalendar date)
+    {
+        Cursor cursorReport = sqLiteDatabase.rawQuery("SELECT strftime('%m', "+DeepAnseSQLiteOpenHelper.DATE+") AS month, strftime('%Y', " + DeepAnseSQLiteOpenHelper.DATE + ") as year, SUM("+DeepAnseSQLiteOpenHelper.AMOUNT+") as sum FROM " + DeepAnseSQLiteOpenHelper.TABLE_DEEPANSE + " " +
+                "WHERE year = '" + date.get(GregorianCalendar.YEAR) + "' " +
+                "GROUP BY month", null);
+
+        ArrayList<fr.deepanse.soywod.deepanse.model.Report> arrayReport = new ArrayList<>();
+
+        for(cursorReport.moveToFirst(); !cursorReport.isAfterLast(); cursorReport.moveToNext())
+            arrayReport.add(Conversion.cursorToReportByYear(cursorReport));
+
+        cursorReport.close();
+
+        return arrayReport;
+    }
+
+    /**
+     *  Sélectionne toutes les dépenses de la BDD du mois et année donnés en paramètre
+     *
+     *  @param date     La date de la dépense de la BDD de type GregorianCalendar
+     *
+     *  @return
+     *      La liste des dépenses de la BDD de type ArrayList
+     */
+    public ArrayList<fr.deepanse.soywod.deepanse.model.Report> selectAllByMonth(GregorianCalendar date)
+    {
+        Cursor cursorReport = sqLiteDatabase.rawQuery("SELECT strftime('%d', "+DeepAnseSQLiteOpenHelper.DATE+") AS day, strftime('%m', "+DeepAnseSQLiteOpenHelper.DATE+") AS month, strftime('%Y', " + DeepAnseSQLiteOpenHelper.DATE + ") as year, SUM("+DeepAnseSQLiteOpenHelper.AMOUNT+") as sum FROM " + DeepAnseSQLiteOpenHelper.TABLE_DEEPANSE + " " +
+                "WHERE year = '" + date.get(GregorianCalendar.YEAR) + "' " +
+                "AND month = '" + ((date.get(GregorianCalendar.MONTH) < 9)?("0" + (date.get(GregorianCalendar.MONTH)+1)):("" + (date.get(GregorianCalendar.MONTH)+1))) + "' " +
+                "GROUP BY day", null);
+
+        ArrayList<fr.deepanse.soywod.deepanse.model.Report> arrayReport = new ArrayList<>();
+
+        for(cursorReport.moveToFirst(); !cursorReport.isAfterLast(); cursorReport.moveToNext())
+            arrayReport.add(Conversion.cursorToReportByMonth(cursorReport));
+
+        cursorReport.close();
+
+        return arrayReport;
     }
 
     /**
