@@ -1,4 +1,4 @@
-package fr.deepanse.soywod.deepanse;
+package fr.deepanse.soywod.deepanse.model;
 
 import android.database.Cursor;
 
@@ -120,11 +120,13 @@ public class Conversion {
      *
      *  @return La date convertie en String
      */
-    public static String dateToStringFr(GregorianCalendar date)
+    public static String dateToStringDayMonthYearFr(GregorianCalendar date)
     {
-        return ((date.get(GregorianCalendar.DAY_OF_MONTH) < 10)?("0" + date.get(GregorianCalendar.DAY_OF_MONTH)):("" + date.get(GregorianCalendar.DAY_OF_MONTH))) + "/" +
-                ((date.get(GregorianCalendar.MONTH) < 9)?("0" + (date.get(GregorianCalendar.MONTH)+1)):("" + (date.get(GregorianCalendar.MONTH)+1))) + "/" +
-                date.get(GregorianCalendar.YEAR);
+        int day = date.get(GregorianCalendar.DAY_OF_MONTH);
+        String month = firstCharToUpperCase(DateFR.findDateLitteral(date.get(GregorianCalendar.MONTH)));
+        int year = date.get(GregorianCalendar.YEAR);
+
+        return day + " " + month + " " + year;
     }
 
     /**

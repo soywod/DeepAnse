@@ -10,7 +10,6 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
-import fr.deepanse.soywod.deepanse.Conversion;
 import fr.deepanse.soywod.deepanse.R;
 import fr.deepanse.soywod.deepanse.model.DateFR;
 

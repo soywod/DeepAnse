@@ -6,16 +6,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.support.v7.app.ActionBarActivity;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -24,6 +25,7 @@ import fr.deepanse.soywod.deepanse.adapter.ReportByMonth;
 import fr.deepanse.soywod.deepanse.adapter.ReportByYear;
 import fr.deepanse.soywod.deepanse.database.DeepAnseSQLiteOpenHelper;
 import fr.deepanse.soywod.deepanse.model.AlertBox;
+import fr.deepanse.soywod.deepanse.model.Conversion;
 import fr.deepanse.soywod.deepanse.model.DateFR;
 import fr.deepanse.soywod.deepanse.model.DeepAnse;
 import fr.deepanse.soywod.deepanse.model.DeepAnseGroup;
@@ -38,15 +40,15 @@ public class MainActivity extends ActionBarActivity {
     private AlertBox alertBox;
     private Activity context;
     private int selectedId;
-    private int activityActive;
+    private int codeActivityActive;
     private GregorianCalendar mainDate = new GregorianCalendar();
 
     private DeepAnseSQLiteOpenHelper deepAnseSQLiteOpenHelper;
     private fr.deepanse.soywod.deepanse.database.DeepAnseGroup groupDb;
     private fr.deepanse.soywod.deepanse.database.DeepAnse deepAnseDb;
 
-    private  ArrayList<DeepAnse> arrayDeepAnse;
-    private  ArrayList<Report> arrayReport;
+    private ArrayList<DeepAnse> arrayDeepAnse;
+    private ArrayList<Report> arrayReport;
     private fr.deepanse.soywod.deepanse.adapter.DeepAnse adapterDeepAnse;
     private ReportByYear adapterReportByYear;
     private ReportByMonth adapterReportByMonth;
@@ -148,7 +150,7 @@ public class MainActivity extends ActionBarActivity {
     public void startViewByYearActivity() {
         setContentView(R.layout.activity_view_deepanse);
 
-        activityActive = CODE_ACTIVITY_BY_YEAR;
+        codeActivityActive = CODE_ACTIVITY_BY_YEAR;
         context = this;
         selectedId = -1;
         deepAnseSQLiteOpenHelper = new DeepAnseSQLiteOpenHelper(this);
@@ -170,18 +172,13 @@ public class MainActivity extends ActionBarActivity {
         });
 
         openDatabases();
-
-        for(Report total : deepAnseDb.selectAllByYear(mainDate))
-            arrayReport.add(total);
-
-        adapterReportByYear.notifyDataSetChanged();
-        refreshMainDate(mainDate.get(GregorianCalendar.YEAR)+"");
+        forwardMainDate(0);
     }
 
     public void startViewByMonthActivity() {
         setContentView(R.layout.activity_view_deepanse);
 
-        activityActive = CODE_ACTIVITY_BY_MONTH;
+        codeActivityActive = CODE_ACTIVITY_BY_MONTH;
         context = this;
         selectedId = -1;
         deepAnseSQLiteOpenHelper = new DeepAnseSQLiteOpenHelper(this);
@@ -204,22 +201,13 @@ public class MainActivity extends ActionBarActivity {
         });
 
         openDatabases();
-
-        for(Report total : deepAnseDb.selectAllByMonth(mainDate))
-        {
-            //System.out.println(total.getName());
-            arrayReport.add(total);
-        }
-
-
-        adapterReportByMonth.notifyDataSetChanged();
-        refreshMainDate(Conversion.dateToStringMonthYearFr(mainDate));
+        forwardMainDate(0);
     }
 
     public void startViewByDayActivity() {
         setContentView(R.layout.activity_add_deepanse);
 
-        activityActive = CODE_ACTIVITY_BY_DAY;
+        codeActivityActive = CODE_ACTIVITY_BY_DAY;
         context = this;
         selectedId = -1;
         deepAnseSQLiteOpenHelper = new DeepAnseSQLiteOpenHelper(this);
@@ -232,51 +220,73 @@ public class MainActivity extends ActionBarActivity {
         listViewDeepAnse.setAdapter(adapterDeepAnse);
 
         openDatabases();
-
-        for(DeepAnse deppAnse : deepAnseDb.selectAllByDate(mainDate))
-            arrayDeepAnse.add(deppAnse);
-
-        adapterDeepAnse.notifyDataSetChanged();
-        refreshMainDate(Conversion.dateToStringFr(mainDate));
+        forwardMainDate(0);
     }
 
-    public void refreshTotal() {
-        TextView textViewTotal = (TextView) findViewById(R.id.text_total);
-        textViewTotal.setText("Total : " + deepAnseDb.selectSumByDate(mainDate));
-    }
+    public void forwardMainDate(int count) {
 
-    public void refreshMainDate(String date) {
-        TextView textViewDate = (TextView) findViewById(R.id.text_main_date);
-        textViewDate.setText(date);
-    }
+        switch (codeActivityActive) {
 
-    public void eventRemoveMonth(View v) {
-        addMonth(-1);
-    }
+            case CODE_ACTIVITY_BY_YEAR : {
+                double total = 0;
+                mainDate.add(GregorianCalendar.YEAR, count);
 
-    public void eventAddMonth(View v) {
-        addMonth(1);
+                arrayReport.clear();
+
+                for(Report item : deepAnseDb.selectAllByYear(mainDate)) {
+                    arrayReport.add(item);
+                    total += item.getTotal();
+                }
+
+                adapterReportByYear.notifyDataSetChanged();
+
+                refreshMainDate(mainDate.get(GregorianCalendar.YEAR)+"");
+                refreshTotal(total);
+                break;
+            }
+
+            case CODE_ACTIVITY_BY_MONTH : {
+                double total = 0;
+                mainDate.add(GregorianCalendar.MONTH, count);
+
+                arrayReport.clear();
+
+                for(Report item : deepAnseDb.selectAllByMonth(mainDate)) {
+                    arrayReport.add(item);
+                    total += item.getTotal();
+                }
+
+                adapterReportByMonth.notifyDataSetChanged();
+
+                refreshMainDate(Conversion.dateToStringMonthYearFr(mainDate));
+                refreshTotal(total);
+                break;
+            }
+
+            case CODE_ACTIVITY_BY_DAY : {
+                double total = 0;
+                mainDate.add(GregorianCalendar.DAY_OF_MONTH, count);
+
+                arrayDeepAnse.clear();
+
+                for(DeepAnse item : deepAnseDb.selectAllByDay(mainDate)) {
+                    arrayDeepAnse.add(item);
+                    total += item.getAmount();
+                }
+
+                adapterDeepAnse.notifyDataSetChanged();
+
+                refreshMainDate(Conversion.dateToStringDayMonthYearFr(mainDate));
+                refreshTotal(total);
+                break;
+            }
+        }
     }
 
     public void eventAddDeepAnse(View v) {
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         intent.putExtra(RecognizerIntent.EXTRA_PROMPT, R.string.prompt_recognizer);
         startActivityForResult(intent, 0);
-    }
-
-    public void addMonth(int count) {
-        mainDate.add(GregorianCalendar.MONTH, count);
-        arrayDeepAnse.clear();
-
-        for(DeepAnse item : deepAnseDb.selectAllByDate(mainDate))
-            arrayDeepAnse.add(item);
-
-        Collections.sort(arrayDeepAnse);
-
-        adapterDeepAnse.notifyDataSetChanged();
-
-        //refreshMainDate();
-        refreshTotal();
     }
 
     public void displayYesNoDialog() {
@@ -356,7 +366,7 @@ public class MainActivity extends ActionBarActivity {
                 if (matcherDate.group(10) != null)
                     date.set(Integer.parseInt(matcherDate.group(13)), DateFR.findDateNumeric(matcherDate.group(12)), Integer.parseInt(matcherDate.group(11)));
 
-                System.out.println("DATE : " + Conversion.dateToStringFr(date));
+                System.out.println("DATE : " + Conversion.dateToStringDayMonthYearFr(date));
             }
 
             Matcher matcherAmount = regexAmount.matcher(bestMatch);
@@ -392,8 +402,54 @@ public class MainActivity extends ActionBarActivity {
                 deepAnse.setId(deepAnseDb.insert(deepAnse));
                 mainDate.set(GregorianCalendar.YEAR, date.get(GregorianCalendar.YEAR));
                 mainDate.set(GregorianCalendar.MONTH, date.get(GregorianCalendar.MONTH));
-                addMonth(0);
+                forwardMainDate(0);
             }
         }
+    }
+
+    public void refreshMainDate(String date) {
+        Button buttonTotal = (Button) findViewById(R.id.button_main_date);
+        buttonTotal.setText(date);
+    }
+
+    public void refreshTotal(double total) {
+        TextView textViewTotal = (TextView) findViewById(R.id.text_total);
+        textViewTotal.setText("Total : " + total);
+    }
+
+    public void eventBackwardDate(View v) {
+        forwardMainDate(-1);
+    }
+
+    public void eventForwardDate(View v) {
+        forwardMainDate(1);
+    }
+
+    public void eventBackwardTypeActivity(View v) {
+        switch (codeActivityActive) {
+            case CODE_ACTIVITY_BY_DAY : {
+                startViewByMonthActivity();
+                break;
+            }
+
+            case CODE_ACTIVITY_BY_MONTH : {
+                startViewByYearActivity();
+                break;
+            }
+
+            case CODE_ACTIVITY_BY_YEAR : {
+                break;
+            }
+        }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event)
+    {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            eventBackwardTypeActivity(null);
+        }
+
+        return false;
     }
 }

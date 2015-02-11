@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import fr.deepanse.soywod.deepanse.Conversion;
+import fr.deepanse.soywod.deepanse.model.Conversion;
 
 /**
  * Created by soywod on 05/02/2015.

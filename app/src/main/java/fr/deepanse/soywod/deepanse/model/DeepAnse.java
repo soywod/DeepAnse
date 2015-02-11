@@ -2,8 +2,6 @@ package fr.deepanse.soywod.deepanse.model;
 
 import java.util.GregorianCalendar;
 
-import fr.deepanse.soywod.deepanse.Conversion;
-
 /**
  * Created by soywod on 05/02/2015.
  *
