@@ -91,15 +91,19 @@ public class DeepAnseGroup {
      */
     public fr.deepanse.soywod.deepanse.model.DeepAnseGroup select(long id) {
         Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM " + DeepAnseSQLiteOpenHelper.TABLE_DEEPANSE_GROUP +" WHERE " + DeepAnseSQLiteOpenHelper.ID + " = ?" , new String[]{String.valueOf(id)});
-        fr.deepanse.soywod.deepanse.model.DeepAnseGroup group;
 
-        cursor.moveToFirst();
+        if (cursor.getCount() != 0) {
+            fr.deepanse.soywod.deepanse.model.DeepAnseGroup group;
 
-        group = Conversion.cursorToDeepAnseGroup(cursor);
+            cursor.moveToFirst();
+            group = Conversion.cursorToDeepAnseGroup(cursor);
+            cursor.close();
 
-        cursor.close();
-
-        return group;
+            return group;
+        }
+        else {
+            return null;
+        }
     }
 
     /**
@@ -112,15 +116,19 @@ public class DeepAnseGroup {
      */
     public fr.deepanse.soywod.deepanse.model.DeepAnseGroup selectByName(String name) {
         Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM " + DeepAnseSQLiteOpenHelper.TABLE_DEEPANSE_GROUP +" WHERE " + DeepAnseSQLiteOpenHelper.NAME + " = ?" , new String[]{name});
-        fr.deepanse.soywod.deepanse.model.DeepAnseGroup group;
 
-        cursor.moveToFirst();
+        if (cursor.getCount() != 0) {
+            fr.deepanse.soywod.deepanse.model.DeepAnseGroup group;
 
-        group = Conversion.cursorToDeepAnseGroup(cursor);
+            cursor.moveToFirst();
+            group = Conversion.cursorToDeepAnseGroup(cursor);
+            cursor.close();
 
-        cursor.close();
-
-        return group;
+            return group;
+        }
+        else {
+            return null;
+        }
     }
 
     /**
@@ -132,13 +140,43 @@ public class DeepAnseGroup {
     public ArrayList<fr.deepanse.soywod.deepanse.model.DeepAnseGroup> selectAll()
     {
         Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM " + DeepAnseSQLiteOpenHelper.TABLE_DEEPANSE_GROUP, null);
-        ArrayList<fr.deepanse.soywod.deepanse.model.DeepAnseGroup> arrayGroup = new ArrayList<>();
 
-        for(cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext())
-            arrayGroup.add(Conversion.cursorToDeepAnseGroup(cursor));
+        if (cursor.getCount() != 0) {
+            ArrayList<fr.deepanse.soywod.deepanse.model.DeepAnseGroup> arrayGroup = new ArrayList<>();
 
-        cursor.close();
+            for(cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext())
+                arrayGroup.add(Conversion.cursorToDeepAnseGroup(cursor));
+            cursor.close();
 
-        return arrayGroup;
+            return arrayGroup;
+        }
+        else {
+            return null;
+        }
+
+    }
+
+    /**
+     *  Sélectionne toutes les rubriques de la BDD sauf le premier
+     *
+     *  @return
+     *      La liste des rubriques de la BDD de type ArrayList
+     */
+    public ArrayList<fr.deepanse.soywod.deepanse.model.DeepAnseGroup> selectAllWithOutDefault()
+    {
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM " + DeepAnseSQLiteOpenHelper.TABLE_DEEPANSE_GROUP + " WHERE " + DeepAnseSQLiteOpenHelper.ID + " <> 1", null);
+
+        if (cursor.getCount() != 0) {
+            ArrayList<fr.deepanse.soywod.deepanse.model.DeepAnseGroup> arrayGroup = new ArrayList<>();
+
+            for(cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext())
+                arrayGroup.add(Conversion.cursorToDeepAnseGroup(cursor));
+            cursor.close();
+
+            return arrayGroup;
+        }
+        else {
+            return null;
+        }
     }
 }

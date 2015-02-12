@@ -123,7 +123,7 @@ public class Conversion {
     public static String dateToStringDayMonthYearFr(GregorianCalendar date)
     {
         int day = date.get(GregorianCalendar.DAY_OF_MONTH);
-        String month = firstCharToUpperCase(DateFR.findDateLitteral(date.get(GregorianCalendar.MONTH)));
+        String month = DateFR.findDateLitteral(date.get(GregorianCalendar.MONTH));
         int year = date.get(GregorianCalendar.YEAR);
 
         return day + " " + month + " " + year;
@@ -172,6 +172,8 @@ public class Conversion {
         String[] splitPhrase = phrase.replace("-", " ").split(" ");
         ArrayList<Integer> arrayNumber = new ArrayList<>();
         ArrayList<String> arrayString = new ArrayList<>();
+        String result = "";
+
         int total = 0;
 
         int numberNumeric;
@@ -230,6 +232,9 @@ public class Conversion {
             }
         }
 
-        return arrayString.toString().replace("[", "").replace("]", "").replace(",", "");
+        for(String item : arrayString)
+            result += item + " ";
+
+        return result.trim();
     }
 }

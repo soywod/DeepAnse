@@ -2,24 +2,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".activity.ViewByDay">
 
     <Button
         android:id="@+id/button_add"
         android:layout_width="fill_parent"
-        android:layout_height="70dp"
-        android:text="Ajouter une dépense"
+        android:layout_height="57dp"
+        android:text="@string/add_deepanse"
         android:onClick="eventAddDeepAnse"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        style="@style/ButtonTheme" />
 
     <TextView
         android:id="@+id/text_total"
         android:layout_width="fill_parent"
-        android:layout_height="50dp"
+        android:layout_height="57dp"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:gravity="center"
         android:layout_alignParentLeft="true"
@@ -40,17 +41,18 @@
         android:id="@+id/layout_date"
         android:orientation="horizontal"
         android:layout_width="fill_parent"
-        android:layout_height="70dp"
-        android:layout_alignParentTop="true" >
+        android:layout_height="57dp"
+        android:layout_alignParentTop="true"
+        android:background="#212121">
 
         <Button
             android:id="@+id/button_left"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
-            android:text="&lt;"
             android:onClick="eventBackwardDate"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="true"
+            style="@style/ButtonLeftTheme" />
 
         <Button
             android:id="@+id/button_main_date"
@@ -61,16 +63,17 @@
             android:layout_toRightOf="@+id/button_left"
             android:layout_toStartOf="@+id/button_left"
             android:layout_toLeftOf="@+id/button_right"
-            android:layout_toEndOf="@+id/button_right" />
+            android:layout_toEndOf="@+id/button_right"
+            style="@style/ButtonTheme" />
 
         <Button
             android:id="@+id/button_right"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
-            android:text=">"
             android:onClick="eventForwardDate"
             android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
+            android:layout_alignParentEnd="true"
+            style="@style/ButtonRightTheme" />
     </RelativeLayout>
 
 </RelativeLayout>

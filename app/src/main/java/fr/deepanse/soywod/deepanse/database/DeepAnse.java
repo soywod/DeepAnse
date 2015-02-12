@@ -99,20 +99,23 @@ public class DeepAnse {
      */
     public fr.deepanse.soywod.deepanse.model.DeepAnse select(long id) {
         Cursor cursorDeepAnse = sqLiteDatabase.rawQuery("SELECT * FROM " + DeepAnseSQLiteOpenHelper.TABLE_DEEPANSE +" WHERE " + DeepAnseSQLiteOpenHelper.ID + " = ?" , new String[]{String.valueOf(id)});
-        fr.deepanse.soywod.deepanse.model.DeepAnse deepAnse;
 
-        cursorDeepAnse.moveToFirst();
+        if (cursorDeepAnse.getCount() != 0) {
+            fr.deepanse.soywod.deepanse.model.DeepAnse deepAnse;
 
-        Cursor cursorGroup = sqLiteDatabase.rawQuery("SELECT * FROM " + DeepAnseSQLiteOpenHelper.TABLE_DEEPANSE_GROUP +" WHERE " + DeepAnseSQLiteOpenHelper.ID + " = ?" , new String[]{String.valueOf(cursorDeepAnse.getInt(3))});
+            cursorDeepAnse.moveToFirst();
+            Cursor cursorGroup = sqLiteDatabase.rawQuery("SELECT * FROM " + DeepAnseSQLiteOpenHelper.TABLE_DEEPANSE_GROUP +" WHERE " + DeepAnseSQLiteOpenHelper.ID + " = ?" , new String[]{String.valueOf(cursorDeepAnse.getInt(3))});
+            cursorGroup.moveToFirst();
+            deepAnse = Conversion.cursorToDeepAnse(cursorDeepAnse, Conversion.cursorToDeepAnseGroup(cursorGroup));
 
-        cursorGroup.moveToFirst();
+            cursorGroup.close();
+            cursorDeepAnse.close();
 
-        deepAnse = Conversion.cursorToDeepAnse(cursorDeepAnse, Conversion.cursorToDeepAnseGroup(cursorGroup));
-
-        cursorGroup.close();
-        cursorDeepAnse.close();
-
-        return deepAnse;
+            return deepAnse;
+        }
+        else {
+            return null;
+        }
     }
 
     /**
@@ -124,22 +127,25 @@ public class DeepAnse {
     public ArrayList<fr.deepanse.soywod.deepanse.model.DeepAnse> selectAll()
     {
         Cursor cursorDeepAnse = sqLiteDatabase.rawQuery("SELECT * FROM " + DeepAnseSQLiteOpenHelper.TABLE_DEEPANSE, null);
-        ArrayList<fr.deepanse.soywod.deepanse.model.DeepAnse> arrayDeepAnse = new ArrayList<>();
 
-        for(cursorDeepAnse.moveToFirst(); !cursorDeepAnse.isAfterLast(); cursorDeepAnse.moveToNext())
-        {
-            Cursor cursorGroup = sqLiteDatabase.rawQuery("SELECT * FROM " + DeepAnseSQLiteOpenHelper.TABLE_DEEPANSE_GROUP +" WHERE " + DeepAnseSQLiteOpenHelper.ID + " = ?" , new String[]{String.valueOf(cursorDeepAnse.getInt(3))});
+        if (cursorDeepAnse.getCount() != 0) {
+            ArrayList<fr.deepanse.soywod.deepanse.model.DeepAnse> arrayDeepAnse = new ArrayList<>();
 
-            cursorGroup.moveToFirst();
+            for(cursorDeepAnse.moveToFirst(); !cursorDeepAnse.isAfterLast(); cursorDeepAnse.moveToNext())
+            {
+                Cursor cursorGroup = sqLiteDatabase.rawQuery("SELECT * FROM " + DeepAnseSQLiteOpenHelper.TABLE_DEEPANSE_GROUP +" WHERE " + DeepAnseSQLiteOpenHelper.ID + " = ?" , new String[]{String.valueOf(cursorDeepAnse.getInt(3))});
 
-            arrayDeepAnse.add(Conversion.cursorToDeepAnse(cursorDeepAnse, Conversion.cursorToDeepAnseGroup(cursorGroup)));
+                cursorGroup.moveToFirst();
+                arrayDeepAnse.add(Conversion.cursorToDeepAnse(cursorDeepAnse, Conversion.cursorToDeepAnseGroup(cursorGroup)));
+                cursorGroup.close();
+            }
+            cursorDeepAnse.close();
 
-            cursorGroup.close();
+            return arrayDeepAnse;
         }
-
-        cursorDeepAnse.close();
-
-        return arrayDeepAnse;
+        else {
+            return null;
+        }
     }
 
     /**
@@ -156,14 +162,18 @@ public class DeepAnse {
                 "WHERE year = '" + date.get(GregorianCalendar.YEAR) + "' " +
                 "GROUP BY month", null);
 
-        ArrayList<fr.deepanse.soywod.deepanse.model.Report> arrayReport = new ArrayList<>();
+        if (cursorReport.getCount() != 0) {
+            ArrayList<fr.deepanse.soywod.deepanse.model.Report> arrayReport = new ArrayList<>();
 
-        for(cursorReport.moveToFirst(); !cursorReport.isAfterLast(); cursorReport.moveToNext())
-            arrayReport.add(Conversion.cursorToReportByYear(cursorReport));
+            for(cursorReport.moveToFirst(); !cursorReport.isAfterLast(); cursorReport.moveToNext())
+                arrayReport.add(Conversion.cursorToReportByYear(cursorReport));
+            cursorReport.close();
 
-        cursorReport.close();
-
-        return arrayReport;
+            return arrayReport;
+        }
+        else {
+            return null;
+        }
     }
 
     /**
@@ -181,14 +191,18 @@ public class DeepAnse {
                 "AND month = '" + ((date.get(GregorianCalendar.MONTH) < 9)?("0" + (date.get(GregorianCalendar.MONTH)+1)):("" + (date.get(GregorianCalendar.MONTH)+1))) + "' " +
                 "GROUP BY day", null);
 
-        ArrayList<fr.deepanse.soywod.deepanse.model.Report> arrayReport = new ArrayList<>();
+        if (cursorReport.getCount() != 0) {
+            ArrayList<fr.deepanse.soywod.deepanse.model.Report> arrayReport = new ArrayList<>();
 
-        for(cursorReport.moveToFirst(); !cursorReport.isAfterLast(); cursorReport.moveToNext())
-            arrayReport.add(Conversion.cursorToReportByMonth(cursorReport));
+            for(cursorReport.moveToFirst(); !cursorReport.isAfterLast(); cursorReport.moveToNext())
+                arrayReport.add(Conversion.cursorToReportByMonth(cursorReport));
+            cursorReport.close();
 
-        cursorReport.close();
-
-        return arrayReport;
+            return arrayReport;
+        }
+        else {
+            return null;
+        }
     }
 
     /**
@@ -206,40 +220,22 @@ public class DeepAnse {
                 "AND strftime('%m', "+DeepAnseSQLiteOpenHelper.DATE+") = '"+((date.get(GregorianCalendar.MONTH) < 9)?("0" + (date.get(GregorianCalendar.MONTH)+1)):("" + (date.get(GregorianCalendar.MONTH)+1)))+"' " +
                 "AND strftime('%d', "+DeepAnseSQLiteOpenHelper.DATE+") = '"+date.get(GregorianCalendar.DAY_OF_MONTH)+"'", null);
 
-        ArrayList<fr.deepanse.soywod.deepanse.model.DeepAnse> arrayDeepAnse = new ArrayList<>();
+        if (cursorDeepAnse.getCount() != 0) {
+            ArrayList<fr.deepanse.soywod.deepanse.model.DeepAnse> arrayDeepAnse = new ArrayList<>();
 
-        for(cursorDeepAnse.moveToFirst(); !cursorDeepAnse.isAfterLast(); cursorDeepAnse.moveToNext())
-        {
-            Cursor cursorGroup = sqLiteDatabase.rawQuery("SELECT * FROM " + DeepAnseSQLiteOpenHelper.TABLE_DEEPANSE_GROUP +" WHERE " + DeepAnseSQLiteOpenHelper.ID + " = ?" , new String[]{String.valueOf(cursorDeepAnse.getInt(3))});
+            for(cursorDeepAnse.moveToFirst(); !cursorDeepAnse.isAfterLast(); cursorDeepAnse.moveToNext())
+            {
+                Cursor cursorGroup = sqLiteDatabase.rawQuery("SELECT * FROM " + DeepAnseSQLiteOpenHelper.TABLE_DEEPANSE_GROUP +" WHERE " + DeepAnseSQLiteOpenHelper.ID + " = ?" , new String[]{String.valueOf(cursorDeepAnse.getInt(3))});
+                cursorGroup.moveToFirst();
+                arrayDeepAnse.add(Conversion.cursorToDeepAnse(cursorDeepAnse, Conversion.cursorToDeepAnseGroup(cursorGroup)));
+                cursorGroup.close();
+            }
+            cursorDeepAnse.close();
 
-            cursorGroup.moveToFirst();
-
-            arrayDeepAnse.add(Conversion.cursorToDeepAnse(cursorDeepAnse, Conversion.cursorToDeepAnseGroup(cursorGroup)));
-
-            cursorGroup.close();
+            return arrayDeepAnse;
         }
-
-        cursorDeepAnse.close();
-
-        return arrayDeepAnse;
-    }
-
-    /**
-     *  Sélectionne le total des dépenses de la BDD du mois et année donnés en paramètre
-     *
-     *  @param date     La date de la dépense de la BDD de type GregorianCalendar
-     *
-     *  @return
-     *      Le total des dépenses de type double
-     */
-    public double selectSumByDate(GregorianCalendar date)
-    {
-        Cursor cursorDeepAnse = sqLiteDatabase.rawQuery("SELECT SUM(" + DeepAnseSQLiteOpenHelper.AMOUNT + ") FROM " + DeepAnseSQLiteOpenHelper.TABLE_DEEPANSE + " " +
-                                                        "WHERE strftime('%Y', " + DeepAnseSQLiteOpenHelper.DATE + ") = '" + date.get(GregorianCalendar.YEAR) + "' " +
-                                                        "AND strftime('%m', "+DeepAnseSQLiteOpenHelper.DATE+") = '"+((date.get(GregorianCalendar.MONTH) < 10)?("0" + date.get(GregorianCalendar.MONTH)):("" + date.get(GregorianCalendar.MONTH)))+"'", null);
-
-        cursorDeepAnse.moveToFirst();
-
-        return cursorDeepAnse.getDouble(0);
+        else {
+            return null;
+        }
     }
 }

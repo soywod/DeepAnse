@@ -30,7 +30,7 @@ public class ReportByYear extends ArrayAdapter<fr.deepanse.soywod.deepanse.model
 
         // Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.activity_item_listview, parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.activity_globalview_listview, parent, false);
         }
 
         // Lookup view for data population
