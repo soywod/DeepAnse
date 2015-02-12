@@ -34,11 +34,11 @@ public class ReportByYear extends ArrayAdapter<fr.deepanse.soywod.deepanse.model
         }
 
         // Lookup view for data population
-        TextView textDate = (TextView) convertView.findViewById(R.id.text_date);
+        TextView textComment = (TextView) convertView.findViewById(R.id.text_comment);
         TextView textAmount = (TextView) convertView.findViewById(R.id.text_amount);
 
         // Populate the data into the template view using the data object
-        textDate.setText(Conversion.firstCharToUpperCase(DateFR.findDateLitteral(report.getDate().get(GregorianCalendar.MONTH))));
+        textComment.setText(Conversion.firstCharToUpperCase(DateFR.findDateLitteral(report.getDate().get(GregorianCalendar.MONTH))));
         textAmount.setText(report.getTotal()+" €");
 
         // Return the completed view to render on screen

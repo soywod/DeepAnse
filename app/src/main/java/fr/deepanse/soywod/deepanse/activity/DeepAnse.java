@@ -67,12 +67,6 @@ abstract public class DeepAnse extends ActionBarActivity {
         deepAnseDb = new fr.deepanse.soywod.deepanse.database.DeepAnse(deepAnseSQLiteOpenHelper);
 
         openDatabases();
-
-        if (groupDb.select(1) == null) groupDb.insert(new DeepAnseGroup(1, "default", Color.GRAY));
-
-        ArrayList<DeepAnseGroup> tmpArrayGroup = groupDb.selectAllWithOutDefault();
-
-        regexGroup = ((tmpArrayGroup == null)?(null):(Pattern.compile(getRegexGroup(tmpArrayGroup))));
     }
 
     @Override
@@ -135,6 +129,11 @@ abstract public class DeepAnse extends ActionBarActivity {
         textViewTotal.setText(getString(R.string.total) + " : " + total + " €");
     }
 
+    public void refreshRegexGroup() {
+        ArrayList<DeepAnseGroup> tmpArrayGroup = groupDb.selectAllWithOutDefault();
+        regexGroup = ((tmpArrayGroup == null)?(null):(Pattern.compile(getRegexGroup(tmpArrayGroup))));
+    }
+
     public void eventBackwardDate(View v) {
         forwardMainDate(-1);
     }
@@ -165,8 +164,7 @@ abstract public class DeepAnse extends ActionBarActivity {
 
     public void eventAddDeepAnse(View v) {
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, getString(R.string.prompt_recognizer));
-        intent.putExtra(RecognizerIntent.EXTRA_SPEECH_INPUT_MINIMUM_LENGTH_MILLIS , 10000);
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, getString(R.string.prompt_add_deepanse));
         startActivityForResult(intent, RESULT_RECOGNIZER);
     }
 
@@ -222,7 +220,6 @@ abstract public class DeepAnse extends ActionBarActivity {
                 if (matcherDate.group(10) != null)
                     date.set(Integer.parseInt(matcherDate.group(13)), DateFR.findDateNumeric(matcherDate.group(12)), Integer.parseInt(matcherDate.group(11)));
 
-                System.out.println("DATE : " + Conversion.dateToStringDayMonthYearFr(date));
             }
 
             Matcher matcherAmount = regexAmount.matcher(bestMatch);
@@ -248,13 +245,16 @@ abstract public class DeepAnse extends ActionBarActivity {
                     bestMatch = bestMatch.replace(group, "").trim();
                 }
             }
-            else {
+
+            if (group.trim().isEmpty()) {
                 group = "default";
             }
 
             System.out.println("RUBRIQUE : " + group);
 
             System.out.println("COMMENT : " + bestMatch);
+
+            System.out.println("DATE : " + Conversion.dateToStringDayMonthYearFr(date));
 
             if (amount != 0) {
                 fr.deepanse.soywod.deepanse.model.DeepAnse deepAnse = new fr.deepanse.soywod.deepanse.model.DeepAnse(0, amount, date, groupDb.selectByName(group), bestMatch, false);

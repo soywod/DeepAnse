@@ -1,6 +1,7 @@
 package fr.deepanse.soywod.deepanse.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -12,6 +13,7 @@ import java.util.GregorianCalendar;
 import fr.deepanse.soywod.deepanse.R;
 import fr.deepanse.soywod.deepanse.adapter.ReportByYear;
 import fr.deepanse.soywod.deepanse.model.Conversion;
+import fr.deepanse.soywod.deepanse.model.DeepAnseGroup;
 import fr.deepanse.soywod.deepanse.model.Report;
 
 /**
@@ -26,6 +28,8 @@ public class ViewByYear extends fr.deepanse.soywod.deepanse.activity.DeepAnse {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_globalview);
+
+        if (groupDb.select(1) == null) groupDb.insert(new DeepAnseGroup(1, "default", Color.BLACK));
 
         mainDate = new GregorianCalendar();
         arrayReport = new ArrayList<>();

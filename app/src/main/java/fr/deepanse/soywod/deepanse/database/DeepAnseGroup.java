@@ -18,7 +18,7 @@ public class DeepAnseGroup {
     private SQLiteDatabase sqLiteDatabase;
 
     /**
-     *  Constructeur DeepAnse standard
+     *  Constructeur ReportByDay standard
      *
      *  @param deepAnseSQLiteOpenHelper  DeepAnseSQLiteOpenHelper
      */
@@ -49,6 +49,22 @@ public class DeepAnseGroup {
         values.put(DeepAnseSQLiteOpenHelper.COLOR, group.getColor());
 
         return sqLiteDatabase.insert(DeepAnseSQLiteOpenHelper.TABLE_DEEPANSE_GROUP, null, values);
+    }
+
+    /**
+     *  Modifie les rubriques d'id passées en paramètre à 1 (default)
+     *
+     *  @param id   L'id de la rubrique à modifier en BDD de type long
+     *
+     *  @return
+     *      Le code de retour de type int
+     */
+    public int updateAllById(long id) {
+        ContentValues values = new ContentValues();
+
+        values.put(DeepAnseSQLiteOpenHelper.ID_GROUP, 1);
+
+        return sqLiteDatabase.update(DeepAnseSQLiteOpenHelper.TABLE_DEEPANSE, values, DeepAnseSQLiteOpenHelper.ID_GROUP + " = " + id, null);
     }
 
     /**

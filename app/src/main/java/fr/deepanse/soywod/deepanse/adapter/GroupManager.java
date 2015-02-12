@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -34,9 +35,11 @@ public class GroupManager extends ArrayAdapter<fr.deepanse.soywod.deepanse.model
         }
 
         // Lookup view for data population
+        LinearLayout layout = (LinearLayout) convertView.findViewById(R.id.layout_group);
         TextView textGroup = (TextView) convertView.findViewById(R.id.text_group);
 
         // Populate the data into the template view using the data object
+        layout.setBackgroundColor(group.getColorLessOpacity());
         textGroup.setText(Conversion.firstCharToUpperCase(group.getName()));
 
         // Return the completed view to render on screen

@@ -2,19 +2,21 @@
 <resources>
 
     <string name="app_name">DeepAnse</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
-    <string name="title_activity_view_by_year">Affichage par année</string>
-    <string name="add_deepanse">Ajouter une dépense</string>
+
     <string name="arrow_left">&lt;</string>
     <string name="arrow_right">&gt;</string>
     <string name="total">Total</string>
+
     <string name="menu_manage_group">Gérer les groupes</string>
-    <string name="prompt_recognizer">Saisissez votre nouvelle dépense :</string>
-    <string name="settings_bg_color_confirm">test1</string>
-    <string name="settings_default_color_confirm">test2</string>
-    <string name="settings_bg_color_dialog">test3</string>
-    <string name="set_color">Définir la couleur</string>
+
+    <string name="save">Sauvegarder</string>
+
+    <string name="add_deepanse">Ajouter une dépense</string>
     <string name="add_group">Créer un nouveau groupe</string>
+
+    <string name="prompt_add_group">Dictez maintenant votre nouveau groupe</string>
+    <string name="prompt_del_group">Voulez-vous vraiment supprimer ce groupe ? Toute dépense liée à ce groupe seront transférées dans le groupe Default.</string>
+    <string name="prompt_add_deepanse">Dictez maintenant votre nouvelle dépense [date] [groupe] [commentaire] montant</string>
+    <string name="prompt_del_deepanse">Voulez-vous vraiment supprimer cette dépense ?</string>
 
 </resources>

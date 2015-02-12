@@ -5,7 +5,7 @@ import java.util.GregorianCalendar;
 /**
  * Created by soywod on 05/02/2015.
  *
- * DeepAnse modélise une dépense, caractérisée par :
+ * ReportByDay modélise une dépense, caractérisée par :
  * <ul>
  *     <li>Un id unique inchangeable</li>
  *     <li>Un montant</li>
@@ -85,12 +85,12 @@ public class DeepAnse implements Comparable{
 
 
     /**
-     *  Constructeur DeepAnse vide
+     *  Constructeur ReportByDay vide
      */
     public DeepAnse(){}
 
     /**
-     *  Constructeur DeepAnse standard
+     *  Constructeur ReportByDay standard
      *
      *  @param id           L'id de la dépense de type long
      *  @param amount       Le montant de la dépense de type double
@@ -243,7 +243,7 @@ public class DeepAnse implements Comparable{
 
     @Override
     public String toString() {
-        return "DeepAnse{" +
+        return "ReportByDay{" +
                 "id=" + id +
                 ", amount=" + amount +
                 ", date=" + Conversion.dateToString(date) +
@@ -256,29 +256,18 @@ public class DeepAnse implements Comparable{
     @Override
     public int compareTo(Object deepAnse)
     {
-        int chYear = this.date.get(GregorianCalendar.YEAR);
-        int chMonth = this.date.get(GregorianCalendar.MONTH);
-        int parYear = ((DeepAnse) deepAnse).getDate().get(GregorianCalendar.YEAR);
-        int parMonth = ((DeepAnse) deepAnse).getDate().get(GregorianCalendar.MONTH);
-
-        if ((parYear > chYear) || (parYear == chYear && parMonth > chMonth)) {
-            return -1;
-        }
-        else if ((parYear < chYear) || (parYear == chYear && parMonth < chMonth)) {
-            return 1;
-        }
-        else
-        {
+        if (this.group.getName().equals(((DeepAnse)deepAnse).getGroup().getName())) {
             if(((DeepAnse) deepAnse).getAmount() > (this.amount)) {
                 return -1;
             }
             else if(((DeepAnse) deepAnse).getAmount() < (this.amount)) {
                 return 1;
             }
-            else {
-                return this.group.getName().compareToIgnoreCase(((DeepAnse) deepAnse).getGroup().getName());
-            }
+            else
+                return this.getComment().compareToIgnoreCase(((DeepAnse) deepAnse).getComment());
         }
-
+        else {
+            return this.group.getName().compareToIgnoreCase(((DeepAnse) deepAnse).getGroup().getName());
+        }
     }
 }

@@ -12,7 +12,7 @@
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name=".activity.SetColor"
+            android:name=".activity.EditGroup"
             android:label="@string/app_name" >
         </activity>
         <activity

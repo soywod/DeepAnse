@@ -1,9 +1,11 @@
 package fr.deepanse.soywod.deepanse.model;
 
+import android.graphics.Color;
+
 /**
  * Created by soywod on 05/02/2015.
  *
- * DeepAnse modélise une rubrique de dépense, caractérisée par :
+ * ReportByDay modélise une rubrique de dépense, caractérisée par :
  * <ul>
  *     <li>Un id unique inchangeable</li>
  *     <li>Un nom unique</li>
@@ -103,6 +105,15 @@ public class DeepAnseGroup {
      */
     public int getColor() {
         return color;
+    }
+
+    /**
+     *  Getter de la couleur de la rubrique version transparente
+     *
+     *  @return La couleur de la rubrique de type int
+     */
+    public int getColorLessOpacity() {
+        return Color.argb(76, Color.red(color), Color.green(color), Color.blue(color));
     }
 
 

@@ -13,12 +13,12 @@ import fr.deepanse.soywod.deepanse.model.*;
 public class Conversion {
 
     /**
-     *  Convertit un curseur en dépense DeepAnse
+     *  Convertit un curseur en dépense ReportByDay
      *
      *  @param cursor   Le curseur à convertir de type Cursor
      *
      *  @return
-     *      Le curseur converti en dépense de type DeepAnse
+     *      Le curseur converti en dépense de type ReportByDay
      */
     public static DeepAnse cursorToDeepAnse(Cursor cursor, DeepAnseGroup group)
     {

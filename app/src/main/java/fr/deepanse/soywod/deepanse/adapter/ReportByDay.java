@@ -16,9 +16,9 @@ import fr.deepanse.soywod.deepanse.R;
 /**
  * Created by soywod on 05/02/2015.
  */
-public class DeepAnse extends ArrayAdapter<fr.deepanse.soywod.deepanse.model.DeepAnse>
+public class ReportByDay extends ArrayAdapter<fr.deepanse.soywod.deepanse.model.DeepAnse>
 {
-    public DeepAnse(Context context, ArrayList<fr.deepanse.soywod.deepanse.model.DeepAnse> event) {
+    public ReportByDay(Context context, ArrayList<fr.deepanse.soywod.deepanse.model.DeepAnse> event) {
         super(context, 0, event);
     }
 
@@ -34,16 +34,16 @@ public class DeepAnse extends ArrayAdapter<fr.deepanse.soywod.deepanse.model.Dee
 
         // Lookup view for data population
         RelativeLayout layout = (RelativeLayout) convertView.findViewById(R.id.layout_deepanse);
-        TextView textDate = (TextView) convertView.findViewById(R.id.text_date);
-        TextView textGroup = (TextView) convertView.findViewById(R.id.text_group);
         TextView textComment = (TextView) convertView.findViewById(R.id.text_comment);
         TextView textAmount = (TextView) convertView.findViewById(R.id.text_amount);
+        int maxWidth = 25;
 
         // Populate the data into the template view using the data object
-        layout.setBackgroundColor(deepAnse.getGroup().getColor());
-        textDate.setText("le " + deepAnse.getDate().get(GregorianCalendar.DAY_OF_MONTH));
-        textGroup.setText("[" + deepAnse.getGroup().getName() + "]");
-        textComment.setText((deepAnse.getComment().length() > 18)?(deepAnse.getComment().substring(0, 15)+"..."):(deepAnse.getComment()));
+        if (deepAnse.getComment().trim().isEmpty())
+            textComment.setText("[" + ((deepAnse.getGroup().getName().length() > (maxWidth-2))?(deepAnse.getGroup().getName().substring(0, maxWidth-5)+"..."):(deepAnse.getGroup().getName())) + "]");
+        else
+            textComment.setText((deepAnse.getComment().length() > maxWidth)?(deepAnse.getComment().substring(0, maxWidth-3)+"..."):(deepAnse.getComment()));
+        layout.setBackgroundColor(deepAnse.getGroup().getColorLessOpacity());
         textAmount.setText(String.valueOf(deepAnse.getAmount())+" €");
 
         // Return the completed view to render on screen

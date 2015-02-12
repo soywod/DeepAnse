@@ -33,11 +33,11 @@ public class ReportByMonth extends ArrayAdapter<fr.deepanse.soywod.deepanse.mode
         }
 
         // Lookup view for data population
-        TextView textDate = (TextView) convertView.findViewById(R.id.text_date);
+        TextView textComment = (TextView) convertView.findViewById(R.id.text_comment);
         TextView textAmount = (TextView) convertView.findViewById(R.id.text_amount);
 
         // Populate the data into the template view using the data object
-        textDate.setText(report.getDate().get(GregorianCalendar.DAY_OF_MONTH) + " " + DateFR.findDateLitteral(report.getDate().get(GregorianCalendar.MONTH)));
+        textComment.setText(report.getDate().get(GregorianCalendar.DAY_OF_MONTH) + " " + DateFR.findDateLitteral(report.getDate().get(GregorianCalendar.MONTH)));
         textAmount.setText(report.getTotal()+" €");
 
         // Return the completed view to render on screen

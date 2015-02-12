@@ -19,7 +19,7 @@ public class DeepAnse {
     private SQLiteDatabase sqLiteDatabase;
 
     /**
-     *  Constructeur DeepAnse standard
+     *  Constructeur ReportByDay standard
      *
      *  @param deepAnseSQLiteOpenHelper  DeepAnseSQLiteOpenHelper
      */
@@ -38,7 +38,7 @@ public class DeepAnse {
     /**
      *  Ajoute une dépense en BDD
      *
-     *  @param deepAnse     La dépense à ajouter en BDD de type DeepAnse
+     *  @param deepAnse     La dépense à ajouter en BDD de type ReportByDay
      *
      *  @return
      *      L'id de la nouvelle dépense ajoutée en BDD de type long
@@ -46,7 +46,6 @@ public class DeepAnse {
     public long insert(fr.deepanse.soywod.deepanse.model.DeepAnse deepAnse) {
         ContentValues values = new ContentValues();
 
-        System.out.println(Conversion.dateToString(deepAnse.getDate()));
         values.put(DeepAnseSQLiteOpenHelper.AMOUNT, deepAnse.getAmount());
         values.put(DeepAnseSQLiteOpenHelper.DATE, Conversion.dateToString(deepAnse.getDate()));
         values.put(DeepAnseSQLiteOpenHelper.ID_GROUP, deepAnse.getGroup().getId());
@@ -60,7 +59,7 @@ public class DeepAnse {
      *  Modifie une dépense en BDD
      *
      *  @param id           L'id de la dépense à modifier en BDD de type long
-     *  @param deepAnse     La dépense à modifier en BDD de type DeepAnse
+     *  @param deepAnse     La dépense à modifier en BDD de type ReportByDay
      *
      *  @return
      *      Le code de retour de type int
@@ -95,7 +94,7 @@ public class DeepAnse {
      *  @param id   L'id de la dépense de la BDD de type long
      *
      *  @return
-     *      La dépense sélectionnée de la BDD de type DeepAnse
+     *      La dépense sélectionnée de la BDD de type ReportByDay
      */
     public fr.deepanse.soywod.deepanse.model.DeepAnse select(long id) {
         Cursor cursorDeepAnse = sqLiteDatabase.rawQuery("SELECT * FROM " + DeepAnseSQLiteOpenHelper.TABLE_DEEPANSE +" WHERE " + DeepAnseSQLiteOpenHelper.ID + " = ?" , new String[]{String.valueOf(id)});

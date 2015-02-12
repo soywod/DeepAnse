@@ -8,9 +8,12 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.GregorianCalendar;
 
 import fr.deepanse.soywod.deepanse.R;
+import fr.deepanse.soywod.deepanse.adapter.ReportByDay;
 import fr.deepanse.soywod.deepanse.model.AlertBox;
 import fr.deepanse.soywod.deepanse.model.Conversion;
 import fr.deepanse.soywod.deepanse.model.DeepAnse;
@@ -21,7 +24,7 @@ import fr.deepanse.soywod.deepanse.model.DeepAnse;
 public class ViewByDay extends fr.deepanse.soywod.deepanse.activity.DeepAnse {
 
     private ArrayList<DeepAnse> arrayDeepAnse;
-    private fr.deepanse.soywod.deepanse.adapter.DeepAnse adapterDeepAnse;
+    private ReportByDay adapterReportByDay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,16 +35,16 @@ public class ViewByDay extends fr.deepanse.soywod.deepanse.activity.DeepAnse {
 
         mainDate = ((intent != null)?(Conversion.stringToDate(intent.getStringExtra("main_date"))):(new GregorianCalendar()));
         arrayDeepAnse = new ArrayList<>();
-        adapterDeepAnse = new fr.deepanse.soywod.deepanse.adapter.DeepAnse(this, arrayDeepAnse);
+        adapterReportByDay = new ReportByDay(this, arrayDeepAnse);
 
         ListView listViewDeepAnse = (ListView) findViewById(R.id.list_view);
-        listViewDeepAnse.setAdapter(adapterDeepAnse);
+        listViewDeepAnse.setAdapter(adapterReportByDay);
         listViewDeepAnse.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(ViewByDay.this, 2);
-                builder.setMessage("Voulez-vous vraiment supprimer cette dépense ?");
+                builder.setMessage(getString(R.string.prompt_del_deepanse));
                 builder.setPositiveButton("Oui", new AlertBox() {
                     @Override
                     public void execute() {
@@ -75,9 +78,12 @@ public class ViewByDay extends fr.deepanse.soywod.deepanse.activity.DeepAnse {
             }
         }
 
-        adapterDeepAnse.notifyDataSetChanged();
+        Collections.sort(arrayDeepAnse);
+
+        adapterReportByDay.notifyDataSetChanged();
 
         refreshMainDate(Conversion.dateToStringDayMonthYearFr(mainDate));
         refreshTotal(total);
+        refreshRegexGroup();
     }
 }
