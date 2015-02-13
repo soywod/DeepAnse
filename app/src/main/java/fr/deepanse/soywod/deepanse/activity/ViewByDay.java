@@ -59,6 +59,14 @@ public class ViewByDay extends fr.deepanse.soywod.deepanse.activity.DeepAnse {
                 return false;
             }
         });
+
+        listViewDeepAnse.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+                startActivity(new Intent(ViewByDay.this, EditDeepAnse.class));
+            }
+        });
     }
 
     @Override

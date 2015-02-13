@@ -3,6 +3,26 @@
 
     <string name="app_name">DeepAnse</string>
 
+    <string name="home_title">Accueil</string>
+    <string name="home_desc"><b>DeepAnse</b> vous permet de saisir simplement et rapidement <b><u>à l\'oral</u></b> comme à l\'écrit vos <b>dépenses quotidiennes</b>, organisées par <b>catégories</b>, et permet également de les visualiser à travers <b>plusieurs états</b> (par année, par mois, par jour, par catégorie …)\n\nPour plus d\'informations sur comment utiliser cette application, jetez un oeil à la rubrique <b>Aide</b> située en bas de cette page.</string>
+    <string name="home_deepanse"><b>Gestion des dépenses</b></string>
+    <string name="home_group"><b>Gestion des rubriques</b></string>
+    <string name="home_help"><b>Aide</b></string>
+    <string name="home_deepanse_add">Ajouter\ndépense</string>
+    <string name="home_deepanse_edit">Editer\ndépense</string>
+    <string name="home_deepanse_find">Rechercher\ndépense</string>
+    <string name="home_deepanse_view_by_year">Afficher\ndépenses\npar année</string>
+    <string name="home_deepanse_view_by_month">Afficher\ndépenses\npar mois</string>
+    <string name="home_deepanse_view_by_day">Afficher\ndépenses\npar jour</string>
+    <string name="home_group_add">Ajouter\nrubrique</string>
+    <string name="home_group_edit">Editer\nrubrique</string>
+    <string name="home_group_view_deepanse_by_group">Afficher\ndépense\npar rubrique</string>
+    <string name="home_help_first_use">Première\nutilisation</string>
+    <string name="home_help_add_deepanse">Comment\najouter\ndépense</string>
+    <string name="home_help_add_group">Comment\najouter\nrubrique</string>
+    <string name="home_help_view">Comment\nlire\ndépense</string>
+    <string name="home_help_del_deepanse">Comment\nsupprimer\ndépense</string>
+    <string name="home_help_del_group">Comment\nsupprimer\nrubrique</string>
     <string name="arrow_left">&lt;</string>
     <string name="arrow_right">&gt;</string>
     <string name="total">Total</string>
@@ -18,5 +38,8 @@
     <string name="prompt_del_group">Voulez-vous vraiment supprimer ce groupe ? Toute dépense liée à ce groupe seront transférées dans le groupe Default.</string>
     <string name="prompt_add_deepanse">Dictez maintenant votre nouvelle dépense [date] [groupe] [commentaire] montant</string>
     <string name="prompt_del_deepanse">Voulez-vous vraiment supprimer cette dépense ?</string>
+
+
+
 
 </resources>
