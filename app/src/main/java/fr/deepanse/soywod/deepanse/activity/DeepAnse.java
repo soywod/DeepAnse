@@ -120,13 +120,13 @@ abstract public class DeepAnse extends ActionBarActivity {
     }
 
     protected void refreshMainDate(String date) {
-        Button buttonTotal = (Button) findViewById(R.id.button_main_date);
-        buttonTotal.setText(date);
+        TextView textTotal = (TextView) findViewById(R.id.text_main_date);
+        textTotal.setText(date);
     }
 
     public void refreshTotal(double total) {
         TextView textViewTotal = (TextView) findViewById(R.id.text_total);
-        textViewTotal.setText(getString(R.string.total) + " : " + total + " €");
+        textViewTotal.setText(getString(R.string.view_total) + "\n" + total + " €");
     }
 
     public void refreshRegexGroup() {

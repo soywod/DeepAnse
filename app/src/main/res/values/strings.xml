@@ -38,8 +38,8 @@
     <string name="prompt_del_group">Voulez-vous vraiment supprimer ce groupe ? Toute dépense liée à ce groupe seront transférées dans le groupe Default.</string>
     <string name="prompt_add_deepanse">Dictez maintenant votre nouvelle dépense [date] [groupe] [commentaire] montant</string>
     <string name="prompt_del_deepanse">Voulez-vous vraiment supprimer cette dépense ?</string>
-
-
+    <string name="view_total">Total :</string>
+    <string name="button_add_deepanse">Ajouter\ndépense</string>
 
 
 </resources>

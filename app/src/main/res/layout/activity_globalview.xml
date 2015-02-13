@@ -1,81 +1,85 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".activity.ViewByDay">
+    android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/button_add"
+    <TableLayout
+        android:id="@+id/layout_buttons_top"
         android:layout_width="fill_parent"
-        android:layout_height="57dp"
-        android:text="@string/add_deepanse"
-        android:onClick="eventAddDeepAnse"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:background="@drawable/background">
+
+        <TableRow>
+            <Button style="@style/ViewButton"
+                android:id="@+id/button_back"
+                android:drawableLeft="@drawable/menu1"
+                android:drawableStart="@drawable/menu1"
+                android:onClick="eventBack" />
+
+            <Button style="@style/ViewButton"
+                android:id="@+id/button_backward_date"
+                android:drawableLeft="@drawable/menu1"
+                android:drawableStart="@drawable/menu1"
+                android:onClick="eventBackwardDate" />
+
+            <TextView style="@style/ViewText"
+                android:id="@+id/text_main_date" />
+
+            <Button style="@style/ViewButton"
+                android:drawableRight="@drawable/menu1"
+                android:drawableEnd="@drawable/menu1"
+                android:id="@+id/button_forward_date"
+                android:onClick="eventForwardDate" />
+
+            <Button style="@style/ViewButton"
+                android:drawableRight="@drawable/menu1"
+                android:drawableEnd="@drawable/menu1"
+                android:id="@+id/button_home"
+                android:onClick="eventHome" />
+        </TableRow>
+    </TableLayout>
+
+    <ListView
+        android:id="@+id/listview"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:choiceMode="singleChoice"
+        android:layout_below="@+id/layout_buttons_top"
+        android:layout_above="@+id/layout_buttons_bot" />
+
+    <TableLayout
+        android:id="@+id/layout_buttons_bot"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        style="@style/ButtonTheme" />
+        android:background="@drawable/background">
+        <TableRow>
+            <Button style="@style/ViewButton"
+                android:id="@+id/button_add_deepanse_by_voice"
+                android:layout_weight="1.5"
+                android:drawableRight="@drawable/menu1"
+                android:drawableEnd="@drawable/menu1"
+                android:text="@string/button_add_deepanse"
+                android:onClick="eventAddDeepanseByVoice" />
 
-    <TextView
-        android:id="@+id/text_total"
-        android:layout_width="fill_parent"
-        android:layout_height="57dp"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:gravity="end|center_vertical"
-        android:layout_alignParentLeft="true"
-        android:paddingRight="10dp"
-        android:background="#DDD"
-        android:layout_alignParentStart="true"
-        android:layout_above="@+id/button_add" />
+            <Button style="@style/ViewButton"
+                android:id="@+id/button_add_deepanse_by_keyboard"
+                android:layout_weight="1.5"
+                android:drawableRight="@drawable/menu1"
+                android:drawableEnd="@drawable/menu1"
+                android:text="@string/button_add_deepanse"
+                android:onClick="eventAddDeepanseByKeyboard" />
 
-    <ListView
-        android:id="@+id/list_view"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/text_total"
-        android:layout_below="@+id/layout_date"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:choiceMode="singleChoice" />
+            <TextView style="@style/ViewText"
+                android:id="@+id/text_total" />
 
-    <RelativeLayout
-        android:id="@+id/layout_date"
-        android:orientation="horizontal"
-        android:layout_width="fill_parent"
-        android:layout_height="57dp"
-        android:layout_alignParentTop="true"
-        android:background="#212121">
 
-        <Button
-            android:id="@+id/button_left"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:onClick="eventBackwardDate"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            style="@style/ButtonLeftTheme" />
-
-        <Button
-            android:id="@+id/button_main_date"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:gravity="center"
-            android:layout_toRightOf="@+id/button_left"
-            android:layout_toStartOf="@+id/button_left"
-            android:layout_toLeftOf="@+id/button_right"
-            android:layout_toEndOf="@+id/button_right"
-            style="@style/ButtonTheme" />
-
-        <Button
-            android:id="@+id/button_right"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:onClick="eventForwardDate"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            style="@style/ButtonRightTheme" />
-    </RelativeLayout>
-
+        </TableRow>
+    </TableLayout>
 </RelativeLayout>

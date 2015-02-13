@@ -30,6 +30,34 @@
 
 
 
+    <style name="ViewButton">
+        <item name="android:layout_width">0dip</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:textColor">@color/ColorWhite</item>
+        <item name="android:shadowColor">@color/ColorShadow</item>
+        <item name="android:shadowDx">4</item>
+        <item name="android:shadowDy">4</item>
+        <item name="android:shadowRadius">3</item>
+    </style>
+
+    <style name="ViewText">
+        <item name="android:layout_width">0dip</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/ColorWhite</item>
+        <item name="android:shadowColor">@color/ColorShadow</item>
+        <item name="android:shadowDx">4</item>
+        <item name="android:shadowDy">4</item>
+        <item name="android:shadowRadius">3</item>
+    </style>
+
+
+
+
+
+
+
     <style name="HomeButton">
         <item name="android:layout_width">0dip</item>
         <item name="android:layout_weight">1</item>

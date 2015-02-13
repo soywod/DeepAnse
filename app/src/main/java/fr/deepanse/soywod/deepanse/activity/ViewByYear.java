@@ -35,7 +35,7 @@ public class ViewByYear extends fr.deepanse.soywod.deepanse.activity.DeepAnse {
         arrayReport = new ArrayList<>();
         adapterReportByYear = new ReportByYear(this, arrayReport);
 
-        ListView listViewDeepAnse = (ListView) findViewById(R.id.list_view);
+        ListView listViewDeepAnse = (ListView) findViewById(R.id.listview);
         listViewDeepAnse.setAdapter(adapterReportByYear);
         listViewDeepAnse.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
