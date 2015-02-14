@@ -31,7 +31,7 @@ public class ViewGroup extends Activity {
     private ArrayList<DeepAnseGroup> arrayGroup;
     private DeepAnseGroup selectedGroup = null;
     private fr.deepanse.soywod.deepanse.database.DeepAnseGroup groupDb;
-    private fr.deepanse.soywod.deepanse.adapter.GroupManager adapterGroup;
+    private fr.deepanse.soywod.deepanse.adapter.ViewGroup adapterGroup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +46,7 @@ public class ViewGroup extends Activity {
         openDatabases();
 
         arrayGroup = groupDb.selectAll();
-        adapterGroup = new fr.deepanse.soywod.deepanse.adapter.GroupManager(this, arrayGroup);
+        adapterGroup = new fr.deepanse.soywod.deepanse.adapter.ViewGroup(this, arrayGroup);
 
         listViewGroup.setAdapter(adapterGroup);
         listViewGroup.setOnItemClickListener(new AdapterView.OnItemClickListener() {

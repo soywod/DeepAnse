@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
 import fr.deepanse.soywod.deepanse.R;
-import fr.deepanse.soywod.deepanse.adapter.ReportByYear;
 import fr.deepanse.soywod.deepanse.model.Conversion;
 import fr.deepanse.soywod.deepanse.model.DeepAnseGroup;
 import fr.deepanse.soywod.deepanse.model.Report;
@@ -22,7 +21,7 @@ import fr.deepanse.soywod.deepanse.model.Report;
 public class ViewByYear extends fr.deepanse.soywod.deepanse.activity.DeepAnse {
 
     private ArrayList<Report> arrayReport;
-    private ReportByYear adapterReportByYear;
+    private fr.deepanse.soywod.deepanse.adapter.ViewByYear adapterViewByYear;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,10 +32,10 @@ public class ViewByYear extends fr.deepanse.soywod.deepanse.activity.DeepAnse {
 
         mainDate = new GregorianCalendar();
         arrayReport = new ArrayList<>();
-        adapterReportByYear = new ReportByYear(this, arrayReport);
+        adapterViewByYear = new fr.deepanse.soywod.deepanse.adapter.ViewByYear(this, arrayReport);
 
         ListView listViewDeepAnse = (ListView) findViewById(R.id.listview);
-        listViewDeepAnse.setAdapter(adapterReportByYear);
+        listViewDeepAnse.setAdapter(adapterViewByYear);
         listViewDeepAnse.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -67,7 +66,7 @@ public class ViewByYear extends fr.deepanse.soywod.deepanse.activity.DeepAnse {
             }
         }
 
-        adapterReportByYear.notifyDataSetChanged();
+        adapterViewByYear.notifyDataSetChanged();
 
         refreshMainDate(mainDate.get(GregorianCalendar.YEAR)+"");
         refreshTotal(total);

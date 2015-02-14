@@ -5,7 +5,7 @@ import java.util.GregorianCalendar;
 /**
  * Created by soywod on 05/02/2015.
  *
- * ReportByDay modélise une dépense, caractérisée par :
+ * ViewByDay modélise une dépense, caractérisée par :
  * <ul>
  *     <li>Un id unique inchangeable</li>
  *     <li>Un montant</li>
@@ -85,12 +85,12 @@ public class DeepAnse implements Comparable{
 
 
     /**
-     *  Constructeur ReportByDay vide
+     *  Constructeur ViewByDay vide
      */
     public DeepAnse(){}
 
     /**
-     *  Constructeur ReportByDay standard
+     *  Constructeur ViewByDay standard
      *
      *  @param id           L'id de la dépense de type long
      *  @param amount       Le montant de la dépense de type double
@@ -243,7 +243,7 @@ public class DeepAnse implements Comparable{
 
     @Override
     public String toString() {
-        return "ReportByDay{" +
+        return "ViewByDay{" +
                 "id=" + id +
                 ", amount=" + amount +
                 ", date=" + Conversion.dateToString(date) +

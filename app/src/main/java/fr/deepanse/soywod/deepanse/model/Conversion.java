@@ -13,12 +13,12 @@ import fr.deepanse.soywod.deepanse.model.*;
 public class Conversion {
 
     /**
-     *  Convertit un curseur en dépense ReportByDay
+     *  Convertit un curseur en dépense ViewByDay
      *
      *  @param cursor   Le curseur à convertir de type Cursor
      *
      *  @return
-     *      Le curseur converti en dépense de type ReportByDay
+     *      Le curseur converti en dépense de type ViewByDay
      */
     public static DeepAnse cursorToDeepAnse(Cursor cursor, DeepAnseGroup group)
     {
@@ -35,12 +35,12 @@ public class Conversion {
     }
 
     /**
-     *  Convertit un curseur en report ReportByYear
+     *  Convertit un curseur en report ViewByYear
      *
      *  @param cursor   Le curseur à convertir de type Cursor
      *
      *  @return
-     *      Le curseur converti en report de type ReportByYear
+     *      Le curseur converti en report de type ViewByYear
      */
     public static Report cursorToReportByYear(Cursor cursor)
     {
@@ -57,12 +57,12 @@ public class Conversion {
     }
 
     /**
-     *  Convertit un curseur en report ReportByYear
+     *  Convertit un curseur en report ViewByYear
      *
      *  @param cursor   Le curseur à convertir de type Cursor
      *
      *  @return
-     *      Le curseur converti en report de type ReportByYear
+     *      Le curseur converti en report de type ViewByYear
      */
     public static Report cursorToReportByMonth(Cursor cursor)
     {

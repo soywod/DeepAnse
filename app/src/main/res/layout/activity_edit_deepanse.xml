@@ -1,63 +1,106 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".activity.EditDeepAnse">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:scrollbars="vertical"
+    android:fadeScrollbars="false"
+    android:layout_weight="1"
+    android:background="@drawable/background">
 
-    <DatePicker
-        android:id="@+id/datePicker"
+    <TableLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/layout_group"/>
+        android:padding="10dp">
 
-    <RelativeLayout
-        android:id="@+id/layout_group"
-        android:layout_width="fill_parent"
-        android:layout_height="57dp"
-        android:layout_above="@+id/editText">
+        <TableRow>
+            <TextView style="@style/Title"
+                android:layout_weight="5"
+                android:drawableLeft="@drawable/edit_deepanse"
+                android:drawableStart="@drawable/edit_deepanse"
+                android:text="@string/view_deepanse_edit" />
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="200dp"
-            android:layout_height="57dp"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="GROUP :"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:gravity="left|center_vertical" />
+            <Button style="@style/HomeButton"
+                android:drawableRight="@drawable/home"
+                android:drawableEnd="@drawable/home"
+                android:onClick="eventHome" />
+        </TableRow>
 
-        <Spinner
-            android:id="@+id/spinner_group"
-            android:layout_width="wrap_content"
-            android:layout_height="57dp"
-            android:layout_gravity="start|center_vertical"
-            android:gravity="end|center_vertical"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+        <TableRow>
+            <TextView style="@style/Text" android:text="@string/view_deepanse_edit_desc" />
+        </TableRow>
 
-    </RelativeLayout>
+        <TableRow>
+            <TextView style="@style/Separator" />
+        </TableRow>
 
-    <EditText
-        android:id="@+id/editText"
-        android:layout_width="fill_parent"
-        android:layout_height="57dp"
-        android:inputType="numberDecimal"
-        android:ems="10"
-        android:layout_above="@+id/button_save"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        <TableRow android:layout_marginTop="20dp">
+            <TextView style="@style/Text"
+                android:layout_height="match_parent"
+                android:gravity="start|center_vertical"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/view_date" />
 
-    <Button
-        android:id="@+id/button_save"
-        android:layout_width="fill_parent"
-        android:layout_height="57dp"
-        android:text="@string/save"
-        android:onClick="eventSaveGroup"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+            <DatePicker style="@android:style/Widget.DatePicker"
+                android:id="@+id/date_picker"
+                android:background="@color/ColorWhite"
+                android:layout_width="0dip"
+                android:layout_weight="2" />
+        </TableRow>
 
-</RelativeLayout>
+        <TableRow android:layout_marginTop="20dp">
+            <TextView style="@style/Text"
+                android:layout_height="match_parent"
+                android:gravity="start|center_vertical"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/view_group" />
+
+            <Spinner
+                android:id="@+id/spinner_group"
+                android:background="#FFF"
+                android:layout_width="0dip"
+                android:layout_weight="2" />
+        </TableRow>
+
+        <TableRow android:layout_marginTop="20dp">
+            <TextView style="@style/Text"
+                android:layout_height="match_parent"
+                android:gravity="start|center_vertical"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/view_amount" />
+
+            <EditText
+                android:id="@+id/edit_amount"
+                android:background="@color/ColorWhite"
+                android:layout_width="0dip"
+                android:padding="10dp"
+                android:inputType="numberDecimal"
+                android:ems="10"
+                android:layout_weight="2" />
+        </TableRow>
+
+        <TableRow android:layout_marginTop="20dp">
+            <TextView style="@style/Text"
+                android:layout_height="match_parent"
+                android:gravity="start|center_vertical"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/view_comment" />
+
+            <EditText
+                android:id="@+id/edit_comment"
+                android:background="@color/ColorWhite"
+                android:layout_width="0dip"
+                android:padding="10dp"
+                android:inputType="textPersonName"
+                android:layout_weight="2" />
+        </TableRow>
+
+        <TableRow>
+            <TextView style="@style/Separator" />
+        </TableRow>
+
+        <TableRow android:layout_marginTop="20dp">
+            <Button style="@style/Button"
+                android:text="@string/save"
+                android:onClick="eventSaveGroup" />
+        </TableRow>
+    </TableLayout>
+</ScrollView>

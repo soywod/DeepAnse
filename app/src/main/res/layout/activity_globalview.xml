@@ -12,7 +12,7 @@
         android:background="@drawable/background">
 
         <TableRow>
-            <TextView style="@style/HomeTitle"
+            <TextView style="@style/Title"
                 android:drawableLeft="@drawable/home"
                 android:drawableStart="@drawable/home"
                 android:text="@string/home_title" />

@@ -10,15 +10,16 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
+import fr.deepanse.soywod.deepanse.model.Conversion;
 import fr.deepanse.soywod.deepanse.R;
 import fr.deepanse.soywod.deepanse.model.DateFR;
 
 /**
  * Created by soywod on 05/02/2015.
  */
-public class ReportByMonth extends ArrayAdapter<fr.deepanse.soywod.deepanse.model.Report>
+public class ViewByYear extends ArrayAdapter<fr.deepanse.soywod.deepanse.model.Report>
 {
-    public ReportByMonth(Context context, ArrayList<fr.deepanse.soywod.deepanse.model.Report> report) {
+    public ViewByYear(Context context, ArrayList<fr.deepanse.soywod.deepanse.model.Report> report) {
         super(context, 0, report);
     }
 
@@ -37,7 +38,7 @@ public class ReportByMonth extends ArrayAdapter<fr.deepanse.soywod.deepanse.mode
         TextView textAmount = (TextView) convertView.findViewById(R.id.text_amount);
 
         // Populate the data into the template view using the data object
-        textComment.setText(report.getDate().get(GregorianCalendar.DAY_OF_MONTH) + " " + DateFR.findDateLitteral(report.getDate().get(GregorianCalendar.MONTH)));
+        textComment.setText(Conversion.firstCharToUpperCase(DateFR.findDateLitteral(report.getDate().get(GregorianCalendar.MONTH))));
         textAmount.setText(report.getTotal()+" €");
 
         // Return the completed view to render on screen

@@ -5,7 +5,7 @@ import android.graphics.Color;
 /**
  * Created by soywod on 05/02/2015.
  *
- * ReportByDay modélise une rubrique de dépense, caractérisée par :
+ * ViewByDay modélise une rubrique de dépense, caractérisée par :
  * <ul>
  *     <li>Un id unique inchangeable</li>
  *     <li>Un nom unique</li>
@@ -157,10 +157,6 @@ public class DeepAnseGroup {
 
     @Override
     public String toString() {
-        return "DeepAnseGroup{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", color=" + color +
-                '}';
+        return Conversion.firstCharToUpperCase(name);
     }
 }

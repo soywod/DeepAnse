@@ -5,27 +5,27 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
 import fr.deepanse.soywod.deepanse.R;
+import fr.deepanse.soywod.deepanse.model.DateFR;
 
 /**
  * Created by soywod on 05/02/2015.
  */
-public class ReportByDay extends ArrayAdapter<fr.deepanse.soywod.deepanse.model.DeepAnse>
+public class ViewByMonth extends ArrayAdapter<fr.deepanse.soywod.deepanse.model.Report>
 {
-    public ReportByDay(Context context, ArrayList<fr.deepanse.soywod.deepanse.model.DeepAnse> event) {
-        super(context, 0, event);
+    public ViewByMonth(Context context, ArrayList<fr.deepanse.soywod.deepanse.model.Report> report) {
+        super(context, 0, report);
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         // Get the data item for this position
-        fr.deepanse.soywod.deepanse.model.DeepAnse deepAnse = getItem(position);
+        fr.deepanse.soywod.deepanse.model.Report report = getItem(position);
 
         // Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {
@@ -33,18 +33,12 @@ public class ReportByDay extends ArrayAdapter<fr.deepanse.soywod.deepanse.model.
         }
 
         // Lookup view for data population
-        RelativeLayout layout = (RelativeLayout) convertView.findViewById(R.id.layout_deepanse);
         TextView textComment = (TextView) convertView.findViewById(R.id.text_comment);
         TextView textAmount = (TextView) convertView.findViewById(R.id.text_amount);
-        int maxWidth = 25;
 
         // Populate the data into the template view using the data object
-        if (deepAnse.getComment().trim().isEmpty())
-            textComment.setText("[" + ((deepAnse.getGroup().getName().length() > (maxWidth-2))?(deepAnse.getGroup().getName().substring(0, maxWidth-5)+"..."):(deepAnse.getGroup().getName())) + "]");
-        else
-            textComment.setText((deepAnse.getComment().length() > maxWidth)?(deepAnse.getComment().substring(0, maxWidth-3)+"..."):(deepAnse.getComment()));
-        layout.setBackgroundColor(deepAnse.getGroup().getColorLessOpacity());
-        textAmount.setText(String.valueOf(deepAnse.getAmount())+" €");
+        textComment.setText(report.getDate().get(GregorianCalendar.DAY_OF_MONTH) + " " + DateFR.findDateLitteral(report.getDate().get(GregorianCalendar.MONTH)));
+        textAmount.setText(report.getTotal()+" €");
 
         // Return the completed view to render on screen
         return convertView;

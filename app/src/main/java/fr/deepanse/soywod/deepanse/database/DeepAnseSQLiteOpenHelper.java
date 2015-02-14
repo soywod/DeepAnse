@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 public class DeepAnseSQLiteOpenHelper extends SQLiteOpenHelper {
 
-    public static final String DATABASE_NAME = "ReportByDay.db";
+    public static final String DATABASE_NAME = "ViewByDay.db";
     public static final int VERSION = 7;
 
     public static final String AMOUNT = "amount";

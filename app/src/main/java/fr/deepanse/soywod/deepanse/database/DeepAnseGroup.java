@@ -18,7 +18,7 @@ public class DeepAnseGroup {
     private SQLiteDatabase sqLiteDatabase;
 
     /**
-     *  Constructeur ReportByDay standard
+     *  Constructeur ViewByDay standard
      *
      *  @param deepAnseSQLiteOpenHelper  DeepAnseSQLiteOpenHelper
      */

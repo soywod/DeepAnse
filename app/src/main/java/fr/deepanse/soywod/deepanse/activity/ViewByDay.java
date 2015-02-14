@@ -8,12 +8,10 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.GregorianCalendar;
 
 import fr.deepanse.soywod.deepanse.R;
-import fr.deepanse.soywod.deepanse.adapter.ReportByDay;
 import fr.deepanse.soywod.deepanse.model.AlertBox;
 import fr.deepanse.soywod.deepanse.model.Conversion;
 import fr.deepanse.soywod.deepanse.model.DeepAnse;
@@ -24,7 +22,7 @@ import fr.deepanse.soywod.deepanse.model.DeepAnse;
 public class ViewByDay extends fr.deepanse.soywod.deepanse.activity.DeepAnse {
 
     private ArrayList<DeepAnse> arrayDeepAnse;
-    private ReportByDay adapterReportByDay;
+    private fr.deepanse.soywod.deepanse.adapter.ViewByDay adapterViewByDay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,10 +33,10 @@ public class ViewByDay extends fr.deepanse.soywod.deepanse.activity.DeepAnse {
 
         mainDate = ((intent != null)?(Conversion.stringToDate(intent.getStringExtra("main_date"))):(new GregorianCalendar()));
         arrayDeepAnse = new ArrayList<>();
-        adapterReportByDay = new ReportByDay(this, arrayDeepAnse);
+        adapterViewByDay = new fr.deepanse.soywod.deepanse.adapter.ViewByDay(this, arrayDeepAnse);
 
         ListView listViewDeepAnse = (ListView) findViewById(R.id.listview);
-        listViewDeepAnse.setAdapter(adapterReportByDay);
+        listViewDeepAnse.setAdapter(adapterViewByDay);
         listViewDeepAnse.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 
             @Override
@@ -88,7 +86,7 @@ public class ViewByDay extends fr.deepanse.soywod.deepanse.activity.DeepAnse {
 
         Collections.sort(arrayDeepAnse);
 
-        adapterReportByDay.notifyDataSetChanged();
+        adapterViewByDay.notifyDataSetChanged();
 
         refreshMainDate(Conversion.dateToStringDayMonthYearFr(mainDate));
         refreshTotal(total);

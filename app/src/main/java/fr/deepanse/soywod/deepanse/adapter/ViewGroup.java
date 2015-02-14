@@ -3,7 +3,6 @@ package fr.deepanse.soywod.deepanse.adapter;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -16,14 +15,14 @@ import fr.deepanse.soywod.deepanse.model.Conversion;
 /**
  * Created by soywod on 05/02/2015.
  */
-public class GroupManager extends ArrayAdapter<fr.deepanse.soywod.deepanse.model.DeepAnseGroup>
+public class ViewGroup extends ArrayAdapter<fr.deepanse.soywod.deepanse.model.DeepAnseGroup>
 {
-    public GroupManager(Context context, ArrayList<fr.deepanse.soywod.deepanse.model.DeepAnseGroup> group) {
+    public ViewGroup(Context context, ArrayList<fr.deepanse.soywod.deepanse.model.DeepAnseGroup> group) {
         super(context, 0, group);
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, android.view.ViewGroup parent) {
         // Get the data item for this position
         fr.deepanse.soywod.deepanse.model.DeepAnseGroup group = getItem(position);
 
@@ -43,5 +42,4 @@ public class GroupManager extends ArrayAdapter<fr.deepanse.soywod.deepanse.model
         // Return the completed view to render on screen
         return convertView;
     }
-
 }

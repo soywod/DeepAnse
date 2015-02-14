@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
 import fr.deepanse.soywod.deepanse.R;
-import fr.deepanse.soywod.deepanse.adapter.ReportByMonth;
 import fr.deepanse.soywod.deepanse.model.Conversion;
 import fr.deepanse.soywod.deepanse.model.Report;
 
@@ -20,7 +19,7 @@ import fr.deepanse.soywod.deepanse.model.Report;
 public class ViewByMonth extends fr.deepanse.soywod.deepanse.activity.DeepAnse {
 
     private ArrayList<Report> arrayReport;
-    private ReportByMonth adapterReportByMonth;
+    private fr.deepanse.soywod.deepanse.adapter.ViewByMonth adapterViewByMonth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,10 +30,10 @@ public class ViewByMonth extends fr.deepanse.soywod.deepanse.activity.DeepAnse {
 
         mainDate = ((intent != null)?(Conversion.stringToDate(intent.getStringExtra("main_date"))):(new GregorianCalendar()));
         arrayReport = new ArrayList<>();
-        adapterReportByMonth = new ReportByMonth(this, arrayReport);
+        adapterViewByMonth = new fr.deepanse.soywod.deepanse.adapter.ViewByMonth(this, arrayReport);
 
         ListView listViewDeepAnse = (ListView) findViewById(R.id.listview);
-        listViewDeepAnse.setAdapter(adapterReportByMonth);
+        listViewDeepAnse.setAdapter(adapterViewByMonth);
         listViewDeepAnse.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -67,7 +66,7 @@ public class ViewByMonth extends fr.deepanse.soywod.deepanse.activity.DeepAnse {
             }
         }
 
-        adapterReportByMonth.notifyDataSetChanged();
+        adapterViewByMonth.notifyDataSetChanged();
 
         refreshMainDate(Conversion.dateToStringMonthYearFr(mainDate));
         refreshTotal(total);

@@ -12,18 +12,18 @@
         android:padding="10dp">
 
         <TableRow>
-            <TextView style="@style/HomeTitle"
+            <TextView style="@style/Title"
                 android:drawableLeft="@drawable/home"
                 android:drawableStart="@drawable/home"
                 android:text="@string/home_title" />
         </TableRow>
 
         <TableRow>
-            <TextView style="@style/HomeText" android:text="@string/home_desc" />
+            <TextView style="@style/Text" android:text="@string/home_desc" />
         </TableRow>
 
         <TableRow android:paddingLeft="10dp">
-            <TextView style="@style/HomeSeparator" />
+            <TextView style="@style/Separator" />
         </TableRow>
 
         <TableRow android:paddingLeft="10dp">
@@ -32,12 +32,15 @@
 
         <TableRow android:padding="10dp">
             <Button style="@style/HomeButton"
+                android:id="@+id/buttonAddDeepanseByVoice"
                 android:drawableTop="@drawable/add_deepanse"
                 android:text="@string/home_deepanse_add_by_voice" />
             <Button style="@style/HomeButton"
+                android:id="@+id/buttonAddDeepanseByHand"
                 android:drawableTop="@drawable/add_deepanse"
                 android:text="@string/home_deepanse_add_by_hand" />
             <Button style="@style/HomeButton"
+                android:id="@+id/buttonEditDeepanse"
                 android:drawableTop="@drawable/edit_deepanse"
                 android:text="@string/home_deepanse_edit" />
             <Button style="@style/HomeButton"
@@ -61,7 +64,7 @@
         </TableRow>
 
         <TableRow android:paddingLeft="10dp">
-            <TextView style="@style/HomeSeparator" />
+            <TextView style="@style/Separator" />
         </TableRow>
 
         <TableRow android:paddingLeft="10dp">
@@ -88,7 +91,7 @@
         </TableRow>
 
         <TableRow android:paddingLeft="10dp">
-            <TextView style="@style/HomeSeparator" />
+            <TextView style="@style/Separator" />
         </TableRow>
 
         <TableRow android:paddingLeft="10dp">
