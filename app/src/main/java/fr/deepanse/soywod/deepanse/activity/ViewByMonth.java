@@ -25,7 +25,7 @@ public class ViewByMonth extends fr.deepanse.soywod.deepanse.activity.DeepAnse {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_globalview);
+        setContentView(R.layout.activity_view_by_month);
 
         Intent intent = getIntent();
 
@@ -33,7 +33,7 @@ public class ViewByMonth extends fr.deepanse.soywod.deepanse.activity.DeepAnse {
         arrayReport = new ArrayList<>();
         adapterReportByMonth = new ReportByMonth(this, arrayReport);
 
-        ListView listViewDeepAnse = (ListView) findViewById(R.id.list_view);
+        ListView listViewDeepAnse = (ListView) findViewById(R.id.listview);
         listViewDeepAnse.setAdapter(adapterReportByMonth);
         listViewDeepAnse.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -71,5 +71,12 @@ public class ViewByMonth extends fr.deepanse.soywod.deepanse.activity.DeepAnse {
 
         refreshMainDate(Conversion.dateToStringMonthYearFr(mainDate));
         refreshTotal(total);
+    }
+
+    public void eventBack(View v) {
+        Intent intent = new Intent(ViewByMonth.this, ViewByYear.class);
+        intent.putExtra("main_date", Conversion.dateToString(mainDate));
+        startActivity(intent);
+        finish();
     }
 }

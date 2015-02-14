@@ -1,0 +1,70 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TableLayout
+        android:id="@+id/layout_buttons_top"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:background="@drawable/background">
+
+        <TableRow>
+
+            <Button style="@style/ViewButtonTop"
+                android:id="@+id/button_back"
+                android:drawableLeft="@drawable/up_arrow"
+                android:drawableStart="@drawable/up_arrow"
+                android:onClick="eventBack" />
+
+            <TextView style="@style/ViewTitle"
+                android:layout_width="0dip"
+                android:layout_weight="5"
+                android:gravity="center"
+                android:text="@string/view_group_edit" />
+
+            <Button style="@style/ViewButtonTop"
+                android:drawableRight="@drawable/home"
+                android:drawableEnd="@drawable/home"
+                android:id="@+id/button_home"
+                android:onClick="eventHome" />
+        </TableRow>
+    </TableLayout>
+
+    <TextView style="@style/ViewText"
+        android:id="@+id/text_desc"
+        android:text="@string/view_group_edit_desc"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/layout_buttons_top" />
+
+    <ListView
+        android:id="@+id/listview"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:choiceMode="singleChoice"
+        android:layout_below="@+id/text_desc"
+        android:layout_above="@+id/button_add"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:id="@+id/button_add"
+        android:layout_width="fill_parent"
+        android:layout_height="57dp"
+        android:text="@string/add_group"
+        android:onClick="eventAddGroup"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+</RelativeLayout>

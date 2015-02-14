@@ -16,7 +16,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.GroupManager"
+            android:name=".activity.ViewGroup"
             android:label="@string/app_name" >
         </activity>
         <activity

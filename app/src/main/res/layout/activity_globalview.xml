@@ -12,30 +12,39 @@
         android:background="@drawable/background">
 
         <TableRow>
-            <Button style="@style/ViewButton"
+            <TextView style="@style/HomeTitle"
+                android:drawableLeft="@drawable/home"
+                android:drawableStart="@drawable/home"
+                android:text="@string/home_title" />
+        </TableRow>
+
+        <TableRow>
+
+            <Button style="@style/ViewButtonTop"
                 android:id="@+id/button_back"
-                android:drawableLeft="@drawable/menu1"
-                android:drawableStart="@drawable/menu1"
+                android:drawableLeft="@drawable/up_arrow"
+                android:drawableStart="@drawable/up_arrow"
                 android:onClick="eventBack" />
 
-            <Button style="@style/ViewButton"
+            <Button style="@style/ViewButtonTop"
                 android:id="@+id/button_backward_date"
-                android:drawableLeft="@drawable/menu1"
-                android:drawableStart="@drawable/menu1"
+                android:drawableLeft="@drawable/left_arrow"
+                android:drawableStart="@drawable/left_arrow"
                 android:onClick="eventBackwardDate" />
 
-            <TextView style="@style/ViewText"
+            <TextView style="@style/ViewTextTop"
+                android:layout_margin="0dp"
                 android:id="@+id/text_main_date" />
 
-            <Button style="@style/ViewButton"
-                android:drawableRight="@drawable/menu1"
-                android:drawableEnd="@drawable/menu1"
+            <Button style="@style/ViewButtonTop"
+                android:drawableRight="@drawable/right_arrow"
+                android:drawableEnd="@drawable/right_arrow"
                 android:id="@+id/button_forward_date"
                 android:onClick="eventForwardDate" />
 
-            <Button style="@style/ViewButton"
-                android:drawableRight="@drawable/menu1"
-                android:drawableEnd="@drawable/menu1"
+            <Button style="@style/ViewButtonTop"
+                android:drawableRight="@drawable/home"
+                android:drawableEnd="@drawable/home"
                 android:id="@+id/button_home"
                 android:onClick="eventHome" />
         </TableRow>
@@ -59,27 +68,24 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:background="@drawable/background">
+
         <TableRow>
-            <Button style="@style/ViewButton"
+            <Button style="@style/ViewButtonBot"
                 android:id="@+id/button_add_deepanse_by_voice"
-                android:layout_weight="1.5"
-                android:drawableRight="@drawable/menu1"
-                android:drawableEnd="@drawable/menu1"
+                android:drawableRight="@drawable/micro"
+                android:drawableEnd="@drawable/micro"
                 android:text="@string/button_add_deepanse"
                 android:onClick="eventAddDeepanseByVoice" />
 
-            <Button style="@style/ViewButton"
+            <Button style="@style/ViewButtonBot"
                 android:id="@+id/button_add_deepanse_by_keyboard"
-                android:layout_weight="1.5"
-                android:drawableRight="@drawable/menu1"
-                android:drawableEnd="@drawable/menu1"
+                android:drawableRight="@drawable/keyboard"
+                android:drawableEnd="@drawable/keyboard"
                 android:text="@string/button_add_deepanse"
                 android:onClick="eventAddDeepanseByKeyboard" />
 
-            <TextView style="@style/ViewText"
+            <TextView style="@style/ViewTextBot"
                 android:id="@+id/text_total" />
-
-
         </TableRow>
     </TableLayout>
 </RelativeLayout>

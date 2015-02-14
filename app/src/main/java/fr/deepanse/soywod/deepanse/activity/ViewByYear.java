@@ -27,7 +27,7 @@ public class ViewByYear extends fr.deepanse.soywod.deepanse.activity.DeepAnse {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_globalview);
+        setContentView(R.layout.activity_view_by_year);
 
         if (groupDb.select(1) == null) groupDb.insert(new DeepAnseGroup(1, "default", Color.BLACK));
 
@@ -71,5 +71,9 @@ public class ViewByYear extends fr.deepanse.soywod.deepanse.activity.DeepAnse {
 
         refreshMainDate(mainDate.get(GregorianCalendar.YEAR)+"");
         refreshTotal(total);
+    }
+
+    public void eventBack(View v) {
+        finish();
     }
 }

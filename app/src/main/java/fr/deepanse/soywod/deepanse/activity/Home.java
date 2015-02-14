@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 
 import java.util.GregorianCalendar;
 
@@ -23,6 +22,9 @@ public class Home extends Activity implements View.OnClickListener {
         findViewById(R.id.buttonViewByDay).setOnClickListener(this);
         findViewById(R.id.buttonViewByMonth).setOnClickListener(this);
         findViewById(R.id.buttonViewByYear).setOnClickListener(this);
+
+        findViewById(R.id.buttonAddGroupByVoice).setOnClickListener(this);
+        findViewById(R.id.buttonEditGroup).setOnClickListener(this);
     }
 
     @Override
@@ -42,6 +44,13 @@ public class Home extends Activity implements View.OnClickListener {
             case R.id.buttonViewByYear :
                 intent = new Intent(Home.this, ViewByYear.class);
                 intent.putExtra("main_date", Conversion.dateToString(new GregorianCalendar()));
+                break;
+            case R.id.buttonAddGroupByVoice :
+                intent = new Intent(Home.this, ViewByYear.class);
+                intent.putExtra("main_date", Conversion.dateToString(new GregorianCalendar()));
+                break;
+            case R.id.buttonEditGroup :
+                intent = new Intent(Home.this, ViewGroup.class);
                 break;
         }
 

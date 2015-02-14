@@ -13,11 +13,9 @@
 
         <TableRow>
             <TextView style="@style/HomeTitle"
-                android:gravity="end|center_vertical"
-                android:drawableRight="@drawable/menu1"
-                android:drawableEnd="@drawable/menu1" />
-            <TextView style="@style/HomeTitle" android:text="@string/home_title" />
-            <TextView style="@style/HomeTitle"/>
+                android:drawableLeft="@drawable/home"
+                android:drawableStart="@drawable/home"
+                android:text="@string/home_title" />
         </TableRow>
 
         <TableRow>
@@ -34,28 +32,31 @@
 
         <TableRow android:padding="10dp">
             <Button style="@style/HomeButton"
-                android:drawableTop="@drawable/menu1"
-                android:text="@string/home_deepanse_add" />
+                android:drawableTop="@drawable/add_deepanse"
+                android:text="@string/home_deepanse_add_by_voice" />
             <Button style="@style/HomeButton"
-                android:drawableTop="@drawable/menu1"
+                android:drawableTop="@drawable/add_deepanse"
+                android:text="@string/home_deepanse_add_by_hand" />
+            <Button style="@style/HomeButton"
+                android:drawableTop="@drawable/edit_deepanse"
                 android:text="@string/home_deepanse_edit" />
             <Button style="@style/HomeButton"
-                android:drawableTop="@drawable/menu1"
+                android:drawableTop="@drawable/find_deepanse"
                 android:text="@string/home_deepanse_find" />
         </TableRow>
 
         <TableRow android:padding="10dp">
             <Button style="@style/HomeButton"
                 android:id="@+id/buttonViewByDay"
-                android:drawableTop="@drawable/menu1"
+                android:drawableTop="@drawable/view_deepanse"
                 android:text="@string/home_deepanse_view_by_day" />
             <Button style="@style/HomeButton"
                 android:id="@+id/buttonViewByMonth"
-                android:drawableTop="@drawable/menu1"
+                android:drawableTop="@drawable/view_deepanse"
                 android:text="@string/home_deepanse_view_by_month" />
             <Button style="@style/HomeButton"
                 android:id="@+id/buttonViewByYear"
-                android:drawableTop="@drawable/menu1"
+                android:drawableTop="@drawable/view_deepanse"
                 android:text="@string/home_deepanse_view_by_year" />
         </TableRow>
 
@@ -69,13 +70,20 @@
 
         <TableRow android:padding="10dp">
             <Button style="@style/HomeButton"
-                android:drawableTop="@drawable/menu1"
-                android:text="@string/home_group_add" />
+                android:id="@+id/buttonAddGroupByVoice"
+                android:drawableTop="@drawable/add_group"
+                android:text="@string/home_group_add_by_voice" />
             <Button style="@style/HomeButton"
-                android:drawableTop="@drawable/menu1"
+                android:id="@+id/buttonAddGroupByHand"
+                android:drawableTop="@drawable/add_group"
+                android:text="@string/home_group_add_by_hand" />
+            <Button style="@style/HomeButton"
+                android:id="@+id/buttonEditGroup"
+                android:drawableTop="@drawable/edit_group"
                 android:text="@string/home_group_edit" />
             <Button style="@style/HomeButton"
-                android:drawableTop="@drawable/menu1"
+                android:id="@+id/buttonViewByGroup"
+                android:drawableTop="@drawable/view_group"
                 android:text="@string/home_group_view_deepanse_by_group" />
         </TableRow>
 
@@ -89,25 +97,25 @@
 
         <TableRow android:padding="10dp">
             <Button style="@style/HomeButton"
-                android:drawableTop="@drawable/menu1"
+                android:drawableTop="@drawable/first_time"
                 android:text="@string/home_help_first_use" />
             <Button style="@style/HomeButton"
-                android:drawableTop="@drawable/menu1"
+                android:drawableTop="@drawable/add_deepanse"
                 android:text="@string/home_help_add_deepanse" />
             <Button style="@style/HomeButton"
-                android:drawableTop="@drawable/menu1"
+                android:drawableTop="@drawable/add_group"
                 android:text="@string/home_help_add_group" />
         </TableRow>
 
         <TableRow android:padding="10dp">
             <Button style="@style/HomeButton"
-                android:drawableTop="@drawable/menu1"
+                android:drawableTop="@drawable/view_deepanse"
                 android:text="@string/home_help_view" />
             <Button style="@style/HomeButton"
-                android:drawableTop="@drawable/menu1"
+                android:drawableTop="@drawable/del_deepanse"
                 android:text="@string/home_help_del_deepanse" />
             <Button style="@style/HomeButton"
-                android:drawableTop="@drawable/menu1"
+                android:drawableTop="@drawable/del_group"
                 android:text="@string/home_help_del_group" />
         </TableRow>
     </TableLayout>

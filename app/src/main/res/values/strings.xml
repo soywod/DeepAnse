@@ -8,21 +8,32 @@
     <string name="home_deepanse"><b>Gestion des dépenses</b></string>
     <string name="home_group"><b>Gestion des rubriques</b></string>
     <string name="home_help"><b>Aide</b></string>
-    <string name="home_deepanse_add">Ajouter\ndépense</string>
+    <string name="home_deepanse_add_by_voice">Ajouter\ndépense\n(oral)</string>
+    <string name="home_deepanse_add_by_hand">Ajouter\ndépense\n(écrit)</string>
     <string name="home_deepanse_edit">Editer\ndépense</string>
     <string name="home_deepanse_find">Rechercher\ndépense</string>
     <string name="home_deepanse_view_by_year">Afficher\ndépenses\npar année</string>
     <string name="home_deepanse_view_by_month">Afficher\ndépenses\npar mois</string>
     <string name="home_deepanse_view_by_day">Afficher\ndépenses\npar jour</string>
-    <string name="home_group_add">Ajouter\nrubrique</string>
+    <string name="home_group_add_by_voice">Ajouter\nrubrique\n(oral)</string>
+    <string name="home_group_add_by_hand">Ajouter\nrubrique\n(écrit)</string>
     <string name="home_group_edit">Editer\nrubrique</string>
     <string name="home_group_view_deepanse_by_group">Afficher\ndépense\npar rubrique</string>
+
     <string name="home_help_first_use">Première\nutilisation</string>
     <string name="home_help_add_deepanse">Comment\najouter\ndépense</string>
     <string name="home_help_add_group">Comment\najouter\nrubrique</string>
     <string name="home_help_view">Comment\nlire\ndépense</string>
     <string name="home_help_del_deepanse">Comment\nsupprimer\ndépense</string>
     <string name="home_help_del_group">Comment\nsupprimer\nrubrique</string>
+
+    <string name="view_total">Total :</string>
+    <string name="view_deepanse_view_by_day">Afficher dépenses par jour</string>
+    <string name="view_deepanse_view_by_month">Afficher dépenses par mois</string>
+    <string name="view_deepanse_view_by_year">Afficher dépenses par année</string>
+    <string name="view_group_edit">Editer rubrique</string>
+    <string name="view_group_edit_desc">Dans ce menu vous pouvez modifier les rubriques en cliquant brièvement dessus, ou les supprimer en cliquant longuement dessus. Enfin vous pouvez en créer des nouvelles en utilisant les deux boutons en bas de la page.</string>
+
     <string name="arrow_left">&lt;</string>
     <string name="arrow_right">&gt;</string>
     <string name="total">Total</string>
@@ -38,7 +49,7 @@
     <string name="prompt_del_group">Voulez-vous vraiment supprimer ce groupe ? Toute dépense liée à ce groupe seront transférées dans le groupe Default.</string>
     <string name="prompt_add_deepanse">Dictez maintenant votre nouvelle dépense [date] [groupe] [commentaire] montant</string>
     <string name="prompt_del_deepanse">Voulez-vous vraiment supprimer cette dépense ?</string>
-    <string name="view_total">Total :</string>
+
     <string name="button_add_deepanse">Ajouter\ndépense</string>
 
 

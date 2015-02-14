@@ -4,50 +4,84 @@
         <item name="android:textSize">14sp</item>
     </style>
 
-    <style name="ButtonLeftTheme" parent="@android:style/Widget.Button">
-        <item name="android:textColor">#FFFFFF</item>
-        <item name="android:gravity">center</item>
-        <item name="android:background">@drawable/button_left</item>
-        <item name="android:padding">0dip</item>
+
+
+
+    <style name="ViewTitle">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/background</item>
+        <item name="android:gravity">left|center_vertical</item>
+        <item name="android:layout_alignParentTop">true</item>
+        <item name="android:layout_alignParentLeft">true</item>
+        <item name="android:layout_alignParentStart">true</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:textColor">@color/ColorWhite</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:shadowColor">@color/ColorShadow</item>
+        <item name="android:shadowDx">-4</item>
+        <item name="android:shadowDy">4</item>
+        <item name="android:shadowRadius">3</item>
     </style>
 
-    <style name="ButtonRightTheme" parent="@android:style/Widget.Button">
-        <item name="android:textColor">#FFFFFF</item>
-        <item name="android:gravity">center</item>
-        <item name="android:background">@drawable/button_right</item>
-        <item name="android:padding">0dip</item>
-    </style>
-
-    <style name="ButtonTheme" parent="@android:style/Widget.Button">
-        <item name="android:gravity">center</item>
-        <item name="android:textColor">#FFF</item>
-        <item name="android:background">@drawable/button</item>
-    </style>
-
-
-
-
-
-
-
-    <style name="ViewButton">
+    <style name="ViewButtonTop">
         <item name="android:layout_width">0dip</item>
         <item name="android:layout_weight">1</item>
         <item name="android:background">@android:color/transparent</item>
         <item name="android:textColor">@color/ColorWhite</item>
         <item name="android:shadowColor">@color/ColorShadow</item>
-        <item name="android:shadowDx">4</item>
+        <item name="android:shadowDx">-4</item>
+        <item name="android:shadowDy">4</item>
+        <item name="android:shadowRadius">3</item>
+    </style>
+
+    <style name="ViewTextTop">
+        <item name="android:layout_width">0dip</item>
+        <item name="android:layout_weight">3</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/ColorWhite</item>
+        <item name="android:shadowColor">@color/ColorShadow</item>
+        <item name="android:layout_margin">7dp</item>
+        <item name="android:shadowDx">-4</item>
         <item name="android:shadowDy">4</item>
         <item name="android:shadowRadius">3</item>
     </style>
 
     <style name="ViewText">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/background</item>
+        <item name="android:gravity">start|center_vertical</item>
+        <item name="android:textColor">@color/ColorWhite</item>
+        <item name="android:shadowColor">@color/ColorShadow</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:layout_marginTop">1dp</item>
+        <item name="android:shadowDx">-4</item>
+        <item name="android:shadowDy">4</item>
+        <item name="android:shadowRadius">3</item>
+    </style>
+
+    <style name="ViewButtonBot">
+        <item name="android:layout_width">0dip</item>
+        <item name="android:layout_weight">1.5</item>
+        <item name="android:background">@color/ColorTransWhite</item>
+        <item name="android:textColor">@color/ColorWhite</item>
+        <item name="android:shadowColor">@color/ColorShadow</item>
+        <item name="android:layout_margin">7dp</item>
+        <item name="android:shadowDx">-4</item>
+        <item name="android:shadowDy">4</item>
+        <item name="android:shadowRadius">3</item>
+    </style>
+
+    <style name="ViewTextBot">
         <item name="android:layout_width">0dip</item>
         <item name="android:layout_weight">1</item>
         <item name="android:gravity">center</item>
         <item name="android:textColor">@color/ColorWhite</item>
         <item name="android:shadowColor">@color/ColorShadow</item>
-        <item name="android:shadowDx">4</item>
+        <item name="android:layout_margin">7dp</item>
+        <item name="android:shadowDx">-4</item>
         <item name="android:shadowDy">4</item>
         <item name="android:shadowRadius">3</item>
     </style>
@@ -58,14 +92,34 @@
 
 
 
-    <style name="HomeButton">
+
+
+
+
+
+
+    <style name="HomeTitle">
         <item name="android:layout_width">0dip</item>
         <item name="android:layout_weight">1</item>
-        <item name="android:background">@android:color/transparent</item>
-        <item name="android:textColor">@color/ColorBlue</item>
-        <item name="android:textSize">10sp</item>
+        <item name="android:gravity">left|center_vertical</item>
+        <item name="android:textSize">30sp</item>
+        <item name="android:textColor">@color/ColorWhite</item>
+        <item name="android:layout_marginBottom">10dp</item>
+        <item name="android:layout_marginTop">10dp</item>
         <item name="android:shadowColor">@color/ColorShadow</item>
-        <item name="android:shadowDx">4</item>
+        <item name="android:shadowDx">-4</item>
+        <item name="android:shadowDy">4</item>
+        <item name="android:shadowRadius">3</item>
+    </style>
+
+    <style name="HomeSubTitle">
+        <item name="android:layout_width">0dip</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">start|top</item>
+        <item name="android:textColor">@color/ColorGray</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:shadowColor">@color/ColorShadow</item>
+        <item name="android:shadowDx">-4</item>
         <item name="android:shadowDy">4</item>
         <item name="android:shadowRadius">3</item>
     </style>
@@ -75,7 +129,19 @@
         <item name="android:layout_weight">1</item>
         <item name="android:textColor">@color/ColorWhite</item>
         <item name="android:shadowColor">@color/ColorShadow</item>
-        <item name="android:shadowDx">4</item>
+        <item name="android:shadowDx">-4</item>
+        <item name="android:shadowDy">4</item>
+        <item name="android:shadowRadius">3</item>
+    </style>
+
+    <style name="HomeButton">
+        <item name="android:layout_width">0dip</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:textColor">@color/ColorWhite</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:shadowColor">@color/ColorShadow</item>
+        <item name="android:shadowDx">-4</item>
         <item name="android:shadowDy">4</item>
         <item name="android:shadowRadius">3</item>
     </style>
@@ -86,32 +152,6 @@
         <item name="android:layout_weight">1</item>
         <item name="android:layout_marginTop">15dp</item>
         <item name="android:background">@color/ColorGray</item>
-    </style>
-
-    <style name="HomeTitle">
-        <item name="android:layout_width">0dip</item>
-        <item name="android:layout_weight">1</item>
-        <item name="android:gravity">center</item>
-        <item name="android:textSize">30sp</item>
-        <item name="android:textColor">@color/ColorBlue</item>
-        <item name="android:layout_marginBottom">10dp</item>
-        <item name="android:layout_marginTop">10dp</item>
-        <item name="android:shadowColor">@color/ColorGray</item>
-        <item name="android:shadowDx">0</item>
-        <item name="android:shadowDy">0</item>
-        <item name="android:shadowRadius">13</item>
-    </style>
-
-    <style name="HomeSubTitle">
-        <item name="android:layout_width">0dip</item>
-        <item name="android:layout_weight">1</item>
-        <item name="android:gravity">start|top</item>
-        <item name="android:textColor">@color/ColorGray</item>
-        <item name="android:textSize">16sp</item>
-        <item name="android:shadowColor">@color/ColorShadow</item>
-        <item name="android:shadowDx">4</item>
-        <item name="android:shadowDy">4</item>
-        <item name="android:shadowRadius">3</item>
     </style>
 
 </resources>

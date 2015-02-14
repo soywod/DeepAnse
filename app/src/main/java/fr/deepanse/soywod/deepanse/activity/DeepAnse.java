@@ -1,17 +1,10 @@
 package fr.deepanse.soywod.deepanse.activity;
 
+import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.ColorFilter;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
-import android.support.v7.app.ActionBarActivity;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import java.sql.SQLException;
@@ -21,7 +14,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import fr.deepanse.soywod.deepanse.R;
-import fr.deepanse.soywod.deepanse.adapter.*;
 import fr.deepanse.soywod.deepanse.database.DeepAnseSQLiteOpenHelper;
 import fr.deepanse.soywod.deepanse.model.Conversion;
 import fr.deepanse.soywod.deepanse.model.DateFR;
@@ -30,7 +22,7 @@ import fr.deepanse.soywod.deepanse.model.DeepAnseGroup;
 /**
  * Created by soywod on 11/02/2015.
  */
-abstract public class DeepAnse extends ActionBarActivity {
+abstract public class DeepAnse extends Activity {
 
     private final static int RESULT_RECOGNIZER = 0;
 
@@ -81,31 +73,6 @@ abstract public class DeepAnse extends ActionBarActivity {
         closeDatabases();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.menu_manage_group) {
-            startActivity(new Intent(DeepAnse.this, GroupManager.class));
-
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
     protected void openDatabases() {
         try
         {
@@ -142,6 +109,13 @@ abstract public class DeepAnse extends ActionBarActivity {
         forwardMainDate(1);
     }
 
+    public void eventHome(View v) {
+        Intent intent = new Intent(DeepAnse.this, Home.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        finish();
+    }
+
     abstract protected void forwardMainDate(int count);
 
     public String getRegexGroup(ArrayList<DeepAnseGroup> array)
@@ -162,7 +136,7 @@ abstract public class DeepAnse extends ActionBarActivity {
         }
     }
 
-    public void eventAddDeepAnse(View v) {
+    public void eventAddDeepanseByVoice(View v) {
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         intent.putExtra(RecognizerIntent.EXTRA_PROMPT, getString(R.string.prompt_add_deepanse));
         startActivityForResult(intent, RESULT_RECOGNIZER);
@@ -187,7 +161,6 @@ abstract public class DeepAnse extends ActionBarActivity {
             double amount = 0;
             String group = "";
             GregorianCalendar date = new GregorianCalendar();
-
 
             if (matcherDate.matches()) {
                 if (matcherDate.group(1) != null)
@@ -267,6 +240,7 @@ abstract public class DeepAnse extends ActionBarActivity {
                     Intent intent = new Intent(DeepAnse.this, ViewByDay.class);
                     intent.putExtra("main_date", Conversion.dateToString(mainDate));
                     startActivity(intent);
+                    finish();
                 }
                 else {
                     forwardMainDate(0);
