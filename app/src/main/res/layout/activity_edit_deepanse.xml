@@ -103,7 +103,7 @@
         <TableRow android:layout_marginTop="20dp">
             <Button style="@style/Button"
                 android:text="@string/save"
-                android:onClick="eventSaveGroup" />
+                android:onClick="eventSaveDeepAnse" />
         </TableRow>
     </TableLayout>
 </ScrollView>

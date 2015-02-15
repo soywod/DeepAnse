@@ -254,5 +254,15 @@ abstract public class DeepAnse extends Activity {
                 }
             }
         }
+        else if (requestCode == RESULT_ADD_DEEPANSE_BY_HAND && resultCode == RESULT_OK) {
+            fr.deepanse.soywod.deepanse.model.DeepAnse deepAnse = new fr.deepanse.soywod.deepanse.model.DeepAnse(data.getLongExtra("id", 0), data.getDoubleExtra("amount", 0), Conversion.stringToDate(data.getStringExtra("main_date")), groupDb.selectByName(data.getStringExtra("group").toLowerCase()), data.getStringExtra("comment"), false);
+
+            //if (deepAnse.getId() == 0)
+            //    deepAnse.setId(deepAnseDb.insert(deepAnse));
+            //else
+                deepAnseDb.update(deepAnse.getId(), deepAnse);
+
+            forwardMainDate(0);
+        }
     }
 }
