@@ -1,3 +1,95 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:scrollbars="vertical"
+    android:fadeScrollbars="false"
+    android:layout_weight="1"
+    android:background="@drawable/background">
+
+    <TableLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
+
+        <TableRow>
+            <TextView style="@style/Title"
+                android:drawableLeft="@drawable/edit_group"
+                android:drawableStart="@drawable/edit_group" />
+
+            <TextView style="@style/Title"
+                android:layout_weight="6"
+                android:textSize="19sp"
+                android:text="@string/view_group_edit" />
+
+            <Button style="@style/HomeButton"
+                android:drawableRight="@drawable/home"
+                android:drawableEnd="@drawable/home"
+                android:onClick="eventHome" />
+        </TableRow>
+
+        <TableRow>
+            <TextView style="@style/Text" android:text="@string/view_group_edit_desc" />
+        </TableRow>
+
+        <TableRow>
+            <TextView style="@style/Separator" />
+        </TableRow>
+
+        <TableRow android:layout_marginTop="20dp">
+            <TextView style="@style/Text"
+                android:layout_height="match_parent"
+                android:gravity="start|center_vertical"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/color" />
+
+            <com.larswerkman.holocolorpicker.ColorPicker
+                android:id="@+id/picker"
+                android:background="#FFF"
+                android:layout_width="0dip"
+                android:layout_weight="2" />
+        </TableRow>
+
+        <TableRow>
+            <TextView style="@style/Text" />
+
+            <com.larswerkman.holocolorpicker.SVBar
+                android:id="@+id/svbar"
+                android:background="#FFF"
+                android:layout_width="0dip"
+                android:layout_weight="2" />
+        </TableRow>
+
+        <TableRow android:layout_marginTop="20dp">
+            <TextView style="@style/Text"
+                android:layout_height="match_parent"
+                android:gravity="start|center_vertical"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/name" />
+
+            <EditText
+                android:id="@+id/edit_name"
+                android:background="@color/ColorWhite"
+                android:layout_width="0dip"
+                android:padding="10dp"
+                android:inputType="textPersonName"
+                android:layout_weight="2" />
+        </TableRow>
+
+        <TableRow>
+            <TextView style="@style/Separator" />
+        </TableRow>
+
+        <TableRow android:layout_marginTop="20dp">
+            <Button style="@style/Button"
+                android:text="@string/save"
+                android:onClick="eventSaveGroup" />
+        </TableRow>
+    </TableLayout>
+</ScrollView>
+
+<!--
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -52,3 +144,4 @@
         android:layout_alignParentEnd="true" />
 
 </RelativeLayout>
+-->

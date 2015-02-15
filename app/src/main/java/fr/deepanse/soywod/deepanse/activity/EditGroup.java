@@ -35,9 +35,10 @@ public class EditGroup extends Activity implements ColorPicker.OnColorChangedLis
         String oldName = ((intent != null)?(intent.getStringExtra("name")):(""));
 
         picker = (ColorPicker) findViewById(R.id.picker);
-        editGroup = (EditText) findViewById(R.id.edit_group);
+        editGroup = (EditText) findViewById(R.id.edit_name);
         SVBar svBar = (SVBar) findViewById(R.id.svbar);
 
+        svBar.setAlpha((float) 0.3);
         editGroup.setText(oldName);
 
         picker.addSVBar(svBar);

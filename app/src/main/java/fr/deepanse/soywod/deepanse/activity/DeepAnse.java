@@ -93,7 +93,7 @@ abstract public class DeepAnse extends Activity {
 
     public void refreshTotal(double total) {
         TextView textViewTotal = (TextView) findViewById(R.id.text_total);
-        textViewTotal.setText(getString(R.string.view_total) + "\n" + total + " €");
+        textViewTotal.setText(getString(R.string.total) + "\n" + total + " €");
     }
 
     public void refreshRegexGroup() {

@@ -13,9 +13,12 @@
 
         <TableRow>
             <TextView style="@style/Title"
-                android:layout_weight="5"
                 android:drawableLeft="@drawable/edit_deepanse"
-                android:drawableStart="@drawable/edit_deepanse"
+                android:drawableStart="@drawable/edit_deepanse" />
+
+            <TextView style="@style/Title"
+                android:layout_weight="6"
+                android:textSize="19sp"
                 android:text="@string/view_deepanse_edit" />
 
             <Button style="@style/HomeButton"
@@ -37,7 +40,7 @@
                 android:layout_height="match_parent"
                 android:gravity="start|center_vertical"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="@string/view_date" />
+                android:text="@string/date" />
 
             <DatePicker style="@android:style/Widget.DatePicker"
                 android:id="@+id/date_picker"
@@ -51,7 +54,7 @@
                 android:layout_height="match_parent"
                 android:gravity="start|center_vertical"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="@string/view_group" />
+                android:text="@string/group" />
 
             <Spinner
                 android:id="@+id/spinner_group"
@@ -65,7 +68,7 @@
                 android:layout_height="match_parent"
                 android:gravity="start|center_vertical"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="@string/view_amount" />
+                android:text="@string/amount" />
 
             <EditText
                 android:id="@+id/edit_amount"
@@ -82,7 +85,7 @@
                 android:layout_height="match_parent"
                 android:gravity="start|center_vertical"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="@string/view_comment" />
+                android:text="@string/comment" />
 
             <EditText
                 android:id="@+id/edit_comment"

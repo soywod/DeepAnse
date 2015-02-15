@@ -26,25 +26,20 @@
     <string name="home_help_del_deepanse">Comment\nsupprimer\ndépense</string>
     <string name="home_help_del_group">Comment\nsupprimer\nrubrique</string>
 
-    <string name="view_total">Total :</string>
-    <string name="view_date">Date :</string>
-    <string name="view_amount">Montant :</string>
-    <string name="view_comment">Commentaire :</string>
-    <string name="view_group">Rubrique :</string>
+
     <string name="view_deepanse_view_by_day">Afficher dépenses par jour</string>
     <string name="view_deepanse_view_by_month">Afficher dépenses par mois</string>
     <string name="view_deepanse_view_by_year">Afficher dépenses par année</string>
     <string name="view_group_edit">Editer rubrique</string>
     <string name="view_deepanse_edit">Editer dépense</string>
-    <string name="view_group_edit_desc">Dans ce menu vous pouvez modifier les rubriques en cliquant brièvement dessus, ou les supprimer en cliquant longuement dessus. Enfin vous pouvez en créer des nouvelles en utilisant les deux boutons en bas de la page.</string>
-    <string name="view_deepanse_edit_desc">Dans ce menu vous pouvez <b>créer et modifier</b> des <b>dépenses</b> en en changeant les paramètres ci-dessous. Enfin, cliquez sur le bouton <b>Sauvegarder</b> pour enregistrer. Si vous cliquez sur un bouton <b>autre</b> que celui-ci, toute modification sera <b>annulée</b>.</string>
+    <string name="view_group_edit_desc">Dans ce menu vous pouvez <b>créer et modifier</b> des <b>rubriques</b> en changeant les paramètres ci-dessous. Enfin, cliquez sur le bouton <b>Sauvegarder</b> pour enregistrer. Si vous cliquez sur un bouton <b>autre</b> que celui-ci, toute modification sera <b>annulée</b>.</string>
+    <string name="view_deepanse_edit_desc">Dans ce menu vous pouvez <b>créer et modifier</b> des <b>dépenses</b> en changeant les paramètres ci-dessous. Enfin, cliquez sur le bouton <b>Sauvegarder</b> pour enregistrer. Si vous cliquez sur un bouton <b>autre</b> que celui-ci, toute modification sera <b>annulée</b>.</string>
     <string name="view_deepanse_view_by_day_desc">Dans ce menu vous pouvez consulter la liste des dépenses triées par jour. Vous pouvez utiliser les flèches gauche et droite pour changer de jour, et la flèche de rabattement pour passer en affichage par mois. Vous pouvez également ajouter des dépenses via les deux boutons du bas.</string>
     <string name="view_deepanse_view_by_month_desc">Dans ce menu vous pouvez consulter la liste des dépenses triées par mois. Vous pouvez utiliser les flèches gauche et droite pour changer de mois, et la flèche de rabattement pour passer en affichage par année. Vous pouvez également ajouter des dépenses via les deux boutons du bas.</string>
     <string name="view_deepanse_view_by_year_desc">Dans ce menu vous pouvez consulter la liste des dépenses triées par année. Vous pouvez utiliser les flèches gauche et droite pour changer de mois, et la flèche de rabattement pour revenir dans le menu principal. Vous pouvez également ajouter des dépenses via les deux boutons du bas.</string>
 
     <string name="arrow_left">&lt;</string>
     <string name="arrow_right">&gt;</string>
-    <string name="total">Total</string>
 
     <string name="menu_manage_group">Gérer les groupes</string>
 
@@ -59,6 +54,14 @@
     <string name="prompt_del_deepanse">Voulez-vous vraiment supprimer cette dépense ?</string>
 
     <string name="button_add_deepanse">Ajouter\ndépense</string>
+
+    <string name="total">Total :</string>
+    <string name="date">Date :</string>
+    <string name="amount">Montant :</string>
+    <string name="comment">Commentaire :</string>
+    <string name="group">Rubrique :</string>
+    <string name="color">Couleur :</string>
+    <string name="name">Nom :</string>
 
 
 </resources>
