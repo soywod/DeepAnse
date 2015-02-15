@@ -94,7 +94,7 @@
                 android:layout_marginEnd="10dp"
                 android:paddingLeft="10dp"
                 android:gravity="start|center_vertical"
-                android:text="@string/button_add_deepanse"
+                android:text="@string/view_deepanse_add"
                 android:onClick="eventAddDeepanseByVoice" />
 
             <Button style="@style/Button"
@@ -107,8 +107,8 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginEnd="10dp"
                 android:gravity="start|center_vertical"
-                android:text="@string/button_add_deepanse"
-                android:onClick="eventAddDeepanseByKeyboard" />
+                android:text="@string/view_deepanse_add"
+                android:onClick="eventAddDeepanseByHand" />
 
             <TextView style="@style/Text"
                 android:gravity="center"

@@ -37,6 +37,9 @@
     <string name="view_deepanse_view_by_day_desc">Dans ce menu vous pouvez consulter la liste des dépenses triées par jour. Vous pouvez utiliser les flèches gauche et droite pour changer de jour, et la flèche de rabattement pour passer en affichage par mois. Vous pouvez également ajouter des dépenses via les deux boutons du bas.</string>
     <string name="view_deepanse_view_by_month_desc">Dans ce menu vous pouvez consulter la liste des dépenses triées par mois. Vous pouvez utiliser les flèches gauche et droite pour changer de mois, et la flèche de rabattement pour passer en affichage par année. Vous pouvez également ajouter des dépenses via les deux boutons du bas.</string>
     <string name="view_deepanse_view_by_year_desc">Dans ce menu vous pouvez consulter la liste des dépenses triées par année. Vous pouvez utiliser les flèches gauche et droite pour changer de mois, et la flèche de rabattement pour revenir dans le menu principal. Vous pouvez également ajouter des dépenses via les deux boutons du bas.</string>
+    <string name="view_group_desc">Dans ce menu vous pouvez <b>consulter</b> la liste des rubriques, <b>ajouter</b> des rubriques via les deux boutons du bas, <b>éditer</b> des rubriques en cliquant brièvement dessus, ou <b>supprimer</b> des rubriques en cliquant longuement dessus.</string>
+    <string name="view_group">Afficher rubriques</string>
+    <string name="view_deepanse_add">Ajouter\ndépense</string>
 
     <string name="arrow_left">&lt;</string>
     <string name="arrow_right">&gt;</string>
@@ -53,7 +56,7 @@
     <string name="prompt_add_deepanse">Dictez maintenant votre nouvelle dépense [date] [groupe] [commentaire] montant</string>
     <string name="prompt_del_deepanse">Voulez-vous vraiment supprimer cette dépense ?</string>
 
-    <string name="button_add_deepanse">Ajouter\ndépense</string>
+
 
     <string name="total">Total :</string>
     <string name="date">Date :</string>

@@ -74,14 +74,14 @@
                 android:id="@+id/button_add_deepanse_by_voice"
                 android:drawableRight="@drawable/micro"
                 android:drawableEnd="@drawable/micro"
-                android:text="@string/button_add_deepanse"
+                android:text="@string/add_deepanse"
                 android:onClick="eventAddDeepanseByVoice" />
 
             <Button style="@style/ViewButtonBot"
                 android:id="@+id/button_add_deepanse_by_keyboard"
                 android:drawableRight="@drawable/keyboard"
                 android:drawableEnd="@drawable/keyboard"
-                android:text="@string/button_add_deepanse"
+                android:text="@string/add_deepanse"
                 android:onClick="eventAddDeepanseByKeyboard" />
 
             <TextView style="@style/ViewTextBot"

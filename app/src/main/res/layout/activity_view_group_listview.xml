@@ -8,7 +8,7 @@
     <TextView
         android:id="@+id/text_group"
         android:layout_width="fill_parent"
-        android:layout_height="57dp"
+        android:layout_height="45dp"
         android:paddingLeft="10dp"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:gravity="center" />

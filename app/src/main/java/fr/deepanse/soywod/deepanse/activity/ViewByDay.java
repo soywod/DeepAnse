@@ -62,7 +62,10 @@ public class ViewByDay extends fr.deepanse.soywod.deepanse.activity.DeepAnse {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-                startActivity(new Intent(ViewByDay.this, EditDeepAnse.class));
+                Intent intent = new Intent(ViewByDay.this, EditDeepAnse.class);
+                intent.putExtra("new_deepanse", false);
+                intent.putExtra("amount", arrayDeepAnse.get(position).getAmount());
+                startActivityForResult(intent, RESULT_ADD_DEEPANSE_BY_HAND);
             }
         });
     }

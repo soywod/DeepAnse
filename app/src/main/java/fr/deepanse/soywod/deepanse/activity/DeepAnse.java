@@ -24,7 +24,8 @@ import fr.deepanse.soywod.deepanse.model.DeepAnseGroup;
  */
 abstract public class DeepAnse extends Activity {
 
-    private final static int RESULT_RECOGNIZER = 0;
+    protected final static int RESULT_ADD_DEEPANSE_BY_VOICE = 0;
+    protected final static int RESULT_ADD_DEEPANSE_BY_HAND = 1;
 
     private Pattern regexGroup;
     private final Pattern regexAmount = Pattern.compile(".*?(([0-9]+?)( euro[s]?[ ]?|[^0-9])([0-9]*)).*?");
@@ -139,14 +140,20 @@ abstract public class DeepAnse extends Activity {
     public void eventAddDeepanseByVoice(View v) {
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         intent.putExtra(RecognizerIntent.EXTRA_PROMPT, getString(R.string.prompt_add_deepanse));
-        startActivityForResult(intent, RESULT_RECOGNIZER);
+        startActivityForResult(intent, RESULT_ADD_DEEPANSE_BY_VOICE);
+    }
+
+    public void eventAddDeepanseByHand(View v) {
+        Intent intent = new Intent(DeepAnse.this, EditDeepAnse.class);
+        intent.putExtra("new_deepanse", true);
+        startActivityForResult(intent, RESULT_ADD_DEEPANSE_BY_HAND);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == RESULT_RECOGNIZER && resultCode == RESULT_OK) {
+        if (requestCode == RESULT_ADD_DEEPANSE_BY_VOICE && resultCode == RESULT_OK) {
 
             String bestMatch = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS).get(0).toLowerCase();
 
