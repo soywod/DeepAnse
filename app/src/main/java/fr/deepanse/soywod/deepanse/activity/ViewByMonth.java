@@ -2,6 +2,7 @@ package fr.deepanse.soywod.deepanse.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -34,6 +35,26 @@ public class ViewByMonth extends fr.deepanse.soywod.deepanse.activity.DeepAnse {
 
         ListView listViewDeepAnse = (ListView) findViewById(R.id.listview);
         listViewDeepAnse.setAdapter(adapterViewByMonth);
+
+        listViewDeepAnse.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    if (adapterViewByMonth.isViewSelected()) {
+                        adapterViewByMonth.setColorSelectedView(getResources().getColor(R.color.ColorBlue));
+                    }
+                } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
+                    if (!adapterViewByMonth.isViewSelected()) {
+                        adapterViewByMonth.removeSelectedView();
+                    }
+                } else {
+                    adapterViewByMonth.removeSelectedView();
+                }
+
+                return false;
+            }
+        });
+
         listViewDeepAnse.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

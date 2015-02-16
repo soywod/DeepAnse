@@ -1,9 +1,16 @@
 package fr.deepanse.soywod.deepanse.activity;
 
+import android.animation.ArgbEvaluator;
+import android.animation.ValueAnimator;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.TransitionDrawable;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
@@ -22,8 +29,8 @@ import fr.deepanse.soywod.deepanse.model.DeepAnse;
 public class ViewByDay extends fr.deepanse.soywod.deepanse.activity.DeepAnse {
 
     private static boolean longClicked;
-    private ArrayList<DeepAnse> arrayDeepAnse;
-    private fr.deepanse.soywod.deepanse.adapter.ViewByDay adapterViewByDay;
+    private static ArrayList<DeepAnse> arrayDeepAnse;
+    private static fr.deepanse.soywod.deepanse.adapter.ViewByDay adapterViewByDay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,10 +47,30 @@ public class ViewByDay extends fr.deepanse.soywod.deepanse.activity.DeepAnse {
         ListView listViewDeepAnse = (ListView) findViewById(R.id.listview);
         listViewDeepAnse.setAdapter(adapterViewByDay);
 
+        listViewDeepAnse.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    if (adapterViewByDay.isViewSelected()) {
+                        adapterViewByDay.setColorSelectedView(getResources().getColor(R.color.ColorBlue));
+                    }
+                } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
+                    if (!adapterViewByDay.isViewSelected()) {
+                        adapterViewByDay.removeSelectedView();
+                    }
+                } else {
+                    adapterViewByDay.removeSelectedView();
+                }
+
+                return false;
+            }
+        });
+
         listViewDeepAnse.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+            public void onItemClick(AdapterView<?> parent, final View view, final int position, long id) {
+                view.setBackgroundColor(arrayDeepAnse.get(position).getGroup().getColor());
                 if (!longClicked) {
                     Intent intent = new Intent(ViewByDay.this, EditDeepAnse.class);
                     intent.putExtra("new_deepanse", false);
@@ -55,6 +82,8 @@ public class ViewByDay extends fr.deepanse.soywod.deepanse.activity.DeepAnse {
                     startActivityForResult(intent, RESULT_ADD_DEEPANSE_BY_HAND);
                 }
             }
+
+
         });
 
         listViewDeepAnse.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -77,6 +106,7 @@ public class ViewByDay extends fr.deepanse.soywod.deepanse.activity.DeepAnse {
                     @Override
                     public void execute() {
                         longClicked = false;
+                        mainRefresh(0);
                     }
                 });
                 builder.show();
