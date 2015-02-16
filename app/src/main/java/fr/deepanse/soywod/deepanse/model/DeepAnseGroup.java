@@ -107,15 +107,6 @@ public class DeepAnseGroup {
         return color;
     }
 
-    /**
-     *  Getter de la couleur de la rubrique version transparente
-     *
-     *  @return La couleur de la rubrique de type int
-     */
-    public int getColorLessOpacity() {
-        return Color.argb(76, Color.red(color), Color.green(color), Color.blue(color));
-    }
-
 
 
 

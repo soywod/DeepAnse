@@ -2,6 +2,7 @@ package fr.deepanse.soywod.deepanse.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
+import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -27,9 +29,12 @@ abstract public class DeepAnse extends Activity {
     protected final static int RESULT_ADD_DEEPANSE_BY_VOICE = 0;
     protected final static int RESULT_ADD_DEEPANSE_BY_HAND = 1;
 
-    private Pattern regexGroup;
-    private final Pattern regexAmount = Pattern.compile(".*?(([0-9]+?)( euro[s]?[ ]?|[^0-9])([0-9]*)).*?");
-    private final Pattern regexDate = Pattern.compile(
+    protected final static int RESULT_ADD_GROUP_BY_VOICE = 2;
+    protected final static int RESULT_ADD_GROUP_BY_HAND = 3;
+
+    protected Pattern regexGroup;
+    protected final Pattern regexAmount = Pattern.compile(".*?(([0-9]+?)( euro[s]?[ ]?|[^0-9])([0-9]*)).*?");
+    protected final Pattern regexDate = Pattern.compile(
     ".*?" +
         "(" +
             "(aujourd\'hui)|" +
@@ -65,7 +70,7 @@ abstract public class DeepAnse extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        forwardMainDate(0);
+        mainRefresh(0);
     }
 
     @Override
@@ -102,22 +107,10 @@ abstract public class DeepAnse extends Activity {
         regexGroup = ((tmpArrayGroup == null)?(null):(Pattern.compile(getRegexGroup(tmpArrayGroup))));
     }
 
-    public void eventBackwardDate(View v) {
-        forwardMainDate(-1);
-    }
 
-    public void eventForwardDate(View v) {
-        forwardMainDate(1);
-    }
 
-    public void eventHome(View v) {
-        Intent intent = new Intent(DeepAnse.this, Home.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
-        finish();
-    }
+    abstract protected void mainRefresh(int count);
 
-    abstract protected void forwardMainDate(int count);
 
     public String getRegexGroup(ArrayList<DeepAnseGroup> array)
     {
@@ -137,6 +130,21 @@ abstract public class DeepAnse extends Activity {
         }
     }
 
+    public void eventBackwardDate(View v) {
+        mainRefresh(-1);
+    }
+
+    public void eventForwardDate(View v) {
+        mainRefresh(1);
+    }
+
+    public void eventHome(View v) {
+        Intent intent = new Intent(DeepAnse.this, Home.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        finish();
+    }
+
     public void eventAddDeepanseByVoice(View v) {
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         intent.putExtra(RecognizerIntent.EXTRA_PROMPT, getString(R.string.prompt_add_deepanse));
@@ -146,7 +154,20 @@ abstract public class DeepAnse extends Activity {
     public void eventAddDeepanseByHand(View v) {
         Intent intent = new Intent(DeepAnse.this, EditDeepAnse.class);
         intent.putExtra("new_deepanse", true);
+        intent.putExtra("date", Conversion.dateToString(mainDate));
         startActivityForResult(intent, RESULT_ADD_DEEPANSE_BY_HAND);
+    }
+
+    public void eventAddGroupByVoice(View v) {
+        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, getString(R.string.prompt_add_group));
+        startActivityForResult(intent, RESULT_ADD_GROUP_BY_VOICE);
+    }
+
+    public void eventAddGroupByHand(View v) {
+        Intent intent = new Intent(DeepAnse.this, EditGroup.class);
+        intent.putExtra("new_group", true);
+        startActivityForResult(intent, RESULT_ADD_GROUP_BY_HAND);
     }
 
     @Override
@@ -239,30 +260,71 @@ abstract public class DeepAnse extends Activity {
             if (amount != 0) {
                 fr.deepanse.soywod.deepanse.model.DeepAnse deepAnse = new fr.deepanse.soywod.deepanse.model.DeepAnse(0, amount, date, groupDb.selectByName(group), bestMatch, false);
                 deepAnse.setId(deepAnseDb.insert(deepAnse));
-                mainDate.set(GregorianCalendar.YEAR, date.get(GregorianCalendar.YEAR));
-                mainDate.set(GregorianCalendar.MONTH, date.get(GregorianCalendar.MONTH));
-                mainDate.set(GregorianCalendar.DAY_OF_MONTH, date.get(GregorianCalendar.DAY_OF_MONTH));
 
-                if (this.getClass() != ViewByDay.class) {
-                    Intent intent = new Intent(DeepAnse.this, ViewByDay.class);
-                    intent.putExtra("main_date", Conversion.dateToString(mainDate));
-                    startActivity(intent);
-                    finish();
+                if (this.getClass() == ViewByDay.class) {
+                    mainDate.set(GregorianCalendar.YEAR, date.get(GregorianCalendar.YEAR));
+                    mainDate.set(GregorianCalendar.MONTH, date.get(GregorianCalendar.MONTH));
+                    mainDate.set(GregorianCalendar.DAY_OF_MONTH, date.get(GregorianCalendar.DAY_OF_MONTH));
+
+                    mainRefresh(0);
                 }
                 else {
-                    forwardMainDate(0);
+                    Intent intent = new Intent(DeepAnse.this, ViewByDay.class);
+                    intent.putExtra("main_date", Conversion.dateToString(date));
+                    startActivity(intent);
+                    if (this.getClass() != Home.class) finish();
                 }
             }
         }
         else if (requestCode == RESULT_ADD_DEEPANSE_BY_HAND && resultCode == RESULT_OK) {
-            fr.deepanse.soywod.deepanse.model.DeepAnse deepAnse = new fr.deepanse.soywod.deepanse.model.DeepAnse(data.getLongExtra("id", 0), data.getDoubleExtra("amount", 0), Conversion.stringToDate(data.getStringExtra("main_date")), groupDb.selectByName(data.getStringExtra("group").toLowerCase()), data.getStringExtra("comment"), false);
+            GregorianCalendar date = Conversion.stringToDate(data.getStringExtra("date"));
+            fr.deepanse.soywod.deepanse.model.DeepAnse deepAnse = new fr.deepanse.soywod.deepanse.model.DeepAnse(data.getLongExtra("id", 0), data.getDoubleExtra("amount", 0), date, groupDb.selectByName(data.getStringExtra("group").toLowerCase()), data.getStringExtra("comment"), false);
 
-            //if (deepAnse.getId() == 0)
-            //    deepAnse.setId(deepAnseDb.insert(deepAnse));
-            //else
+            if (data.getBooleanExtra("new_deepanse", true))
+                deepAnseDb.insert(deepAnse);
+            else
                 deepAnseDb.update(deepAnse.getId(), deepAnse);
 
-            forwardMainDate(0);
+            if (this.getClass() == ViewByDay.class) {
+                mainDate.set(GregorianCalendar.YEAR, date.get(GregorianCalendar.YEAR));
+                mainDate.set(GregorianCalendar.MONTH, date.get(GregorianCalendar.MONTH));
+                mainDate.set(GregorianCalendar.DAY_OF_MONTH, date.get(GregorianCalendar.DAY_OF_MONTH));
+
+                mainRefresh(0);
+            }
+            else {
+                Intent intent = new Intent(DeepAnse.this, ViewByDay.class);
+                intent.putExtra("main_date", Conversion.dateToString(date));
+                startActivity(intent);
+                if (this.getClass() != Home.class) finish();
+            }
+        }
+        else if (requestCode == RESULT_ADD_GROUP_BY_VOICE && resultCode == RESULT_OK) {
+            Random random = new Random();
+            groupDb.insert(new DeepAnseGroup(0, data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS).get(0).toLowerCase(), Color.argb(50, random.nextInt(256), random.nextInt(256), random.nextInt(256))));
+
+            if (this.getClass() == ViewGroup.class) {
+                mainRefresh(0);
+            }
+            else {
+                startActivity(new Intent(DeepAnse.this, ViewGroup.class));
+                if (this.getClass() != Home.class) finish();
+            }
+        }
+        else if (requestCode == RESULT_ADD_GROUP_BY_HAND && resultCode == RESULT_OK) {
+            DeepAnseGroup group = new DeepAnseGroup(data.getLongExtra("id", 0), data.getStringExtra("name"), data.getIntExtra("color", Color.GREEN));
+            if (data.getBooleanExtra("new_group", true))
+                groupDb.insert(group);
+            else
+                groupDb.update(group.getId(), group);
+
+            if (this.getClass() == ViewGroup.class) {
+                mainRefresh(0);
+            }
+            else {
+                startActivity(new Intent(DeepAnse.this, ViewGroup.class));
+                if (this.getClass() != Home.class) finish();
+            }
         }
     }
 }

@@ -36,7 +36,7 @@ public class ViewGroup extends ArrayAdapter<fr.deepanse.soywod.deepanse.model.De
         TextView textGroup = (TextView) convertView.findViewById(R.id.text_group);
 
         // Populate the data into the template view using the data object
-        layout.setBackgroundColor(group.getColorLessOpacity());
+        layout.setBackgroundColor(group.getColor());
         textGroup.setText(Conversion.firstCharToUpperCase(group.getName()));
 
         // Return the completed view to render on screen

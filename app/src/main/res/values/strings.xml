@@ -40,6 +40,7 @@
     <string name="view_group_desc">Dans ce menu vous pouvez <b>consulter</b> la liste des rubriques, <b>ajouter</b> des rubriques via les deux boutons du bas, <b>éditer</b> des rubriques en cliquant brièvement dessus, ou <b>supprimer</b> des rubriques en cliquant longuement dessus.</string>
     <string name="view_group">Afficher rubriques</string>
     <string name="view_deepanse_add">Ajouter\ndépense</string>
+    <string name="view_group_add">Ajouter\nrubrique</string>
 
     <string name="arrow_left">&lt;</string>
     <string name="arrow_right">&gt;</string>
@@ -65,6 +66,8 @@
     <string name="group">Rubrique :</string>
     <string name="color">Couleur :</string>
     <string name="name">Nom :</string>
+    <string name="saturation">Saturation :</string>
+    <string name="opacity">Opacité :</string>
 
 
 </resources>

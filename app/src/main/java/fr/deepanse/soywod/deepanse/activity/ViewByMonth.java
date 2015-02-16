@@ -50,7 +50,7 @@ public class ViewByMonth extends fr.deepanse.soywod.deepanse.activity.DeepAnse {
     }
 
     @Override
-    protected void forwardMainDate(int count) {
+    protected void mainRefresh(int count) {
 
         mainDate.add(GregorianCalendar.MONTH, count);
 

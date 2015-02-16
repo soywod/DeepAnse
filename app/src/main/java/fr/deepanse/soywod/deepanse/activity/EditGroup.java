@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.larswerkman.holocolorpicker.ColorPicker;
+import com.larswerkman.holocolorpicker.OpacityBar;
 import com.larswerkman.holocolorpicker.SVBar;
 
 import fr.deepanse.soywod.deepanse.R;
@@ -15,10 +16,12 @@ import fr.deepanse.soywod.deepanse.R;
 /**
  * Created by soywod on 11/02/2015.
  */
-public class EditGroup extends Activity implements ColorPicker.OnColorChangedListener {
+public class EditGroup extends Activity {
 
     private static boolean buttonSavePressed;
 
+    private boolean newGroup;
+    private long id;
     private ColorPicker picker;
     private EditText editGroup;
 
@@ -31,30 +34,32 @@ public class EditGroup extends Activity implements ColorPicker.OnColorChangedLis
 
         Intent intent = getIntent();
 
-        int oldColor = ((intent != null)?(intent.getIntExtra("color", Color.RED)):(Color.RED));
-        String oldName = ((intent != null)?(intent.getStringExtra("name")):(""));
+        newGroup = ((intent == null) || (intent.getBooleanExtra("new_group", true)));
 
-        picker = (ColorPicker) findViewById(R.id.picker);
-        editGroup = (EditText) findViewById(R.id.edit_name);
         SVBar svBar = (SVBar) findViewById(R.id.svbar);
-
-        svBar.setAlpha((float) 0.3);
-        editGroup.setText(oldName);
+        OpacityBar opacityBar = (OpacityBar) findViewById(R.id.opacity_bar);
+        editGroup = (EditText) findViewById(R.id.edit_name);
+        picker = (ColorPicker) findViewById(R.id.picker);
 
         picker.addSVBar(svBar);
+        picker.addOpacityBar(opacityBar);
         picker.setShowOldCenterColor(false);
-        picker.setOnColorChangedListener(this);
-        picker.setNewCenterColor(oldColor);
-        picker.setAlpha((float) 0.3);
-    }
 
-    @Override
-    public void onColorChanged(int color) {
+        if (!newGroup) {
+            id = intent.getLongExtra("id", 0);
+            picker.setColor(intent.getIntExtra("color", Color.GREEN));
+            editGroup.setText(intent.getStringExtra("name"));
+        }
+        else {
+            id = 0;
+        }
     }
 
     @Override
     public void finish() {
         Intent data = new Intent();
+        data.putExtra("new_group", newGroup);
+        data.putExtra("id", id);
         data.putExtra("color", picker.getColor());
         data.putExtra("name", editGroup.getText().toString());
 

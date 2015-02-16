@@ -42,7 +42,7 @@ public class ViewByDay extends ArrayAdapter<fr.deepanse.soywod.deepanse.model.De
             textComment.setText("[" + ((deepAnse.getGroup().getName().length() > (maxWidth-2))?(deepAnse.getGroup().getName().substring(0, maxWidth-5)+"..."):(deepAnse.getGroup().getName())) + "]");
         else
             textComment.setText((deepAnse.getComment().length() > maxWidth)?(deepAnse.getComment().substring(0, maxWidth-3)+"..."):(deepAnse.getComment()));
-        layout.setBackgroundColor(deepAnse.getGroup().getColorLessOpacity());
+        layout.setBackgroundColor(deepAnse.getGroup().getColor());
         textAmount.setText(String.valueOf(deepAnse.getAmount())+" €");
 
         // Return the completed view to render on screen

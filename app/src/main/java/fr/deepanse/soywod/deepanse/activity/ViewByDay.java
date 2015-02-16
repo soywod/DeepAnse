@@ -21,6 +21,7 @@ import fr.deepanse.soywod.deepanse.model.DeepAnse;
  */
 public class ViewByDay extends fr.deepanse.soywod.deepanse.activity.DeepAnse {
 
+    private static boolean longClicked;
     private ArrayList<DeepAnse> arrayDeepAnse;
     private fr.deepanse.soywod.deepanse.adapter.ViewByDay adapterViewByDay;
 
@@ -29,6 +30,7 @@ public class ViewByDay extends fr.deepanse.soywod.deepanse.activity.DeepAnse {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_by_day);
 
+        longClicked = false;
         Intent intent = getIntent();
 
         mainDate = ((intent != null)?(Conversion.stringToDate(intent.getStringExtra("main_date"))):(new GregorianCalendar()));
@@ -37,45 +39,55 @@ public class ViewByDay extends fr.deepanse.soywod.deepanse.activity.DeepAnse {
 
         ListView listViewDeepAnse = (ListView) findViewById(R.id.listview);
         listViewDeepAnse.setAdapter(adapterViewByDay);
-        listViewDeepAnse.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(ViewByDay.this, 2);
-                builder.setMessage(getString(R.string.prompt_del_deepanse));
-                builder.setPositiveButton("Oui", new AlertBox() {
-                    @Override
-                    public void execute() {
-                        deepAnseDb.delete(arrayDeepAnse.get(position).getId());
-                        arrayDeepAnse.remove(position);
-                        forwardMainDate(0);
-                    }
-                });
-                builder.setNegativeButton("Non", null);
-                builder.show();
-
-                return false;
-            }
-        });
 
         listViewDeepAnse.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-                Intent intent = new Intent(ViewByDay.this, EditDeepAnse.class);
-                intent.putExtra("new_deepanse", false);
-                intent.putExtra("id", arrayDeepAnse.get(position).getId());
-                intent.putExtra("main_date", Conversion.dateToString(arrayDeepAnse.get(position).getDate()));
-                intent.putExtra("group", arrayDeepAnse.get(position).getGroup().getName());
-                intent.putExtra("amount", arrayDeepAnse.get(position).getAmount());
-                intent.putExtra("comment", arrayDeepAnse.get(position).getComment());
-                startActivityForResult(intent, RESULT_ADD_DEEPANSE_BY_HAND);
+                if (!longClicked) {
+                    Intent intent = new Intent(ViewByDay.this, EditDeepAnse.class);
+                    intent.putExtra("new_deepanse", false);
+                    intent.putExtra("id", arrayDeepAnse.get(position).getId());
+                    intent.putExtra("date", Conversion.dateToString(arrayDeepAnse.get(position).getDate()));
+                    intent.putExtra("group", arrayDeepAnse.get(position).getGroup().getName());
+                    intent.putExtra("amount", arrayDeepAnse.get(position).getAmount());
+                    intent.putExtra("comment", arrayDeepAnse.get(position).getComment());
+                    startActivityForResult(intent, RESULT_ADD_DEEPANSE_BY_HAND);
+                }
+            }
+        });
+
+        listViewDeepAnse.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+                longClicked = true;
+                AlertDialog.Builder builder = new AlertDialog.Builder(ViewByDay.this, 2);
+                builder.setMessage(getString(R.string.prompt_del_deepanse));
+                builder.setPositiveButton("Oui", new AlertBox() {
+                    @Override
+                    public void execute() {
+                        longClicked = false;
+                        deepAnseDb.delete(arrayDeepAnse.get(position).getId());
+                        arrayDeepAnse.remove(position);
+                        mainRefresh(0);
+                    }
+                });
+                builder.setNegativeButton("Non", new AlertBox() {
+                    @Override
+                    public void execute() {
+                        longClicked = false;
+                    }
+                });
+                builder.show();
+
+                return false;
             }
         });
     }
 
     @Override
-    protected void forwardMainDate(int count) {
+    protected void mainRefresh(int count) {
 
         mainDate.add(GregorianCalendar.DAY_OF_MONTH, count);
 

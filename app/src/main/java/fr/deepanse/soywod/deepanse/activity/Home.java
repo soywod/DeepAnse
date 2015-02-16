@@ -7,20 +7,16 @@ import android.speech.RecognizerIntent;
 import android.view.View;
 
 import java.util.GregorianCalendar;
+import java.util.regex.Matcher;
 
 import fr.deepanse.soywod.deepanse.R;
 import fr.deepanse.soywod.deepanse.model.Conversion;
+import fr.deepanse.soywod.deepanse.model.DateFR;
 
 /**
  * Created by soywod on 13/02/2015.
  */
-public class Home extends Activity implements View.OnClickListener {
-
-    private final static int RESULT_ADD_DEEPANSE_BY_VOICE = 0;
-    private final static int RESULT_ADD_DEEPANSE_BY_HAND = 1;
-
-    private final static int RESULT_ADD_GROUP_BY_VOICE = 2;
-    private final static int RESULT_ADD_GROUP_BY_HAND = 3;
+public class Home extends DeepAnse implements View.OnClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,27 +47,33 @@ public class Home extends Activity implements View.OnClickListener {
                 intent.putExtra(RecognizerIntent.EXTRA_PROMPT, getString(R.string.prompt_add_deepanse));
                 startActivityForResult(intent, RESULT_ADD_DEEPANSE_BY_VOICE);
                 break;
+
             case R.id.buttonAddDeepanseByHand :
                 intent = new Intent(Home.this, EditDeepAnse.class);
                 intent.putExtra("new_deepanse", true);
+                intent.putExtra("date", Conversion.dateToString(new GregorianCalendar()));
                 startActivityForResult(intent, RESULT_ADD_DEEPANSE_BY_HAND);
                 break;
+
             case R.id.buttonEditDeepanse :
             case R.id.buttonViewByDay :
                 intent = new Intent(Home.this, ViewByDay.class);
                 intent.putExtra("main_date", Conversion.dateToString(new GregorianCalendar()));
                 startActivity(intent);
                 break;
+
             case R.id.buttonViewByMonth :
                 intent = new Intent(Home.this, ViewByMonth.class);
                 intent.putExtra("main_date", Conversion.dateToString(new GregorianCalendar()));
                 startActivity(intent);
                 break;
+
             case R.id.buttonViewByYear :
                 intent = new Intent(Home.this, ViewByYear.class);
                 intent.putExtra("main_date", Conversion.dateToString(new GregorianCalendar()));
                 startActivity(intent);
                 break;
+
             case R.id.buttonAddGroupByVoice :
                 intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
                 intent.putExtra(RecognizerIntent.EXTRA_PROMPT, getString(R.string.prompt_add_group));
@@ -82,6 +84,7 @@ public class Home extends Activity implements View.OnClickListener {
                 intent.putExtra("new_group", true);
                 startActivityForResult(intent, RESULT_ADD_GROUP_BY_HAND);
                 break;
+
             case R.id.buttonEditGroup :
                 intent = new Intent(Home.this, ViewGroup.class);
                 intent.putExtra("new_deepanse", true);
@@ -89,4 +92,7 @@ public class Home extends Activity implements View.OnClickListener {
                 break;
         }
     }
+
+    @Override
+    protected void mainRefresh(int count){}
 }

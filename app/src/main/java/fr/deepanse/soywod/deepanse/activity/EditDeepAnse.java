@@ -27,8 +27,9 @@ public class EditDeepAnse extends Activity {
     private ArrayList<DeepAnseGroup> arrayGroup;
     private fr.deepanse.soywod.deepanse.database.DeepAnseGroup groupDb;
     private fr.deepanse.soywod.deepanse.adapter.ViewGroup adapterGroup;
-    private long id;
 
+    private boolean newDeepAnse;
+    private long id;
     private DatePicker datePicker;
     private Spinner spinner;
     private EditText editAmout;
@@ -40,18 +41,19 @@ public class EditDeepAnse extends Activity {
         setContentView(R.layout.activity_edit_deepanse);
 
         DeepAnseSQLiteOpenHelper deepAnseSQLiteOpenHelper = new DeepAnseSQLiteOpenHelper(this);
-        Intent intent = getIntent();
-        boolean newDeepAnse = true;
 
-        if (intent != null) newDeepAnse = intent.getBooleanExtra("new_deepanse", true);
+        buttonSavePressed = false;
+
+        Intent intent = getIntent();
+
+        newDeepAnse = ((intent == null) || (intent.getBooleanExtra("new_deepanse", true)));
 
         datePicker = (DatePicker) findViewById(R.id.date_picker);
         spinner = (Spinner) findViewById(R.id.spinner_group);
         editAmout = (EditText) findViewById(R.id.edit_amount);
         editComment = (EditText) findViewById(R.id.edit_comment);
-        groupDb = new fr.deepanse.soywod.deepanse.database.DeepAnseGroup(deepAnseSQLiteOpenHelper);
-        id = 0;
 
+        groupDb = new fr.deepanse.soywod.deepanse.database.DeepAnseGroup(deepAnseSQLiteOpenHelper);
         openDatabases();
 
         arrayGroup = groupDb.selectAll();
@@ -62,14 +64,17 @@ public class EditDeepAnse extends Activity {
         spinner.setAdapter(adapterGroup);
 
         if (!newDeepAnse) {
-            GregorianCalendar date = Conversion.stringToDate(intent.getStringExtra("main_date"));
-
             id = intent.getLongExtra("id", 0);
-            datePicker.updateDate(date.get(GregorianCalendar.YEAR), date.get(GregorianCalendar.MONTH), date.get(GregorianCalendar.DAY_OF_MONTH));
             spinner.setSelection(adapterGroup.getPosition(groupDb.selectByName(intent.getStringExtra("group"))));
             editAmout.setText(intent.getDoubleExtra("amount", 0)+"");
             editComment.setText(intent.getStringExtra("comment"));
         }
+        else {
+            id = 0;
+        }
+
+        GregorianCalendar date = Conversion.stringToDate(intent.getStringExtra("date"));
+        datePicker.updateDate(date.get(GregorianCalendar.YEAR), date.get(GregorianCalendar.MONTH), date.get(GregorianCalendar.DAY_OF_MONTH));
     }
 
     @Override
@@ -91,17 +96,22 @@ public class EditDeepAnse extends Activity {
 
     @Override
     public void finish() {
-        Intent intent = new Intent();
-        intent.putExtra("id", id);
-        intent.putExtra("main_date", Conversion.dateToString(new GregorianCalendar(datePicker.getYear(), datePicker.getMonth(), datePicker.getDayOfMonth())));
-        intent.putExtra("group", spinner.getSelectedItem().toString());
-        intent.putExtra("amount", Double.parseDouble(editAmout.getText().toString()));
-        intent.putExtra("comment", editComment.getText().toString());
+        Intent data = new Intent();
+        data.putExtra("new_deepanse", newDeepAnse);
+        data.putExtra("id", id);
+        data.putExtra("date", Conversion.dateToString(new GregorianCalendar(datePicker.getYear(), datePicker.getMonth(), datePicker.getDayOfMonth())));
+        data.putExtra("group", spinner.getSelectedItem().toString());
+        data.putExtra("comment", editComment.getText().toString());
+        try {
+            data.putExtra("amount", Double.parseDouble(editAmout.getText().toString()));
+        } catch(NumberFormatException e) {
+            data.putExtra("amount", 0);
+        }
 
         if(buttonSavePressed)
-            setResult(RESULT_OK, intent);
+            setResult(RESULT_OK, data);
         else
-            setResult(RESULT_CANCELED, intent);
+            setResult(RESULT_CANCELED, data);
 
         super.finish();
     }

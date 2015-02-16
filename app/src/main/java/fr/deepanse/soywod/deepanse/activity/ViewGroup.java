@@ -12,6 +12,7 @@ import android.widget.ListView;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 
 import fr.deepanse.soywod.deepanse.R;
@@ -22,15 +23,10 @@ import fr.deepanse.soywod.deepanse.model.DeepAnseGroup;
 /**
  * Created by soywod on 11/02/2015.
  */
-public class ViewGroup extends Activity {
+public class ViewGroup extends DeepAnse {
 
-    private static final int RESULT_RECOGNIZER = 0;
-    private static final int RESULT_SET_COLOR = 1;
-    private static boolean longClicked = false;
-
+    private static boolean longClicked;
     private ArrayList<DeepAnseGroup> arrayGroup;
-    private DeepAnseGroup selectedGroup = null;
-    private fr.deepanse.soywod.deepanse.database.DeepAnseGroup groupDb;
     private fr.deepanse.soywod.deepanse.adapter.ViewGroup adapterGroup;
 
     @Override
@@ -38,28 +34,25 @@ public class ViewGroup extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_group);
 
-        DeepAnseSQLiteOpenHelper deepAnseSQLiteOpenHelper = new DeepAnseSQLiteOpenHelper(this);
-        ListView listViewGroup = (ListView) findViewById(R.id.listview);
+        longClicked = false;
 
-        groupDb = new fr.deepanse.soywod.deepanse.database.DeepAnseGroup(deepAnseSQLiteOpenHelper);
-
-        openDatabases();
-
-        arrayGroup = groupDb.selectAll();
+        arrayGroup = new ArrayList<>();
         adapterGroup = new fr.deepanse.soywod.deepanse.adapter.ViewGroup(this, arrayGroup);
 
+        ListView listViewGroup = (ListView) findViewById(R.id.listview);
         listViewGroup.setAdapter(adapterGroup);
+
         listViewGroup.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 if (!longClicked && position > 0) {
-                    selectedGroup = arrayGroup.get(position);
-
                     Intent intent = new Intent(ViewGroup.this, EditGroup.class);
-                    intent.putExtra("color", selectedGroup.getColor());
-                    intent.putExtra("name", selectedGroup.getName());
-                    startActivityForResult(intent, RESULT_SET_COLOR);
+                    intent.putExtra("new_group", false);
+                    intent.putExtra("id", arrayGroup.get(position).getId());
+                    intent.putExtra("color", arrayGroup.get(position).getColor());
+                    intent.putExtra("name", arrayGroup.get(position).getName());
+                    startActivityForResult(intent, RESULT_ADD_GROUP_BY_HAND);
                 }
             }
         });
@@ -91,6 +84,7 @@ public class ViewGroup extends Activity {
                     });
                     builder.show();
                 }
+
                 return false;
             }
         });
@@ -98,46 +92,15 @@ public class ViewGroup extends Activity {
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        closeDatabases();
-    }
+    protected void mainRefresh(int count) {
+        ArrayList<DeepAnseGroup> tmpArrayGroup = groupDb.selectAll();
 
-    protected void openDatabases() {
-        try
-        {
-            groupDb.open();
-        }catch(SQLException e){e.printStackTrace();}
-    }
+        arrayGroup.clear();
 
-    protected void closeDatabases() {
-        groupDb.close();
-    }
+        if (tmpArrayGroup != null)
+            for (DeepAnseGroup item : tmpArrayGroup)
+                arrayGroup.add(item);
 
-    public void eventAddGroup(View v) {
-        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, getString(R.string.prompt_add_group));
-        startActivityForResult(intent, RESULT_RECOGNIZER);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == RESULT_SET_COLOR && resultCode == RESULT_OK) {
-            selectedGroup.setColor(data.getIntExtra("color", selectedGroup.getColor()));
-            selectedGroup.setName(data.getStringExtra("name"));
-            groupDb.update(selectedGroup.getId(), selectedGroup);
-            adapterGroup.notifyDataSetChanged();
-        }
-        else if (requestCode == RESULT_RECOGNIZER && resultCode == RESULT_OK) {
-            DeepAnseGroup group = new DeepAnseGroup();
-            Random rand = new Random();
-            group.setColor(Color.rgb(rand.nextInt(256), rand.nextInt(256), rand.nextInt(256)));
-            group.setName(data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS).get(0).toLowerCase());
-            groupDb.insert(group);
-            arrayGroup.add(group);
-            adapterGroup.notifyDataSetChanged();
-        }
+        adapterGroup.notifyDataSetChanged();
     }
 }
