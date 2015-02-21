@@ -272,7 +272,7 @@ abstract public class DeepAnse extends Activity {
                     Intent intent = new Intent(DeepAnse.this, ViewByDay.class);
                     intent.putExtra("main_date", Conversion.dateToString(date));
                     startActivity(intent);
-                    if (this.getClass() != Home.class) finish();
+                    //if (this.getClass() != Home.class) finish();
                 }
             }
         }
@@ -296,7 +296,7 @@ abstract public class DeepAnse extends Activity {
                 Intent intent = new Intent(DeepAnse.this, ViewByDay.class);
                 intent.putExtra("main_date", Conversion.dateToString(date));
                 startActivity(intent);
-                if (this.getClass() != Home.class) finish();
+                //if (this.getClass() != Home.class) finish();
             }
         }
         else if (requestCode == RESULT_ADD_GROUP_BY_VOICE && resultCode == RESULT_OK) {
@@ -308,7 +308,7 @@ abstract public class DeepAnse extends Activity {
             }
             else {
                 startActivity(new Intent(DeepAnse.this, ViewGroup.class));
-                if (this.getClass() != Home.class) finish();
+                //if (this.getClass() != Home.class) finish();
             }
         }
         else if (requestCode == RESULT_ADD_GROUP_BY_HAND && resultCode == RESULT_OK) {
@@ -323,7 +323,7 @@ abstract public class DeepAnse extends Activity {
             }
             else {
                 startActivity(new Intent(DeepAnse.this, ViewGroup.class));
-                if (this.getClass() != Home.class) finish();
+                //if (this.getClass() != Home.class) finish();
             }
         }
     }

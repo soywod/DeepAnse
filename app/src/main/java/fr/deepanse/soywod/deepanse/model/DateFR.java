@@ -32,6 +32,20 @@ public enum DateFR {
         this.dateNumeric = dateNumeric;
     }
 
+    public static String[] getMonthList() {
+        String list = "";
+        for (DateFR type : DateFR.values())
+            if (!type.dateLitteral.equals("lundi") &&
+                !type.dateLitteral.equals("mardi") &&
+                !type.dateLitteral.equals("mercredi") &&
+                !type.dateLitteral.equals("jeudi") &&
+                !type.dateLitteral.equals("vendredi") &&
+                !type.dateLitteral.equals("samedi") &&
+                !type.dateLitteral.equals("dimanche")) list += Conversion.firstCharToUpperCase(type.dateLitteral) + " ";
+
+        return list.trim().split(" ");
+    }
+
     public String getDateLitteral() {
         return dateLitteral;
     }
@@ -67,4 +81,6 @@ public enum DateFR {
         }
         return dateNumeric;
     }
+
+
 }

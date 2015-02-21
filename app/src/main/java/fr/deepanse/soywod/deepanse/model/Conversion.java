@@ -114,6 +114,20 @@ public class Conversion {
     }
 
     /**
+     *  Convertit un GregorianCalendar en String
+     *
+     *  @param date     La date à convertir de type GregorianCalendar
+     *
+     *  @return La date convertie en String
+     */
+    public static String dateToStringFr(GregorianCalendar date)
+    {
+        return ((date.get(GregorianCalendar.DAY_OF_MONTH) < 10)?("0" + date.get(GregorianCalendar.DAY_OF_MONTH)):("" + date.get(GregorianCalendar.DAY_OF_MONTH))) + "/" +
+                ((date.get(GregorianCalendar.MONTH) < 9)?("0" + (date.get(GregorianCalendar.MONTH)+1)):("" + (date.get(GregorianCalendar.MONTH)+1))) + "/" +
+                date.get(GregorianCalendar.YEAR);
+    }
+
+    /**
      *  Convertit un GregorianCalendar en String (version FR)
      *
      *  @param date     La date à convertir de type GregorianCalendar

@@ -2,16 +2,10 @@
 <resources>
 
     <string name="app_name">DeepAnse</string>
-
     <string name="home_title">Accueil</string>
-    <string name="home_desc"><b>DeepAnse</b> vous permet de saisir simplement et rapidement <b><u>à l\'oral</u></b> comme à l\'écrit vos <b>dépenses quotidiennes</b>, organisées par <b>catégories</b>, et permet également de les visualiser à travers <b>plusieurs états</b> (par année, par mois, par jour, par catégorie …)\n\nPour plus d\'informations sur comment utiliser cette application, jetez un oeil à la rubrique <b>Aide</b> située en bas de cette page.</string>
-    <string name="home_deepanse"><b>Gestion des dépenses</b></string>
-    <string name="home_group"><b>Gestion des rubriques</b></string>
-    <string name="home_help"><b>Aide</b></string>
-    <string name="home_deepanse_add_by_voice">Ajouter\ndépense\n(oral)</string>
-    <string name="home_deepanse_add_by_hand">Ajouter\ndépense\n(écrit)</string>
-    <string name="home_deepanse_edit">Editer\ndépense</string>
-    <string name="home_deepanse_find">Rechercher\ndépense</string>
+    <string name="home_deepanse"><i>Gestion des dépenses</i></string>
+    <string name="home_group"><i>Gestion des rubriques</i></string>
+    <string name="home_help"><i>Aide</i></string>
     <string name="home_deepanse_view_by_year">Afficher\ndépenses\npar année</string>
     <string name="home_deepanse_view_by_month">Afficher\ndépenses\npar mois</string>
     <string name="home_deepanse_view_by_day">Afficher\ndépenses\npar jour</string>
@@ -25,8 +19,6 @@
     <string name="home_help_view">Comment\nlire\ndépense</string>
     <string name="home_help_del_deepanse">Comment\nsupprimer\ndépense</string>
     <string name="home_help_del_group">Comment\nsupprimer\nrubrique</string>
-
-
     <string name="view_deepanse_view_by_day">Afficher dépenses par jour</string>
     <string name="view_deepanse_view_by_month">Afficher dépenses par mois</string>
     <string name="view_deepanse_view_by_year">Afficher dépenses par année</string>
@@ -41,24 +33,16 @@
     <string name="view_group">Afficher rubriques</string>
     <string name="view_deepanse_add">Ajouter\ndépense</string>
     <string name="view_group_add">Ajouter\nrubrique</string>
-
     <string name="arrow_left">&lt;</string>
-    <string name="arrow_right">&gt;</string>
-
+    <string name="arrow_right">></string>
     <string name="menu_manage_group">Gérer les groupes</string>
-
     <string name="save">Sauvegarder</string>
-
     <string name="add_deepanse">Ajouter une dépense</string>
     <string name="add_group">Créer un nouveau groupe</string>
-
     <string name="prompt_add_group">Dictez maintenant votre nouveau groupe</string>
     <string name="prompt_del_group">Voulez-vous vraiment supprimer ce groupe ? Toute dépense liée à ce groupe seront transférées dans le groupe Default.</string>
     <string name="prompt_add_deepanse">Dictez maintenant votre nouvelle dépense [date] [groupe] [commentaire] montant</string>
     <string name="prompt_del_deepanse">Voulez-vous vraiment supprimer cette dépense ?</string>
-
-
-
     <string name="total">Total :</string>
     <string name="date">Date :</string>
     <string name="amount">Montant :</string>
@@ -68,6 +52,39 @@
     <string name="name">Nom :</string>
     <string name="saturation">Saturation :</string>
     <string name="opacity">Opacité :</string>
+    <string name="title_activity_list_deep_anse">ListDeepAnse</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="action_example">Example action</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="home">Accueil</string>
+    <string name="home_desc"><b>DeepAnse</b> vous permet de saisir simplement et rapidement <b><u>à l\'oral</u></b> comme à l\'écrit vos <b>dépenses quotidiennes</b>, organisées par catégories entièrement <b>personnalisables</b>.</string>
+    <string name="home_add_deepanse">Ajouter\ndépense</string>
+    <string name="home_add_group">Ajouter\nrubrique</string>
+    <string name="home_list_deepanse">Lister\ndépense</string>
+    <string name="home_list_group">Lister\nrubrique</string>
+    <string name="home_find_deepanse">Rechercher\ndépense</string>
+    <string name="home_import_group">Importer\nrubrique</string>
+    <string name="title_section1">Section 1</string>
+    <string name="title_section2">Section 2</string>
+    <string name="title_section3">Section 3</string>
+    <string name="hello_world">Hello world!</string>
+
+    <string name="view_title_by_year">Liste par année</string>
+    <string name="view_title_by_month">Liste par mois</string>
+    <string name="view_title_by_day">Liste par jour</string>
+
+    <string name="view_button_by_year">Par année</string>
+    <string name="view_button_by_month">Par mois</string>
+    <string name="view_button_by_day">Par jour</string>
+
+    <string name="view_title_detail">Liste détaillée</string>
+
+
+    <string name="menu_collapse">Réduire tous les groupes</string>
+    <string name="detail_of_group">Détail de la rubrique</string>
+    <string name="at">au</string>
 
 
 </resources>

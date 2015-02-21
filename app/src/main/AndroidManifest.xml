@@ -9,11 +9,8 @@
         android:theme="@style/DeepAnseTheme" >
         <activity
             android:name=".activity.Home"
+            android:icon="@drawable/add_deepanse"
             android:label="@string/app_name" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".activity.ViewGroup"
@@ -38,6 +35,19 @@
         <activity
             android:name=".activity.ViewByYear"
             android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name=".activity.ListDeepAnse"
+            android:label="@string/title_activity_list_deep_anse" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activity.ListDeepAnseDetail"
+            android:label="@string/title_activity_list_deep_anse" >
         </activity>
     </application>
 

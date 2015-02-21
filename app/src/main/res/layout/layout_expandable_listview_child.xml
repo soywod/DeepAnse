@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="@drawable/expandable_listview_child">
+
+    <TextView
+        android:id="@+id/text_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        android:gravity="start|center_vertical"
+        android:paddingLeft="40dp"
+        android:shadowColor="@color/ColorShadow"
+        android:shadowRadius="4"
+        android:shadowDx="-3"
+        android:shadowDy="3" />
+
+    <TextView
+        android:id="@+id/text_sum"
+        android:layout_width="fill_parent"
+        android:layout_height="40dp"
+        android:gravity="end|center_vertical"
+        android:textColor="@color/ColorWhite"
+        android:paddingRight="20dp"
+        android:shadowColor="@color/ColorShadow"
+        android:shadowRadius="4"
+        android:shadowDx="-3"
+        android:shadowDy="3" />
+
+</LinearLayout>
