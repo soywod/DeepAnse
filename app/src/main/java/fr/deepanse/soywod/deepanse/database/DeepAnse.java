@@ -7,9 +7,9 @@ import android.database.sqlite.SQLiteDatabase;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
-import java.util.Objects;
 
-import fr.deepanse.soywod.deepanse.model.*;
+import fr.deepanse.soywod.deepanse.model.Conversion;
+import fr.deepanse.soywod.deepanse.model.DateFR;
 
 /**
  * Created by soywod on 05/02/2015.
@@ -112,127 +112,6 @@ public class DeepAnse {
             cursorDeepAnse.close();
 
             return deepAnse;
-        }
-        else {
-            return null;
-        }
-    }
-
-    /**
-     *  Sélectionne toutes les dépenses de la BDD
-     *
-     *  @return
-     *      La liste des dépenses de la BDD de type ArrayList
-     */
-    public ArrayList<fr.deepanse.soywod.deepanse.model.DeepAnse> selectAll()
-    {
-        Cursor cursorDeepAnse = sqLiteDatabase.rawQuery("SELECT * FROM " + DeepAnseSQLiteOpenHelper.TABLE_DEEPANSE, null);
-
-        if (cursorDeepAnse.getCount() != 0) {
-            ArrayList<fr.deepanse.soywod.deepanse.model.DeepAnse> arrayDeepAnse = new ArrayList<>();
-
-            for(cursorDeepAnse.moveToFirst(); !cursorDeepAnse.isAfterLast(); cursorDeepAnse.moveToNext())
-            {
-                Cursor cursorGroup = sqLiteDatabase.rawQuery("SELECT * FROM " + DeepAnseSQLiteOpenHelper.TABLE_DEEPANSE_GROUP +" WHERE " + DeepAnseSQLiteOpenHelper.ID + " = ?" , new String[]{String.valueOf(cursorDeepAnse.getInt(3))});
-
-                cursorGroup.moveToFirst();
-                arrayDeepAnse.add(Conversion.cursorToDeepAnse(cursorDeepAnse, Conversion.cursorToDeepAnseGroup(cursorGroup)));
-                cursorGroup.close();
-            }
-            cursorDeepAnse.close();
-
-            return arrayDeepAnse;
-        }
-        else {
-            return null;
-        }
-    }
-
-    /**
-     *  Sélectionne toutes les dépenses de la BDD du mois et année donnés en paramètre
-     *
-     *  @param date     La date de la dépense de la BDD de type GregorianCalendar
-     *
-     *  @return
-     *      La liste des dépenses de la BDD de type ArrayList
-     */
-    public ArrayList<fr.deepanse.soywod.deepanse.model.Report> selectAllByYear(GregorianCalendar date)
-    {
-        Cursor cursorReport = sqLiteDatabase.rawQuery("SELECT strftime('%m', "+DeepAnseSQLiteOpenHelper.DATE+") AS month, strftime('%Y', " + DeepAnseSQLiteOpenHelper.DATE + ") as year, SUM("+DeepAnseSQLiteOpenHelper.AMOUNT+") as sum FROM " + DeepAnseSQLiteOpenHelper.TABLE_DEEPANSE + " " +
-                "WHERE year = '" + date.get(GregorianCalendar.YEAR) + "' " +
-                "GROUP BY month", null);
-
-        if (cursorReport.getCount() != 0) {
-            ArrayList<fr.deepanse.soywod.deepanse.model.Report> arrayReport = new ArrayList<>();
-
-            for(cursorReport.moveToFirst(); !cursorReport.isAfterLast(); cursorReport.moveToNext())
-                arrayReport.add(Conversion.cursorToReportByYear(cursorReport));
-            cursorReport.close();
-
-            return arrayReport;
-        }
-        else {
-            return null;
-        }
-    }
-
-    /**
-     *  Sélectionne toutes les dépenses de la BDD du mois et année donnés en paramètre
-     *
-     *  @param date     La date de la dépense de la BDD de type GregorianCalendar
-     *
-     *  @return
-     *      La liste des dépenses de la BDD de type ArrayList
-     */
-    public ArrayList<fr.deepanse.soywod.deepanse.model.Report> selectAllByMonth(GregorianCalendar date)
-    {
-        Cursor cursorReport = sqLiteDatabase.rawQuery("SELECT strftime('%d', "+DeepAnseSQLiteOpenHelper.DATE+") AS day, strftime('%m', "+DeepAnseSQLiteOpenHelper.DATE+") AS month, strftime('%Y', " + DeepAnseSQLiteOpenHelper.DATE + ") as year, SUM("+DeepAnseSQLiteOpenHelper.AMOUNT+") as sum FROM " + DeepAnseSQLiteOpenHelper.TABLE_DEEPANSE + " " +
-                "WHERE year = '" + date.get(GregorianCalendar.YEAR) + "' " +
-                "AND month = '" + ((date.get(GregorianCalendar.MONTH) < 9)?("0" + (date.get(GregorianCalendar.MONTH)+1)):("" + (date.get(GregorianCalendar.MONTH)+1))) + "' " +
-                "GROUP BY day", null);
-
-        if (cursorReport.getCount() != 0) {
-            ArrayList<fr.deepanse.soywod.deepanse.model.Report> arrayReport = new ArrayList<>();
-
-            for(cursorReport.moveToFirst(); !cursorReport.isAfterLast(); cursorReport.moveToNext())
-                arrayReport.add(Conversion.cursorToReportByMonth(cursorReport));
-            cursorReport.close();
-
-            return arrayReport;
-        }
-        else {
-            return null;
-        }
-    }
-
-    /**
-     *  Sélectionne toutes les dépenses de la BDD du mois et année donnés en paramètre
-     *
-     *  @param date     La date de la dépense de la BDD de type GregorianCalendar
-     *
-     *  @return
-     *      La liste des dépenses de la BDD de type ArrayList
-     */
-    public ArrayList<fr.deepanse.soywod.deepanse.model.DeepAnse> selectAllByDay(GregorianCalendar date)
-    {
-        Cursor cursorDeepAnse = sqLiteDatabase.rawQuery("SELECT * FROM " + DeepAnseSQLiteOpenHelper.TABLE_DEEPANSE + " " +
-                "WHERE strftime('%Y', " + DeepAnseSQLiteOpenHelper.DATE + ") = '" + date.get(GregorianCalendar.YEAR) + "' " +
-                "AND strftime('%m', "+DeepAnseSQLiteOpenHelper.DATE+") = '"+((date.get(GregorianCalendar.MONTH) < 9)?("0" + (date.get(GregorianCalendar.MONTH)+1)):("" + (date.get(GregorianCalendar.MONTH)+1)))+"' " +
-                "AND strftime('%d', "+DeepAnseSQLiteOpenHelper.DATE+") = '"+date.get(GregorianCalendar.DAY_OF_MONTH)+"'", null);
-
-        if (cursorDeepAnse.getCount() != 0) {
-            ArrayList<fr.deepanse.soywod.deepanse.model.DeepAnse> arrayDeepAnse = new ArrayList<>();
-
-            for(cursorDeepAnse.moveToFirst(); !cursorDeepAnse.isAfterLast(); cursorDeepAnse.moveToNext())
-            {
-                Cursor cursorGroup = sqLiteDatabase.rawQuery("SELECT * FROM " + DeepAnseSQLiteOpenHelper.TABLE_DEEPANSE_GROUP +" WHERE " + DeepAnseSQLiteOpenHelper.ID + " = ?" , new String[]{String.valueOf(cursorDeepAnse.getInt(3))});
-                cursorGroup.moveToFirst();
-                arrayDeepAnse.add(Conversion.cursorToDeepAnse(cursorDeepAnse, Conversion.cursorToDeepAnseGroup(cursorGroup)));
-                cursorGroup.close();
-            }
-            cursorDeepAnse.close();
-
-            return arrayDeepAnse;
         }
         else {
             return null;
@@ -456,25 +335,43 @@ public class DeepAnse {
      *  @return
      *      La liste des dépenses de la BDD de type ArrayList
      */
-    public ArrayList<fr.deepanse.soywod.deepanse.model.DeepAnse> selectAllByDateGroup(GregorianCalendar date, fr.deepanse.soywod.deepanse.model.DeepAnseGroup group)
+    public ArrayList<fr.deepanse.soywod.deepanse.model.DeepAnse> selectAllBySearch(GregorianCalendar date, fr.deepanse.soywod.deepanse.model.DeepAnseGroup group, Double amount, String comment)
     {
-        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM " + DeepAnseSQLiteOpenHelper.TABLE_DEEPANSE + " " +
-                "WHERE strftime('%Y', " + DeepAnseSQLiteOpenHelper.DATE + ") = '" + date.get(GregorianCalendar.YEAR) + "' " +
+        String request = "SELECT * FROM " + DeepAnseSQLiteOpenHelper.TABLE_DEEPANSE + " WHERE ";
+
+        if (date != null) {
+            request = request + "strftime('%Y', " + DeepAnseSQLiteOpenHelper.DATE + ") = '" + date.get(GregorianCalendar.YEAR) + "' " +
                 "AND strftime('%m', " + DeepAnseSQLiteOpenHelper.DATE + ") = '" + ((date.get(GregorianCalendar.MONTH) < 9)?("0" + (date.get(GregorianCalendar.MONTH)+1)):("" + (date.get(GregorianCalendar.MONTH)+1))) + "' " +
-                "AND strftime('%d', " + DeepAnseSQLiteOpenHelper.DATE + ") = '" + ((date.get(GregorianCalendar.DAY_OF_MONTH) < 10)?("0" + date.get(GregorianCalendar.DAY_OF_MONTH)):("" + date.get(GregorianCalendar.DAY_OF_MONTH))) + "' " +
-                "AND " + DeepAnseSQLiteOpenHelper.ID_GROUP + " = " + group.getId() + " " +
-                "ORDER BY " + DeepAnseSQLiteOpenHelper.AMOUNT, null);
+                "AND strftime('%d', " + DeepAnseSQLiteOpenHelper.DATE + ") = '" + ((date.get(GregorianCalendar.DAY_OF_MONTH) < 10)?("0" + date.get(GregorianCalendar.DAY_OF_MONTH)):("" + date.get(GregorianCalendar.DAY_OF_MONTH))) + "' AND ";
+        }
+
+        if (group != null) {
+            request = request + DeepAnseSQLiteOpenHelper.ID_GROUP + " = " + group.getId() + " AND ";
+        }
+
+        if (amount != 0) {
+            request = request + DeepAnseSQLiteOpenHelper.AMOUNT + " = " + amount + " AND ";
+        }
+
+        if (comment != null) {
+            request = request + DeepAnseSQLiteOpenHelper.COMMENT + " LIKE '%" + comment + "%' AND ";
+        }
+
+        request += "1 = 1 ORDER BY " + DeepAnseSQLiteOpenHelper.DATE + " DESC, " + DeepAnseSQLiteOpenHelper.ID_GROUP + ", " + DeepAnseSQLiteOpenHelper.AMOUNT + " DESC";
+
+        System.out.println(request);
+
+        Cursor cursor = sqLiteDatabase.rawQuery(request, null);
 
         if (cursor.getCount() != 0) {
             ArrayList<fr.deepanse.soywod.deepanse.model.DeepAnse> arrayDeepAnse = new ArrayList<>();
 
-            Cursor cursorGroup = sqLiteDatabase.rawQuery("SELECT * FROM " + DeepAnseSQLiteOpenHelper.TABLE_DEEPANSE_GROUP +" WHERE " + DeepAnseSQLiteOpenHelper.ID + " = " + group.getId(), null);
-            cursorGroup.moveToFirst();
-
-            for(cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext())
+            for(cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+                Cursor cursorGroup = sqLiteDatabase.rawQuery("SELECT * FROM " + DeepAnseSQLiteOpenHelper.TABLE_DEEPANSE_GROUP +" WHERE " + DeepAnseSQLiteOpenHelper.ID + " = " + cursor.getLong(3), null);
+                cursorGroup.moveToFirst();
                 arrayDeepAnse.add(Conversion.cursorToDeepAnse(cursor, Conversion.cursorToDeepAnseGroup(cursorGroup)));
-
-            cursorGroup.close();
+                cursorGroup.close();
+            }
             cursor.close();
 
             return arrayDeepAnse;

@@ -1,165 +1,140 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:scrollbars="vertical"
-    android:fadeScrollbars="false"
-    android:layout_weight="1"
+    android:padding="10dp"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     android:background="@drawable/background">
 
-    <TableLayout
+    <ScrollView
+        android:id="@+id/layout_scroll"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:focusable="true"
-        android:focusableInTouchMode="true">
+        android:scrollbars="vertical"
+        android:fadeScrollbars="false"
+        android:layout_above="@+id/layout_buttons"
+        android:layout_alignParentTop="true">
 
-        <TableRow>
-            <TextView style="@style/Title"
-                android:drawableLeft="@drawable/edit_group"
-                android:drawableStart="@drawable/edit_group" />
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-            <TextView style="@style/Title"
-                android:layout_weight="6"
-                android:textSize="19sp"
-                android:text="@string/view_group_edit" />
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="10dp"
+                android:orientation="horizontal"
+                android:weightSum="3"
+                android:layout_marginBottom="10dp">
 
-            <Button style="@style/HomeButton"
-                android:drawableRight="@drawable/home"
-                android:drawableEnd="@drawable/home"
-                android:onClick="eventHome" />
-        </TableRow>
+                <TextView style="@style/text_white"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.3"
+                    android:paddingLeft="10dp"
+                    android:gravity="start|center_vertical"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="@string/name" />
 
-        <TableRow>
-            <TextView style="@style/Text" android:text="@string/view_group_edit_desc" />
-        </TableRow>
+                <EditText style="@style/edit_text"
+                    android:id="@+id/edit_name"
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:padding="10dp"
+                    android:inputType="textPersonName"
+                    android:layout_weight="1.7" />
+            </LinearLayout>
 
-        <TableRow>
-            <TextView style="@style/Separator" />
-        </TableRow>
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
+                android:layout_marginBottom="10dp">
 
-        <TableRow android:layout_marginTop="20dp">
-            <TextView style="@style/Text"
-                android:layout_height="match_parent"
-                android:gravity="start|center_vertical"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="@string/color" />
+                <TextView style="@style/text_white"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.3"
+                    android:paddingLeft="10dp"
+                    android:gravity="start|center_vertical"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="@string/color" />
 
-            <com.larswerkman.holocolorpicker.ColorPicker
-                android:id="@+id/picker"
-                android:background="@color/ColorWhite"
-                android:layout_width="0dip"
-                android:layout_weight="2" />
-        </TableRow>
+                <com.larswerkman.holocolorpicker.ColorPicker
+                    android:id="@+id/color_picker"
+                    android:background="@color/ColorWhite"
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.7" />
 
-        <TableRow android:layout_marginTop="20dp">
-            <TextView style="@style/Text"
-                android:layout_height="match_parent"
-                android:gravity="start|center_vertical"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="@string/saturation" />
+            </LinearLayout>
 
-            <com.larswerkman.holocolorpicker.SVBar
-                android:id="@+id/svbar"
-                android:background="@color/ColorWhite"
-                android:layout_width="0dip"
-                android:layout_weight="2" />
-        </TableRow>
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="10dp"
+                android:weightSum="3"
+                android:layout_marginBottom="10dp">
 
-        <TableRow android:layout_marginTop="20dp">
-            <TextView style="@style/Text"
-                android:layout_height="match_parent"
-                android:gravity="start|center_vertical"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="@string/opacity" />
+                <TextView style="@style/text_white"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.3"
+                    android:paddingLeft="10dp"
+                    android:gravity="start|center_vertical"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="@string/saturation" />
 
-            <com.larswerkman.holocolorpicker.OpacityBar
-                android:id="@+id/opacity_bar"
-                android:background="@color/ColorWhite"
-                android:layout_width="0dip"
-                android:layout_weight="2" />
-        </TableRow>
+                <com.larswerkman.holocolorpicker.SVBar
+                    android:id="@+id/svbar"
+                    android:background="@color/ColorWhite"
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.7" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 
-        <TableRow android:layout_marginTop="20dp">
-            <TextView style="@style/Text"
-                android:layout_height="match_parent"
-                android:gravity="start|center_vertical"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="@string/name" />
-
-            <EditText
-                android:id="@+id/edit_name"
-                android:background="@color/ColorWhite"
-                android:layout_width="0dip"
-                android:padding="10dp"
-                android:inputType="textPersonName"
-                android:layout_weight="2" />
-        </TableRow>
-
-        <TableRow>
-            <TextView style="@style/Separator" />
-        </TableRow>
-
-        <TableRow android:layout_marginTop="20dp">
-            <Button style="@style/Button"
-                android:text="@string/save"
-                android:onClick="eventSaveGroup" />
-        </TableRow>
-    </TableLayout>
-</ScrollView>
-
-<!--
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".activity.SetColor">
-
-    <com.larswerkman.holocolorpicker.ColorPicker
-        android:id="@+id/picker"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_above="@+id/svbar" />
-
-    <com.larswerkman.holocolorpicker.SVBar
-        android:id="@+id/svbar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="15dip"
-        android:layout_above="@+id/edit_group"
-        android:layout_marginBottom="30dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-
-    <EditText
-        android:id="@+id/edit_group"
+    <LinearLayout
+        android:id="@+id/layout_buttons"
         android:layout_width="fill_parent"
-        android:layout_height="57dp"
-        android:inputType="textPersonName"
-        android:layout_above="@+id/button_save"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:weightSum="3"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentBottom="true">
 
-    <Button
-        android:id="@+id/button_save"
-        android:layout_width="fill_parent"
-        android:layout_height="57dp"
-        android:text="@string/save"
-        android:onClick="eventSaveGroup"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        <Button style="@style/button"
+            android:id="@+id/button_cancel"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:text="@string/cancel"
+            android:layout_marginRight="5dp"
+            android:onClick="eventCancel" />
 
+        <Button style="@style/button"
+            android:id="@+id/button_delete"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:text="@string/delete"
+            android:onClick="eventDelete" />
+
+        <Button style="@style/button"
+            android:id="@+id/button_save"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:layout_marginLeft="5dp"
+            android:text="@string/save"
+            android:onClick="eventSave" />
+    </LinearLayout>
 </RelativeLayout>
--->

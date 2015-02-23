@@ -1,18 +1,16 @@
 package fr.deepanse.soywod.deepanse.activity;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.Spinner;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -23,50 +21,42 @@ import java.util.Map;
 
 import fr.deepanse.soywod.deepanse.R;
 import fr.deepanse.soywod.deepanse.adapter.ExpandableListDeepAnse;
-import fr.deepanse.soywod.deepanse.adapter.SpinnerDeepAnse;
+import fr.deepanse.soywod.deepanse.adapter.SpinnerDate;
 import fr.deepanse.soywod.deepanse.database.DeepAnseSQLiteOpenHelper;
-import fr.deepanse.soywod.deepanse.model.*;
-import fr.deepanse.soywod.deepanse.model.DeepAnse;
+import fr.deepanse.soywod.deepanse.model.Conversion;
+import fr.deepanse.soywod.deepanse.model.DateFR;
 
-public class ListDeepAnse extends ActionBarActivity {
+public class ListDeepAnse extends DeepAnse {
 
-    private fr.deepanse.soywod.deepanse.database.DeepAnseGroup groupDb;
-    private fr.deepanse.soywod.deepanse.database.DeepAnse deepAnseDb;
-
-    private List<Object[]> groupList = new ArrayList<>();
-    private List<Object[]> childList  = new ArrayList<>();
-    private Map<Object[], List<Object[]>> deepAnseCollection = new LinkedHashMap<>();
+    private List<Object[]> groupList;
+    private List<Object[]> childList;
+    private Map<Object[], List<Object[]>> deepAnseCollection;
 
     private ExpandableListView expandableListView;
     private ExpandableListDeepAnse adapter;
 
     private Spinner spinnerMonth, spinnerYear;
 
-    private ArrayList<String> arraySpinnerMonth = new ArrayList<>();
-    private ArrayList<String> arraySpinnerYear = new ArrayList<>();
+    private ArrayList<String> arraySpinnerMonth;
+    private ArrayList<String> arraySpinnerYear;
 
-    private static int ACTIVE_DISPLAY = 0;
+    private static int ACTIVE_DISPLAY;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_deepanse);
-        setTitle(R.string.view_title_by_year);
 
-        DeepAnseSQLiteOpenHelper deepAnseSQLiteOpenHelper = new DeepAnseSQLiteOpenHelper(this);
-        groupDb = new fr.deepanse.soywod.deepanse.database.DeepAnseGroup(deepAnseSQLiteOpenHelper);
-        deepAnseDb = new fr.deepanse.soywod.deepanse.database.DeepAnse(deepAnseSQLiteOpenHelper);
+        initComponent();
+        initData();
+    }
 
+    public void initComponent() {
+        expandableListView = (ExpandableListView) findViewById(R.id.expandable_listview);
         spinnerMonth = (Spinner) findViewById(R.id.spinner_month);
         spinnerYear = (Spinner) findViewById(R.id.spinner_year);
-        expandableListView = (ExpandableListView) findViewById(R.id.expandable_listview);
-
-        openDatabases();
-
-        adapter = new ExpandableListDeepAnse(this, groupDb, groupList, deepAnseCollection);
 
         expandableListView.setDividerHeight(1);
-        expandableListView.setAdapter(adapter);
         expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
@@ -80,6 +70,7 @@ public class ListDeepAnse extends ActionBarActivity {
 
 
                     Intent intent = new Intent(ListDeepAnse.this, ListDeepAnseDetail.class);
+                    intent.putExtra("title", R.string.title_detail_of);
                     intent.putExtra("date", Conversion.dateToString(date));
                     intent.putExtra("group", group);
                     startActivity(intent);
@@ -88,7 +79,6 @@ public class ListDeepAnse extends ActionBarActivity {
                 return false;
             }
         });
-
         spinnerMonth.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -100,7 +90,6 @@ public class ListDeepAnse extends ActionBarActivity {
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
-
         spinnerYear.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -120,11 +109,29 @@ public class ListDeepAnse extends ActionBarActivity {
         });
     }
 
+    public void initData() {
+        ACTIVE_DISPLAY = 2;
+
+        groupList = new ArrayList<>();
+        childList  = new ArrayList<>();
+        deepAnseCollection = new LinkedHashMap<>();
+        arraySpinnerMonth = new ArrayList<>();
+        arraySpinnerYear = new ArrayList<>();
+
+        adapter = new ExpandableListDeepAnse(this, groupDb, groupList, deepAnseCollection);
+
+        expandableListView.setAdapter(adapter);
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
+        refreshData();
+    }
 
+    public void refreshData() {
         initSpinnerYear();
+        initSpinnerMonth();
 
         switch (ACTIVE_DISPLAY) {
             case 0:
@@ -142,46 +149,27 @@ public class ListDeepAnse extends ActionBarActivity {
     public void initSpinnerYear() {
         arraySpinnerYear.clear();
         ArrayList<String> tmpArrayYear = deepAnseDb.selectAllYearWithOutSum();
-        for (String item : tmpArrayYear)
-            arraySpinnerYear.add(item);
-        spinnerYear.setAdapter(new SpinnerDeepAnse(ListDeepAnse.this, arraySpinnerYear));
+        if (tmpArrayYear != null) {
+            for (String item : tmpArrayYear)
+                arraySpinnerYear.add(item);
+            spinnerYear.setAdapter(new SpinnerDate(ListDeepAnse.this, arraySpinnerYear));
+        }
     }
 
     public void initSpinnerMonth() {
         arraySpinnerMonth.clear();
         ArrayList<String> tmpArrayMonth = deepAnseDb.selectAllMonth((String) spinnerYear.getSelectedItem());
-        for (String item : tmpArrayMonth)
-            arraySpinnerMonth.add(item);
+        if (tmpArrayMonth != null) {
+            for (String item : tmpArrayMonth)
+                arraySpinnerMonth.add(item);
 
-        spinnerMonth.setAdapter(new SpinnerDeepAnse(ListDeepAnse.this, arraySpinnerMonth));
+            spinnerMonth.setAdapter(new SpinnerDate(ListDeepAnse.this, arraySpinnerMonth));
+        }
     }
 
     public void collapseAll() {
         for (int i=0 ; i<adapter.getGroupCount() ; i++)
             expandableListView.collapseGroup(i);
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        closeDatabases();
-    }
-
-    public void openDatabases() {
-        try
-        {
-            groupDb.open();
-            deepAnseDb.open();
-        }catch(SQLException e){e.printStackTrace();}
-
-        if (groupDb.select(1) == null) groupDb.insert(new DeepAnseGroup(1, "default", Color.parseColor("#CCCCCC")));
-        //groupDb.insert(new DeepAnseGroup(2, "chaise", Color.RED));
-        //deepAnseDb.insert(new DeepAnse(0, 6, new GregorianCalendar(2016, 5, 20), groupDb.select(1), "comment5", false));
-    }
-
-    public void closeDatabases() {
-        groupDb.close();
-        deepAnseDb.close();
     }
 
     private void createCollectionForYear() {
@@ -241,35 +229,6 @@ public class ListDeepAnse extends ActionBarActivity {
             childList.add(new Object[]{groupDb.select((Long) item[1]).getName(), String.valueOf(item[2])});
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_list_deepanse, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        switch (id) {
-            case R.id.menu_year:
-                eventListByYear(null);
-                break;
-
-            case R.id.menu_month:
-                eventListByMonth(null);
-                break;
-
-            case R.id.menu_day:
-                eventListByDay(null);
-                break;
-
-            case R.id.menu_collapse:
-                collapseAll();
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
     public void eventListByYear(View v) {
         ACTIVE_DISPLAY = 0;
@@ -286,9 +245,7 @@ public class ListDeepAnse extends ActionBarActivity {
 
         adapter.notifyDataSetChanged();
 
-        setTitle(R.string.view_title_by_year);
-
-
+        setTitle(R.string.title_by_year);
 
         collapseAll();
     }
@@ -310,7 +267,7 @@ public class ListDeepAnse extends ActionBarActivity {
 
         adapter.notifyDataSetChanged();
 
-        setTitle(R.string.view_title_by_month);
+        setTitle(R.string.title_by_month);
 
         collapseAll();
     }
@@ -326,17 +283,55 @@ public class ListDeepAnse extends ActionBarActivity {
 
         Object tmpYear = ((Spinner) findViewById(R.id.spinner_year)).getSelectedItem();
 
-        String tmpMonth = (DateFR.findDateNumeric(((String)((Spinner) findViewById(R.id.spinner_month)).getSelectedItem()).toLowerCase())+1)+"";
-        if (tmpMonth.length() == 1) tmpMonth = "0" + tmpMonth;
+        if (tmpYear != null) {
+            String tmpMonth = (DateFR.findDateNumeric(((String)((Spinner) findViewById(R.id.spinner_month)).getSelectedItem()).toLowerCase())+1)+"";
+            if (tmpMonth.length() == 1) tmpMonth = "0" + tmpMonth;
 
-        adapter.setChildSelectable(true);
+            adapter.setChildSelectable(true);
 
-        createCollectionForDay(tmpYear, tmpMonth);
+            createCollectionForDay(tmpYear, tmpMonth);
 
-        adapter.notifyDataSetChanged();
+            adapter.notifyDataSetChanged();
 
-        setTitle(R.string.view_title_by_day);
+            setTitle(R.string.title_by_day);
 
-        collapseAll();
+            collapseAll();
+        }
+        else {
+            Toast.makeText(getApplicationContext(), getString(R.string.no_result), Toast.LENGTH_SHORT).show();
+            finish();
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_list_deepanse, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_year:
+                eventListByYear(null);
+                break;
+
+            case R.id.menu_month:
+                eventListByMonth(null);
+                break;
+
+            case R.id.menu_day:
+                eventListByDay(null);
+                break;
+
+            case R.id.menu_collapse:
+                collapseAll();
+                break;
+
+            case android.R.id.home:
+                finish();
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

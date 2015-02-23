@@ -9,14 +9,14 @@
     <TableLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:paddingStart="30dp"
-        android:paddingLeft="30dp"
-        android:paddingEnd="30dp"
-        android:paddingRight="30dp"
-        android:paddingTop="20dp">
+        android:padding="20dp">
 
-        <TableRow>
-            <TextView style="@style/Text" android:text="@string/home_desc" />
+        <TableRow android:layout_marginBottom="20dp">
+            <TextView style="@style/text_white"
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="@string/home_desc" />
         </TableRow>
 
         <TableRow>
@@ -27,16 +27,21 @@
             <TextView style="@style/HomeSubTitle" android:text="@string/home_deepanse"/>
         </TableRow>
 
-        <TableRow android:padding="7dp">
+        <TableRow android:padding="7dp" android:layout_marginBottom="20dp">
             <Button style="@style/HomeButton"
-                android:id="@+id/buttonAddDeepanse"
-                android:drawableTop="@drawable/add_deepanse"
-                android:text="@string/home_add_deepanse" />
+                android:id="@+id/button_add_deepanse_by_voice"
+                android:drawableTop="@drawable/add_deepanse_by_voice"
+                android:text="@string/home_add_deepanse_by_voice" />
             <Button style="@style/HomeButton"
-                android:id="@+id/buttonListDeepanse"
-                android:drawableTop="@drawable/view_deepanse"
+                android:id="@+id/button_add_deepanse_by_hand"
+                android:drawableTop="@drawable/add_deepanse_by_hand"
+                android:text="@string/home_add_deepanse_by_hand" />
+            <Button style="@style/HomeButton"
+                android:id="@+id/button_list_deepanse"
+                android:drawableTop="@drawable/list_deepanse"
                 android:text="@string/home_list_deepanse" />
             <Button style="@style/HomeButton"
+                android:id="@+id/button_find_deepanse"
                 android:drawableTop="@drawable/find_deepanse"
                 android:text="@string/home_find_deepanse" />
         </TableRow>
@@ -51,19 +56,20 @@
 
         <TableRow android:padding="7dp">
             <Button style="@style/HomeButton"
-                android:id="@+id/buttonAddGroup"
+                android:id="@+id/button_add_group"
                 android:drawableTop="@drawable/add_group"
                 android:text="@string/home_add_group" />
             <Button style="@style/HomeButton"
-                android:id="@+id/buttonListGroup"
-                android:drawableTop="@drawable/view_group"
+                android:id="@+id/button_list_group"
+                android:drawableTop="@drawable/list_group"
                 android:text="@string/home_list_group" />
             <Button style="@style/HomeButton"
-                android:id="@+id/buttonImportGroup"
-                android:drawableTop="@drawable/add_group"
+                android:id="@+id/button_import_group"
+                android:drawableTop="@drawable/import_group"
                 android:text="@string/home_import_group" />
         </TableRow>
 
+        <!--
         <TableRow>
             <TextView style="@style/Separator" />
         </TableRow>
@@ -86,6 +92,6 @@
                 android:drawableTop="@drawable/add_group"
                 android:text="@string/home_import_group" />
         </TableRow>
-
+        -->
     </TableLayout>
 </ScrollView>

@@ -1,35 +1,32 @@
 package fr.deepanse.soywod.deepanse.activity;
 
-import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.Toast;
 
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
 import fr.deepanse.soywod.deepanse.R;
-import fr.deepanse.soywod.deepanse.adapter.ViewGroup;
-import fr.deepanse.soywod.deepanse.database.DeepAnseSQLiteOpenHelper;
+import fr.deepanse.soywod.deepanse.adapter.SpinnerDeepAnseGroup;
+import fr.deepanse.soywod.deepanse.model.AlertBox;
 import fr.deepanse.soywod.deepanse.model.Conversion;
-import fr.deepanse.soywod.deepanse.model.DeepAnseGroup;
 
 /**
  * Created by soywod on 11/02/2015.
  */
-public class EditDeepAnse extends Activity {
-
-    private static boolean buttonSavePressed;
-    private ArrayList<DeepAnseGroup> arrayGroup;
-    private fr.deepanse.soywod.deepanse.database.DeepAnseGroup groupDb;
-    private fr.deepanse.soywod.deepanse.adapter.ViewGroup adapterGroup;
+public class EditDeepAnse extends DeepAnse {
 
     private boolean newDeepAnse;
     private long id;
+
     private DatePicker datePicker;
     private Spinner spinner;
     private EditText editAmout;
@@ -40,85 +37,98 @@ public class EditDeepAnse extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_deepanse);
 
-        DeepAnseSQLiteOpenHelper deepAnseSQLiteOpenHelper = new DeepAnseSQLiteOpenHelper(this);
+        initComponent();
+        initData();
+    }
 
-        buttonSavePressed = false;
-
-        Intent intent = getIntent();
-
-        newDeepAnse = ((intent == null) || (intent.getBooleanExtra("new_deepanse", true)));
-
+    public void initComponent() {
         datePicker = (DatePicker) findViewById(R.id.date_picker);
         spinner = (Spinner) findViewById(R.id.spinner_group);
         editAmout = (EditText) findViewById(R.id.edit_amount);
         editComment = (EditText) findViewById(R.id.edit_comment);
 
-        groupDb = new fr.deepanse.soywod.deepanse.database.DeepAnseGroup(deepAnseSQLiteOpenHelper);
-        openDatabases();
-
-        arrayGroup = groupDb.selectAll();
-        adapterGroup = new ViewGroup(this, arrayGroup);
-        adapterGroup.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
         datePicker.setCalendarViewShown(false);
-        spinner.setAdapter(adapterGroup);
+        spinner.setAdapter(new SpinnerDeepAnseGroup(EditDeepAnse.this, groupDb.selectAll()));
+    }
+
+    public void initData() {
+        Intent data = getIntent();
+
+        newDeepAnse = data.getBooleanExtra("new_deepanse", true);
 
         if (!newDeepAnse) {
-            id = intent.getLongExtra("id", 0);
-            spinner.setSelection(adapterGroup.getPosition(groupDb.selectByName(intent.getStringExtra("group"))));
-            editAmout.setText(intent.getDoubleExtra("amount", 0)+"");
-            editComment.setText(intent.getStringExtra("comment"));
+            GregorianCalendar date = Conversion.stringToDate(data.getStringExtra("date"));
+            id = data.getLongExtra("id", 0);
+            spinner.setSelection(groupDb.selectAllGroupName().indexOf(data.getStringExtra("group")));
+            editAmout.setText(data.getDoubleExtra("amount", 0) + "");
+            editComment.setText(data.getStringExtra("comment"));
+            datePicker.updateDate(date.get(GregorianCalendar.YEAR), date.get(GregorianCalendar.MONTH), date.get(GregorianCalendar.DAY_OF_MONTH));
+
+            setActionBarTitle(R.string.title_edit_deepanse);
         }
         else {
+            GregorianCalendar date = new GregorianCalendar();
             id = 0;
+            datePicker.updateDate(date.get(GregorianCalendar.YEAR), date.get(GregorianCalendar.MONTH), date.get(GregorianCalendar.DAY_OF_MONTH));
+
+            findViewById(R.id.button_delete).setVisibility(View.GONE);
+            ((LinearLayout) findViewById(R.id.layout_buttons)).setWeightSum(2);
+
+            setActionBarTitle(R.string.title_create_deepanse);
+        }
+    }
+
+    public void eventDelete(View view) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(EditDeepAnse.this, 2);
+        builder.setMessage(getString(R.string.prompt_del_deepanse));
+        builder.setPositiveButton(getString(R.string.yes), new AlertBox() {
+            @Override
+            public void execute() {
+                deepAnseDb.delete(id);
+                Toast.makeText(getApplicationContext(), getString(R.string.deleted_deepense), Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        });
+        builder.setNegativeButton(getString(R.string.no), null);
+        builder.show();
+    }
+
+    public void eventSave(View view) {
+        fr.deepanse.soywod.deepanse.model.DeepAnse deepAnse = new fr.deepanse.soywod.deepanse.model.DeepAnse(
+                0,
+                Double.parseDouble(editAmout.getText().toString()),
+                new GregorianCalendar(datePicker.getYear(), datePicker.getMonth(), datePicker.getDayOfMonth()),
+                groupDb.selectByName(spinner.getSelectedItem().toString()),
+                editComment.getText().toString(),
+                false
+        );
+
+        if (id == 0) {
+            deepAnseDb.insert(deepAnse);
+            Toast.makeText(getApplicationContext(), getString(R.string.inserted_deepense), Toast.LENGTH_SHORT).show();
+        }
+        else {
+            deepAnseDb.update(id, deepAnse);
+            Toast.makeText(getApplicationContext(), getString(R.string.updated_deepense), Toast.LENGTH_SHORT).show();
         }
 
-        GregorianCalendar date = Conversion.stringToDate(intent.getStringExtra("date"));
-        datePicker.updateDate(date.get(GregorianCalendar.YEAR), date.get(GregorianCalendar.MONTH), date.get(GregorianCalendar.DAY_OF_MONTH));
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        closeDatabases();
-    }
-
-    protected void openDatabases() {
-        try
-        {
-            groupDb.open();
-        }catch(SQLException e){e.printStackTrace();}
-    }
-
-    protected void closeDatabases() {
-        groupDb.close();
-    }
-
-    @Override
-    public void finish() {
-        Intent data = new Intent();
-        data.putExtra("new_deepanse", newDeepAnse);
-        data.putExtra("id", id);
-        data.putExtra("date", Conversion.dateToString(new GregorianCalendar(datePicker.getYear(), datePicker.getMonth(), datePicker.getDayOfMonth())));
-        data.putExtra("group", spinner.getSelectedItem().toString());
-        data.putExtra("comment", editComment.getText().toString());
-        try {
-            data.putExtra("amount", Double.parseDouble(editAmout.getText().toString()));
-        } catch(NumberFormatException e) {
-            data.putExtra("amount", 0);
-        }
-
-        if(buttonSavePressed)
-            setResult(RESULT_OK, data);
-        else
-            setResult(RESULT_CANCELED, data);
-
-        super.finish();
-    }
-
-    public void eventSaveDeepAnse(View view) {
-        buttonSavePressed = true;
         finish();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_edit_deepanse, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                eventCancel(null);
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
 

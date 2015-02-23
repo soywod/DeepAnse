@@ -1,7 +1,5 @@
 package fr.deepanse.soywod.deepanse.model;
 
-import android.graphics.Color;
-
 /**
  * Created by soywod on 05/02/2015.
  *
@@ -148,6 +146,6 @@ public class DeepAnseGroup {
 
     @Override
     public String toString() {
-        return Conversion.firstCharToUpperCase(name);
+        return name;
     }
 }

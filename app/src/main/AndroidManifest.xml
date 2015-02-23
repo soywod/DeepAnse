@@ -5,40 +5,11 @@
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name"
+        android:label="@string/title_app"
         android:theme="@style/DeepAnseTheme" >
         <activity
-            android:name=".activity.Home"
-            android:icon="@drawable/add_deepanse"
-            android:label="@string/app_name" >
-        </activity>
-        <activity
-            android:name=".activity.ViewGroup"
-            android:label="@string/app_name" >
-        </activity>
-        <activity
-            android:name=".activity.EditGroup"
-            android:label="@string/app_name" >
-        </activity>
-        <activity
-            android:name=".activity.EditDeepAnse"
-            android:label="@string/app_name" >
-        </activity>
-        <activity
-            android:name=".activity.ViewByDay"
-            android:label="@string/app_name" >
-        </activity>
-        <activity
-            android:name=".activity.ViewByMonth"
-            android:label="@string/app_name" >
-        </activity>
-        <activity
-            android:name=".activity.ViewByYear"
-            android:label="@string/app_name" >
-        </activity>
-        <activity
-            android:name=".activity.ListDeepAnse"
-            android:label="@string/title_activity_list_deep_anse" >
+            android:name="fr.deepanse.soywod.deepanse.activity.Home"
+            android:label="@string/title_app" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -46,8 +17,29 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.ListDeepAnseDetail"
-            android:label="@string/title_activity_list_deep_anse" >
+            android:name="fr.deepanse.soywod.deepanse.activity.EditDeepAnse"
+            android:label="@string/title_edit_deepanse" >
+        </activity>
+        <activity
+            android:name="fr.deepanse.soywod.deepanse.activity.EditDeepAnseGroup">
+        </activity>
+        <activity
+            android:name="fr.deepanse.soywod.deepanse.activity.FindDeepAnse"
+            android:label="@string/title_find_deepanse" >
+        </activity>
+        <activity
+            android:name="fr.deepanse.soywod.deepanse.activity.CreateDeepAnse"
+            android:label="@string/title_create_deepanse" >
+        </activity>
+        <activity
+            android:name="fr.deepanse.soywod.deepanse.activity.ListDeepAnse" >
+        </activity>
+        <activity
+            android:name="fr.deepanse.soywod.deepanse.activity.ListDeepAnseDetail" >
+        </activity>
+
+        <activity
+            android:name="fr.deepanse.soywod.deepanse.activity.ListDeepAnseGroup" >
         </activity>
     </application>
 

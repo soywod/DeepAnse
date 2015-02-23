@@ -5,29 +5,21 @@
     android:orientation="horizontal"
     android:background="@drawable/expandable_listview_child">
 
-    <TextView
+    <TextView style="@style/text_white"
         android:id="@+id/text_desc"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
-        android:textSize="13sp"
+        android:textSize="16sp"
         android:textStyle="bold"
         android:gravity="start|center_vertical"
-        android:paddingLeft="40dp"
-        android:shadowColor="@color/ColorShadow"
-        android:shadowRadius="4"
-        android:shadowDx="-3"
-        android:shadowDy="3" />
+        android:paddingLeft="40dp" />
 
-    <TextView
+    <TextView style="@style/text_white"
         android:id="@+id/text_sum"
         android:layout_width="fill_parent"
         android:layout_height="40dp"
         android:gravity="end|center_vertical"
         android:textColor="@color/ColorWhite"
-        android:paddingRight="20dp"
-        android:shadowColor="@color/ColorShadow"
-        android:shadowRadius="4"
-        android:shadowDx="-3"
-        android:shadowDy="3" />
+        android:paddingRight="20dp" />
 
 </LinearLayout>

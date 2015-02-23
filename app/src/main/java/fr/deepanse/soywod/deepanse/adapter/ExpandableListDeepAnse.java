@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Map;
 
 import fr.deepanse.soywod.deepanse.R;
-import fr.deepanse.soywod.deepanse.model.Conversion;
 
 public class ExpandableListDeepAnse extends BaseExpandableListAdapter {
 

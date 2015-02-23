@@ -1,109 +1,170 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:scrollbars="vertical"
-    android:fadeScrollbars="false"
-    android:layout_weight="1"
+    android:padding="10dp"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     android:background="@drawable/background">
 
-    <TableLayout
+    <ScrollView
+        android:id="@+id/layout_scroll"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp">
+        android:scrollbars="vertical"
+        android:fadeScrollbars="false"
+        android:layout_above="@+id/layout_buttons"
+        android:layout_alignParentTop="true">
 
-        <TableRow>
-            <TextView style="@style/Title"
-                android:drawableLeft="@drawable/edit_deepanse"
-                android:drawableStart="@drawable/edit_deepanse" />
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-            <TextView style="@style/Title"
-                android:layout_weight="6"
-                android:textSize="19sp"
-                android:text="@string/view_deepanse_edit" />
+            <LinearLayout
+                android:id="@+id/layout_date"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
+                android:layout_marginBottom="10dp">
 
-            <Button style="@style/HomeButton"
-                android:drawableRight="@drawable/home"
-                android:drawableEnd="@drawable/home"
-                android:onClick="eventHome" />
-        </TableRow>
+                <TextView style="@style/text_white"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.3"
+                    android:paddingLeft="10dp"
+                    android:gravity="start|center_vertical"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="@string/date" />
 
-        <TableRow>
-            <TextView style="@style/Text" android:text="@string/view_deepanse_edit_desc" />
-        </TableRow>
+                <DatePicker style="@android:style/Widget.DatePicker"
+                    android:background="@drawable/edit_text"
+                    android:id="@+id/date_picker"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.7" />
 
-        <TableRow>
-            <TextView style="@style/Separator" />
-        </TableRow>
+            </LinearLayout>
 
-        <TableRow android:layout_marginTop="20dp">
-            <TextView style="@style/Text"
-                android:layout_height="match_parent"
-                android:gravity="start|center_vertical"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="@string/date" />
+            <LinearLayout
+                android:id="@+id/layout_group"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="10dp"
+                android:weightSum="3"
+                android:layout_marginBottom="10dp">
 
-            <DatePicker style="@android:style/Widget.DatePicker"
-                android:id="@+id/date_picker"
-                android:background="@color/ColorWhite"
-                android:layout_width="0dip"
-                android:layout_weight="2" />
-        </TableRow>
+                <TextView style="@style/text_white"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.3"
+                    android:paddingLeft="10dp"
+                    android:gravity="start|center_vertical"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="@string/group" />
 
-        <TableRow android:layout_marginTop="20dp">
-            <TextView style="@style/Text"
-                android:layout_height="match_parent"
-                android:gravity="start|center_vertical"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="@string/group" />
+                <Spinner style="@style/spinner"
+                    android:id="@+id/spinner_group"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.7" />
+            </LinearLayout>
 
-            <Spinner
-                android:id="@+id/spinner_group"
-                android:background="#FFF"
-                android:layout_width="0dip"
-                android:layout_weight="2" />
-        </TableRow>
+            <LinearLayout
+                android:id="@+id/layout_amount"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="10dp"
+                android:orientation="horizontal"
+                android:weightSum="3"
+                android:layout_marginBottom="10dp">
 
-        <TableRow android:layout_marginTop="20dp">
-            <TextView style="@style/Text"
-                android:layout_height="match_parent"
-                android:gravity="start|center_vertical"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="@string/amount" />
+                <TextView style="@style/text_white"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.3"
+                    android:paddingLeft="10dp"
+                    android:gravity="start|center_vertical"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="@string/amount" />
 
-            <EditText
-                android:id="@+id/edit_amount"
-                android:background="@color/ColorWhite"
-                android:layout_width="0dip"
-                android:padding="10dp"
-                android:inputType="numberDecimal"
-                android:ems="10"
-                android:layout_weight="2" />
-        </TableRow>
+                <EditText style="@style/edit_text"
+                    android:id="@+id/edit_amount"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.7"
+                    android:padding="10dp"
+                    android:inputType="numberDecimal"
+                    android:ems="10" />
+            </LinearLayout>
 
-        <TableRow android:layout_marginTop="20dp">
-            <TextView style="@style/Text"
-                android:layout_height="match_parent"
-                android:gravity="start|center_vertical"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="@string/comment" />
+            <LinearLayout
+                android:id="@+id/layout_comment"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3"
+                android:layout_marginBottom="10dp">
 
-            <EditText
-                android:id="@+id/edit_comment"
-                android:background="@color/ColorWhite"
-                android:layout_width="0dip"
-                android:padding="10dp"
-                android:inputType="textPersonName"
-                android:layout_weight="2" />
-        </TableRow>
+                <TextView style="@style/text_white"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.3"
+                    android:paddingLeft="10dp"
+                    android:gravity="start|center_vertical"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="@string/comment" />
 
-        <TableRow>
-            <TextView style="@style/Separator" />
-        </TableRow>
+                <EditText style="@style/edit_text"
+                    android:id="@+id/edit_comment"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.7"
+                    android:padding="10dp"
+                    android:inputType="textMultiLine" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 
-        <TableRow android:layout_marginTop="20dp">
-            <Button style="@style/Button"
-                android:text="@string/save"
-                android:onClick="eventSaveDeepAnse" />
-        </TableRow>
-    </TableLayout>
-</ScrollView>
+    <LinearLayout
+        android:id="@+id/layout_buttons"
+        android:layout_width="fill_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:weightSum="3"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentBottom="true">
+
+        <Button style="@style/button"
+            android:id="@+id/button_cancel"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:text="@string/cancel"
+            android:layout_marginRight="5dp"
+            android:onClick="eventCancel" />
+
+        <Button style="@style/button"
+            android:id="@+id/button_delete"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:text="@string/delete"
+            android:onClick="eventDelete" />
+
+        <Button style="@style/button"
+            android:id="@+id/button_save"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:layout_marginLeft="5dp"
+            android:text="@string/save"
+            android:onClick="eventSave" />
+    </LinearLayout>
+
+</RelativeLayout>

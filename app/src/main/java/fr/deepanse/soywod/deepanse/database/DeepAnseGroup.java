@@ -173,6 +173,31 @@ public class DeepAnseGroup {
     }
 
     /**
+     *  Sélectionne toutes les rubriques de la BDD
+     *
+     *  @return
+     *      La liste des rubriques de la BDD de type ArrayList
+     */
+    public ArrayList<String> selectAllGroupName()
+    {
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT " + DeepAnseSQLiteOpenHelper.NAME + " FROM " + DeepAnseSQLiteOpenHelper.TABLE_DEEPANSE_GROUP, null);
+
+        if (cursor.getCount() != 0) {
+            ArrayList<String> arrayGroup = new ArrayList<>();
+
+            for(cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext())
+                arrayGroup.add(cursor.getString(0));
+            cursor.close();
+
+            return arrayGroup;
+        }
+        else {
+            return null;
+        }
+
+    }
+
+    /**
      *  Sélectionne toutes les rubriques de la BDD sauf le premier
      *
      *  @return

@@ -3,17 +3,17 @@
 
     <item
         android:id="@+id/menu_year"
-        android:title="@string/view_title_by_year"
+        android:title="@string/title_by_year"
         android:orderInCategory="100"
         app:showAsAction="never" />
     <item
         android:id="@+id/menu_month"
-        android:title="@string/view_title_by_month"
+        android:title="@string/title_by_month"
         android:orderInCategory="100"
         app:showAsAction="never" />
     <item
         android:id="@+id/menu_day"
-        android:title="@string/view_title_by_day"
+        android:title="@string/title_by_day"
         android:orderInCategory="100"
         app:showAsAction="never" />
     <item

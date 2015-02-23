@@ -1,7 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:padding="10dp"
     android:background="@drawable/background">
 
     <LinearLayout
@@ -9,90 +8,54 @@
         android:layout_width="fill_parent"
         android:layout_height="40dp"
         android:orientation="horizontal"
-        android:weightSum="2"
-        android:layout_marginBottom="10dp">
+        android:layout_margin="10dp"
+        android:weightSum="2">
 
         <Spinner style="@style/spinner"
             android:id="@+id/spinner_month"
             android:layout_weight="1"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginRight="5dp" />
+
         <Spinner style="@style/spinner"
             android:id="@+id/spinner_year"
             android:layout_weight="1"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp" />
 
     </LinearLayout>
 
-    <TableLayout
-        android:id="@+id/separator_top"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/layout_2_spinners"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="10dp">
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView style="@style/Separator" />
-        </TableRow>
-
-    </TableLayout>
-
     <ExpandableListView
         android:id="@+id/expandable_listview"
-        android:background="@drawable/expandable_listview"
-        android:drawSelectorOnTop="false"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:listSelector="@android:color/transparent"
-        android:scrollbars="vertical"
-        android:layout_above="@+id/separator_bot"
-        android:fadeScrollbars="false"
-        android:scrollbarStyle="outsideOverlay"
         android:layout_width="fill_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="10dp"
-        android:layout_below="@+id/separator_top" />
-
-    <TableLayout
-        android:id="@+id/separator_bot"
-        android:layout_width="fill_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
         android:layout_height="wrap_content"
         android:layout_above="@+id/layout_3_buttons"
-        android:layout_marginBottom="10dp">
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView style="@style/Separator" />
-        </TableRow>
-
-    </TableLayout>
+        android:layout_below="@+id/layout_2_spinners"
+        android:background="@drawable/expandable_listview"
+        android:drawSelectorOnTop="false"
+        android:listSelector="@android:color/transparent"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:scrollbars="vertical"
+        android:fadeScrollbars="false"
+        android:scrollbarStyle="outsideOverlay" />
 
     <LinearLayout
         android:id="@+id/layout_3_buttons"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
+        android:layout_width="fill_parent"
+        android:layout_height="40dp"
         android:layout_alignParentBottom="true"
         android:orientation="horizontal"
-        android:layout_width="fill_parent"
-        android:weightSum="3"
-        android:layout_height="40dp">
+        android:layout_margin="10dp"
+        android:weightSum="3">
 
         <Button style="@style/button"
             android:id="@+id/button_year"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
             android:onClick="eventListByYear"
-            android:textColor="@drawable/spinner_text"
             android:text="@string/view_button_by_year"
             android:layout_weight="1" />
 
@@ -101,18 +64,16 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:onClick="eventListByMonth"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@drawable/spinner_text"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
             android:text="@string/view_button_by_month"
             android:layout_weight="1" />
 
         <Button style="@style/button"
             android:id="@+id/button_day"
             android:onClick="eventListByDay"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@drawable/spinner_text"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
             android:text="@string/view_button_by_day"
             android:layout_weight="1" />
 

@@ -5,8 +5,6 @@ import android.database.Cursor;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
-import fr.deepanse.soywod.deepanse.model.*;
-
 /**
  * Created by soywod on 05/02/2015.
  */
@@ -32,52 +30,6 @@ public class Conversion {
         deepAnse.setRecursive(cursor.getInt(5) == 1);
 
         return deepAnse;
-    }
-
-    /**
-     *  Convertit un curseur en report ViewByYear
-     *
-     *  @param cursor   Le curseur à convertir de type Cursor
-     *
-     *  @return
-     *      Le curseur converti en report de type ViewByYear
-     */
-    public static Report cursorToReportByYear(Cursor cursor)
-    {
-        Report report = new Report();
-        GregorianCalendar date = new GregorianCalendar();
-
-        date.set(GregorianCalendar.MONTH, cursor.getInt(0)-1);
-        date.set(GregorianCalendar.YEAR, cursor.getInt(1));
-
-        report.setDate(date);
-        report.setTotal(cursor.getDouble(2));
-
-        return report;
-    }
-
-    /**
-     *  Convertit un curseur en report ViewByYear
-     *
-     *  @param cursor   Le curseur à convertir de type Cursor
-     *
-     *  @return
-     *      Le curseur converti en report de type ViewByYear
-     */
-    public static Report cursorToReportByMonth(Cursor cursor)
-    {
-        Report report = new Report();
-
-        GregorianCalendar date = new GregorianCalendar();
-
-        date.set(GregorianCalendar.DAY_OF_MONTH, cursor.getInt(0));
-        date.set(GregorianCalendar.MONTH, cursor.getInt(1)-1);
-        date.set(GregorianCalendar.YEAR, cursor.getInt(2));
-
-        report.setDate(date);
-        report.setTotal(cursor.getDouble(3));
-
-        return report;
     }
 
     /**
@@ -159,7 +111,10 @@ public class Conversion {
     }
 
     public static String firstCharToUpperCase(String word) {
-        return word.toLowerCase().replaceFirst(".", word.substring(0, 1).toUpperCase());
+        if (word.length() > 0)
+            return word.toLowerCase().replaceFirst(".", word.substring(0, 1).toUpperCase());
+        else
+            return "";
     }
 
     /**

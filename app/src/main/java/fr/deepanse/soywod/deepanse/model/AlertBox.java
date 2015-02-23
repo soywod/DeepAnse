@@ -1,7 +1,5 @@
 package fr.deepanse.soywod.deepanse.model;
 
-import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 
 /**
