@@ -9,6 +9,7 @@ import android.view.View;
 
 import java.sql.SQLException;
 
+import fr.deepanse.soywod.deepanse.R;
 import fr.deepanse.soywod.deepanse.database.DeepAnseSQLiteOpenHelper;
 import fr.deepanse.soywod.deepanse.model.DeepAnseGroup;
 
@@ -51,12 +52,12 @@ abstract public class DeepAnse extends ActionBarActivity {
             e.printStackTrace();
         }
 
-        if (groupDb.select(1) == null) groupDb.insert(new DeepAnseGroup(1, "default", Color.DKGRAY));
+        if (groupDb.select(1) == null) groupDb.insert(new DeepAnseGroup(1, "default", getResources().getColor(R.color.ColorBlue)));
     }
 
     private void initActionBar() {
         actionBar = getSupportActionBar();
-        actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_TITLE);
+        actionBar.setDisplayOptions(ActionBar.DISPLAY_HOME_AS_UP | ActionBar.DISPLAY_SHOW_TITLE);
     }
 
     protected void setActionBarIcon(int drawableRes) {

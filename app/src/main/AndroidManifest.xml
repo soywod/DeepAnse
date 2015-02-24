@@ -21,7 +21,8 @@
             android:label="@string/title_edit_deepanse" >
         </activity>
         <activity
-            android:name="fr.deepanse.soywod.deepanse.activity.EditDeepAnseGroup">
+            android:name="fr.deepanse.soywod.deepanse.activity.EditDeepAnseGroup"
+            android:label="@string/title_edit_group" >
         </activity>
         <activity
             android:name="fr.deepanse.soywod.deepanse.activity.FindDeepAnse"
@@ -39,7 +40,8 @@
         </activity>
 
         <activity
-            android:name="fr.deepanse.soywod.deepanse.activity.ListDeepAnseGroup" >
+            android:name="fr.deepanse.soywod.deepanse.activity.ListDeepAnseGroup"
+            android:label="@string/title_list_group" >
         </activity>
     </application>
 

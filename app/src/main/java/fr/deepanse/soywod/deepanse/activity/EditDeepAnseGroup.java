@@ -4,6 +4,8 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -78,7 +80,7 @@ public class EditDeepAnseGroup extends DeepAnse {
             public void execute() {
                 groupDb.updateAllById(id);
                 groupDb.delete(id);
-                Toast.makeText(getApplicationContext(), getString(R.string.deleted_group), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), getString(R.string.toast_deleted_group), Toast.LENGTH_SHORT).show();
                 finish();
             }
         });
@@ -95,14 +97,37 @@ public class EditDeepAnseGroup extends DeepAnse {
 
         if (id == 0) {
             groupDb.insert(deepAnseGroup);
-            Toast.makeText(getApplicationContext(), getString(R.string.inserted_group), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), getString(R.string.toast_inserted_group), Toast.LENGTH_SHORT).show();
         }
         else {
             groupDb.update(id, deepAnseGroup);
-            Toast.makeText(getApplicationContext(), getString(R.string.updated_group), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), getString(R.string.toast_updated_group), Toast.LENGTH_SHORT).show();
         }
 
         finish();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_edit_deepanse, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                break;
+
+            case R.id.home :
+                Intent intent = new Intent(EditDeepAnseGroup.this, Home.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                finish();
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
 

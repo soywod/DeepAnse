@@ -85,7 +85,7 @@ public class EditDeepAnse extends DeepAnse {
             @Override
             public void execute() {
                 deepAnseDb.delete(id);
-                Toast.makeText(getApplicationContext(), getString(R.string.deleted_deepense), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), getString(R.string.toast_deleted_deepense), Toast.LENGTH_SHORT).show();
                 finish();
             }
         });
@@ -105,11 +105,11 @@ public class EditDeepAnse extends DeepAnse {
 
         if (id == 0) {
             deepAnseDb.insert(deepAnse);
-            Toast.makeText(getApplicationContext(), getString(R.string.inserted_deepense), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), getString(R.string.toast_inserted_deepense), Toast.LENGTH_SHORT).show();
         }
         else {
             deepAnseDb.update(id, deepAnse);
-            Toast.makeText(getApplicationContext(), getString(R.string.updated_deepense), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), getString(R.string.toast_updated_deepense), Toast.LENGTH_SHORT).show();
         }
 
         finish();
@@ -124,8 +124,15 @@ public class EditDeepAnse extends DeepAnse {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case android.R.id.home:
+            case android.R.id.home :
                 eventCancel(null);
+                break;
+
+            case R.id.home :
+                Intent intent = new Intent(EditDeepAnse.this, Home.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                finish();
         }
 
         return super.onOptionsItemSelected(item);

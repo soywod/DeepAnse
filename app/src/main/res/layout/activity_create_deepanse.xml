@@ -46,7 +46,7 @@
                 android:layout_height="40dp"
                 android:gravity="start|center_vertical"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="@string/google_reduce_text" />
+                android:text="@string/deepanse_reduce_text" />
 
             <EditText style="@style/edit_text"
                 android:id="@+id/edit_reduce"

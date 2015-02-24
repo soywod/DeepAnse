@@ -175,7 +175,7 @@ public class CreateDeepAnse extends DeepAnse {
 
     public void eventAgain(View view) {
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, getString(R.string.prompt_add_deepanse));
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, getString(R.string.prompt_create_deepanse));
         startActivityForResult(intent, 0);
     }
 
@@ -189,7 +189,7 @@ public class CreateDeepAnse extends DeepAnse {
                 false
         );
         deepAnseDb.insert(deepAnse);
-        Toast.makeText(getApplicationContext(), getString(R.string.inserted_deepense), Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), getString(R.string.toast_inserted_deepense), Toast.LENGTH_SHORT).show();
         finish();
     }
 
@@ -199,22 +199,6 @@ public class CreateDeepAnse extends DeepAnse {
         if (requestCode == 0 && resultCode == RESULT_OK) {
             initExtract(data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS).get(0).toLowerCase());
         }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_edit_deepanse, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     public void initRegexGroup() {
@@ -240,5 +224,27 @@ public class CreateDeepAnse extends DeepAnse {
         }
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_edit_deepanse, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                break;
+
+            case R.id.home :
+                Intent intent = new Intent(CreateDeepAnse.this, Home.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                finish();
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 }
 

@@ -1,115 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="home_title">Accueil</string>
-
-    <string name="home_help"><i>Aide</i></string>
-    <string name="home_deepanse_view_by_year">Afficher\ndépenses\npar année</string>
-    <string name="home_deepanse_view_by_month">Afficher\ndépenses\npar mois</string>
-    <string name="home_deepanse_view_by_day">Afficher\ndépenses\npar jour</string>
-    <string name="home_group_add_by_voice">Ajouter\ncatégorie\n(oral)</string>
-
-
-
-    <string name="home_group_add_by_hand">Ajouter\ncatégorie\n(écrit)</string>
-    <string name="home_group_edit">Editer\ncatégorie</string>
-    <string name="home_group_view_deepanse_by_group">Afficher\ndépense\npar catégorie</string>
-    <string name="home_help_first_use">Première\nutilisation</string>
-    <string name="home_help_add_deepanse">Comment\najouter\ndépense</string>
-    <string name="home_help_add_group">Comment\najouter\ncatégorie</string>
-    <string name="home_help_view">Comment\nlire\ndépense</string>
-    <string name="home_help_del_deepanse">Comment\nsupprimer\ndépense</string>
-    <string name="home_help_del_group">Comment\nsupprimer\ncatégorie</string>
-    <string name="view_deepanse_view_by_day">Afficher dépenses par jour</string>
-    <string name="view_deepanse_view_by_month">Afficher dépenses par mois</string>
-    <string name="view_deepanse_view_by_year">Afficher dépenses par année</string>
-    <string name="view_group_edit">Editer catégorie</string>
-    <string name="view_deepanse_edit">Editer dépense</string>
-    <string name="view_group">Afficher catégories</string>
-    <string name="view_deepanse_add">Ajouter\ndépense</string>
-
-    <string name="menu_manage_group">Gérer les groupes</string>
-
-    <string name="add_deepanse">Créer une dépense</string>
-    <string name="add_group">Créer un nouveau groupe</string>
-    <string name="prompt_add_group">Dictez maintenant votre nouveau groupe</string>
-    <string name="prompt_del_group">Voulez-vous vraiment supprimer cette catégorie ? Toute dépense liée à cette catégorie sera transférée dans la catégorie par défaut.</string>
-    <string name="prompt_add_deepanse">Dictez votre nouvelle dépense</string>
-    <string name="prompt_del_deepanse">Voulez-vous vraiment supprimer cette dépense ?</string>
-    <string name="total">Total :</string>
-    <string name="date">Date :</string>
-    <string name="amount">Montant :</string>
-    <string name="comment">Intitulé :</string>
-    <string name="group">Rubrique :</string>
-    <string name="color">Couleur :</string>
-    <string name="name">Nom :</string>
-    <string name="saturation">Saturation :</string>
-    <string name="opacity">Opacité :</string>
-
-    <string name="inserted_deepense">Nouvelle dépense enregistrée.</string>
-    <string name="inserted_group">Nouvelle catégorie enregistrée.</string>
-    <string name="updated_deepense">Dépense modifiée.</string>
-    <string name="updated_group">Rubrique modifiée.</string>
-    <string name="deleted_deepense">Dépense supprimée.</string>
-    <string name="deleted_group">Rubrique supprimée.</string>
-
-
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="action_example">Example action</string>
-    <string name="action_settings">Settings</string>
-
-    <string name="home">Accueil</string>
-
-    <string name="home_add_deepanse">Ajouter\ndépense</string>
-
-
-
-
-
-
-
-
-    <string name="view_button_by_year">Par année</string>
-    <string name="view_button_by_month">Par mois</string>
-    <string name="view_button_by_day">Par jour</string>
-
-
+    <!-- TITLE -->
     <string name="title_app">DeepAnse</string>
-
+    <string name="title_home">Menu principal</string>
+    <string name="title_create_deepanse">Créer une dépense</string>
     <string name="title_by_year">Liste par année</string>
     <string name="title_by_month">Liste par mois</string>
     <string name="title_by_day">Liste par jour</string>
+    <string name="title_detailed_list">Liste détaillée</string>
     <string name="title_edit_deepanse">Editer une dépense</string>
-    <string name="title_create_deepanse">Créer une dépense</string>
-    <string name="title_group">Rubrique</string>
-    <string name="title_detail_of">Détail du</string>
     <string name="title_find_deepanse">Rechercher une dépense</string>
-
-    <string name="menu_collapse">Réduire tous les groupes</string>
-
-    <string name="save">Enregistrer</string>
-    <string name="cancel">Annuler</string>
-    <string name="delete">Supprimer</string>
-    <string name="yes">Oui</string>
-    <string name="no">Non</string>
-    <string name="google_full_text">Text brut retourné par Google :</string>
-    <string name="google_reduce_text">Text corrigé par l\'application :</string>
-    <string name="again">Recommencer</string>
-    <string name="deepanse_recognized">Dépense reconnue :</string>
-    <string name="deepanse_not_recognized">Aucune dépense reconnue, veuillez recommencer la saisie vocale.</string>
-    <string name="by_date">Par date :</string>
-    <string name="by_group">Par catégorie :</string>
-    <string name="by_amount">Par montant :</string>
-    <string name="by_comment">Par commentaire :</string>
-    <string name="find">Rechercher</string>
-    <string name="no_result">Aucun résultat.</string>
-    <string name="title_list_group">Liste des catégories</string>
-    <string name="title_edit_group">Editer une catégorie</string>
     <string name="title_create_group">Créer une catégorie</string>
+    <string name="title_edit_group">Editer une catégorie</string>
+    <string name="title_list_group">Liste des catégories</string>
 
-
-
+    <!-- HOME -->
     <string name="home_add_deepanse_by_voice">Dicter une\ndépense</string>
     <string name="home_add_deepanse_by_hand">Ecrire une\ndépense</string>
     <string name="home_list_deepanse">Liste des\ndépense</string>
@@ -117,9 +23,56 @@
     <string name="home_add_group">Créer une\ncatégorie</string>
     <string name="home_list_group">Liste des\ncatégories</string>
     <string name="home_import_group">Glossaire de\ncatégories</string>
-
-    <string name="title_home">Menu principal</string>
     <string name="home_desc"><b>DeepAnse</b> vous permet de saisir simplement et rapidement <b><u>à l\'oral</u></b> comme à l\'écrit vos <b>dépenses quotidiennes</b>, organisées par catégories entièrement <b>personnalisables</b>.</string>
     <string name="home_deepanse"><i>Gestion des dépenses</i></string>
     <string name="home_group"><i>Gestion des catégories</i></string>
+
+    <!-- BUTTON -->
+    <string name="cancel">Annuler</string>
+    <string name="save">Enregistrer</string>
+    <string name="again">Recommencer</string>
+    <string name="find">Rechercher</string>
+    <string name="delete">Supprimer</string>
+    <string name="yes">Oui</string>
+    <string name="no">Non</string>
+
+    <!-- TEXTVIEW -->
+    <string name="by_year">Par année</string>
+    <string name="by_month">Par mois</string>
+    <string name="by_day">Par jour</string>
+    <string name="by_date">Par date :</string>
+    <string name="by_group">Par catégorie :</string>
+    <string name="by_amount">Par montant :</string>
+    <string name="by_comment">Par commentaire :</string>
+    <string name="date">Date :</string>
+    <string name="group">Rubrique :</string>
+    <string name="amount">Montant :</string>
+    <string name="comment">Intitulé :</string>
+    <string name="name">Nom :</string>
+    <string name="color">Couleur :</string>
+    <string name="saturation">Saturation :</string>
+    <string name="total">Total :</string>
+    <string name="google_full_text">Text brut retourné par Google :</string>
+    <string name="deepanse_reduce_text">Text corrigé par l\'application :</string>
+    <string name="deepanse_not_recognized">Aucune dépense reconnue (peut-être manque-t-il un montant ?), veuillez recommencer la saisie vocale.</string>
+    <string name="deepanse_recognized">Dépense reconnue :</string>
+
+    <!-- TOAST -->
+    <string name="toast_inserted_deepense">Nouvelle dépense enregistrée.</string>
+    <string name="toast_inserted_group">Nouvelle catégorie enregistrée.</string>
+    <string name="toast_updated_deepense">Dépense modifiée.</string>
+    <string name="toast_updated_group">Rubrique modifiée.</string>
+    <string name="toast_deleted_deepense">Dépense supprimée.</string>
+    <string name="toast_deleted_group">Rubrique supprimée.</string>
+    <string name="toast_no_result">Aucun résultat.</string>
+
+    <!-- ALERTBOX -->
+    <string name="prompt_create_deepanse">Dictez votre nouvelle dépense</string>
+    <string name="prompt_del_deepanse">Voulez-vous vraiment supprimer cette dépense ?</string>
+    <string name="prompt_del_group">Voulez-vous vraiment supprimer cette catégorie ? Toute dépense liée à cette catégorie sera transférée dans la catégorie par défaut.</string>
+
+    <!-- MENU -->
+    <string name="menu_home">Retour au menu principal</string>
+    <string name="menu_collapse">Réduire tous les groupes</string>
+
 </resources>

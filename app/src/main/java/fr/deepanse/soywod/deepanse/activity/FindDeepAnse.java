@@ -107,6 +107,13 @@ public class FindDeepAnse extends DeepAnse {
         switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
+                break;
+
+            case R.id.home :
+                Intent intent = new Intent(FindDeepAnse.this, Home.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                finish();
         }
 
         return super.onOptionsItemSelected(item);

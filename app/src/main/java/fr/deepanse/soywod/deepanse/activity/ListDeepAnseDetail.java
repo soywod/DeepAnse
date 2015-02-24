@@ -84,7 +84,7 @@ public class ListDeepAnseDetail extends DeepAnse implements AdapterView.OnItemCl
         adapter.notifyDataSetChanged();
 
         if (arrayDeepAnse.size() == 0) {
-            Toast.makeText(getApplicationContext(), getString(R.string.no_result), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), getString(R.string.toast_no_result), Toast.LENGTH_SHORT).show();
             finish();
         }
 
@@ -120,7 +120,7 @@ public class ListDeepAnseDetail extends DeepAnse implements AdapterView.OnItemCl
             @Override
             public void execute() {
                 deepAnseDb.delete(arrayDeepAnse.get(position).getId());
-                Toast.makeText(getApplicationContext(), getString(R.string.deleted_deepense), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), getString(R.string.toast_deleted_deepense), Toast.LENGTH_SHORT).show();
                 refreshData();
                 longClicked = false;
             }
@@ -138,7 +138,7 @@ public class ListDeepAnseDetail extends DeepAnse implements AdapterView.OnItemCl
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_list_deepanse_detail, menu);
+        getMenuInflater().inflate(R.menu.menu_edit_deepanse, menu);
         return true;
     }
 
@@ -146,6 +146,13 @@ public class ListDeepAnseDetail extends DeepAnse implements AdapterView.OnItemCl
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
+                finish();
+                break;
+
+            case R.id.home :
+                Intent intent = new Intent(ListDeepAnseDetail.this, Home.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
                 finish();
         }
 

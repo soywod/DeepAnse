@@ -10,7 +10,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DeepAnseSQLiteOpenHelper extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "deepanse.db";
-    public static final int VERSION = 1;
+    public static final int VERSION = 2;
 
     public static final String AMOUNT = "amount";
     public static final String COLOR = "color";

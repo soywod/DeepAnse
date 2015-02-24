@@ -70,7 +70,7 @@ public class ListDeepAnse extends DeepAnse {
 
 
                     Intent intent = new Intent(ListDeepAnse.this, ListDeepAnseDetail.class);
-                    intent.putExtra("title", R.string.title_detail_of);
+                    intent.putExtra("title", R.string.title_detailed_list);
                     intent.putExtra("date", Conversion.dateToString(date));
                     intent.putExtra("group", group);
                     startActivity(intent);
@@ -298,7 +298,7 @@ public class ListDeepAnse extends DeepAnse {
             collapseAll();
         }
         else {
-            Toast.makeText(getApplicationContext(), getString(R.string.no_result), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), getString(R.string.toast_no_result), Toast.LENGTH_SHORT).show();
             finish();
         }
     }
@@ -312,23 +312,18 @@ public class ListDeepAnse extends DeepAnse {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menu_year:
-                eventListByYear(null);
-                break;
-
-            case R.id.menu_month:
-                eventListByMonth(null);
-                break;
-
-            case R.id.menu_day:
-                eventListByDay(null);
-                break;
-
             case R.id.menu_collapse:
                 collapseAll();
                 break;
 
             case android.R.id.home:
+                finish();
+                break;
+
+            case R.id.home :
+                Intent intent = new Intent(ListDeepAnse.this, Home.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
                 finish();
         }
 

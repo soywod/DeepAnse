@@ -3,7 +3,7 @@
 
     <item
         android:id="@+id/home"
-        android:title="@string/home"
+        android:title="@string/menu_home"
         android:icon="@drawable/home"
         android:orderInCategory="100"
         app:showAsAction="ifRoom" />

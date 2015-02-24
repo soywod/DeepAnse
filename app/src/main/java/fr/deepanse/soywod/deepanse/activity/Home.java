@@ -22,6 +22,7 @@ public class Home extends ActionBarActivity implements View.OnClickListener {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_TITLE);
         actionBar.setTitle(getString(R.string.title_home));
+        actionBar.setIcon(getResources().getDrawable(R.drawable.home));
 
         findViewById(R.id.button_add_deepanse_by_voice).setOnClickListener(this);
         findViewById(R.id.button_add_deepanse_by_hand).setOnClickListener(this);
@@ -39,7 +40,7 @@ public class Home extends ActionBarActivity implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.button_add_deepanse_by_voice :
                 intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-                intent.putExtra(RecognizerIntent.EXTRA_PROMPT, getString(R.string.prompt_add_deepanse));
+                intent.putExtra(RecognizerIntent.EXTRA_PROMPT, getString(R.string.prompt_create_deepanse));
                 startActivityForResult(intent, 0);
                 break;
 

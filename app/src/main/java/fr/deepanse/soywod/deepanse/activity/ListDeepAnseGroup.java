@@ -89,7 +89,7 @@ public class ListDeepAnseGroup extends DeepAnse implements AdapterView.OnItemCli
                 public void execute() {
                     groupDb.updateAllById(arrayDeepAnseGroup.get(position).getId());
                     groupDb.delete(arrayDeepAnseGroup.get(position).getId());
-                    Toast.makeText(getApplicationContext(), getString(R.string.deleted_group), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), getString(R.string.toast_deleted_group), Toast.LENGTH_SHORT).show();
                     refreshData();
                     longClicked = false;
                 }
@@ -107,7 +107,7 @@ public class ListDeepAnseGroup extends DeepAnse implements AdapterView.OnItemCli
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_list_deepanse_detail, menu);
+        getMenuInflater().inflate(R.menu.menu_edit_deepanse, menu);
         return true;
     }
 
@@ -115,6 +115,13 @@ public class ListDeepAnseGroup extends DeepAnse implements AdapterView.OnItemCli
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
+                finish();
+                break;
+
+            case R.id.home :
+                Intent intent = new Intent(ListDeepAnseGroup.this, Home.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
                 finish();
         }
 
