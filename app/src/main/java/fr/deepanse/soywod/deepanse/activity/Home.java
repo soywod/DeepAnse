@@ -1,17 +1,24 @@
 package fr.deepanse.soywod.deepanse.activity;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.speech.RecognizerIntent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.telephony.TelephonyManager;
 import android.view.View;
 import android.widget.Toast;
 
+import java.util.Locale;
+
 import fr.deepanse.soywod.deepanse.R;
+import fr.deepanse.soywod.deepanse.model.Connectivity;
 import fr.deepanse.soywod.deepanse.model.HomeAnimation;
 
 /**
@@ -67,9 +74,16 @@ public class Home extends ActionBarActivity implements View.OnClickListener {
 
             switch (v.getId()) {
                 case R.id.button_add_deepanse_by_voice:
-                    intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-                    intent.putExtra(RecognizerIntent.EXTRA_PROMPT, getString(R.string.prompt_create_deepanse));
-                    startActivityForResult(intent, 0);
+                    if (Connectivity.isConnectedFast(Home.this)) {
+                        intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+                        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, getString(R.string.prompt_create_deepanse));
+                        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+                        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
+                        startActivityForResult(intent, 0);
+                    }
+                    else {
+                        Toast.makeText(getApplicationContext(), getString(R.string.home_need_fast_connection), Toast.LENGTH_SHORT).show();
+                    }
                     break;
 
                 case R.id.button_add_deepanse_by_hand:

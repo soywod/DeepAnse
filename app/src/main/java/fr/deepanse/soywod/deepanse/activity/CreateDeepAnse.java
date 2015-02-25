@@ -20,6 +20,7 @@ import java.util.regex.Pattern;
 
 import fr.deepanse.soywod.deepanse.R;
 import fr.deepanse.soywod.deepanse.adapter.SpinnerDeepAnseGroup;
+import fr.deepanse.soywod.deepanse.model.Connectivity;
 import fr.deepanse.soywod.deepanse.model.Conversion;
 import fr.deepanse.soywod.deepanse.model.DateFR;
 import fr.deepanse.soywod.deepanse.model.DeepAnseGroup;
@@ -203,9 +204,15 @@ public class CreateDeepAnse extends DeepAnse {
     }
 
     public void eventAgain(View view) {
-        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, getString(R.string.prompt_create_deepanse));
-        startActivityForResult(intent, 0);
+        if (Connectivity.isConnectedFast(CreateDeepAnse.this)) {
+            Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+            intent.putExtra(RecognizerIntent.EXTRA_PROMPT, getString(R.string.prompt_create_deepanse));
+            startActivityForResult(intent, 0);
+        }
+        else {
+            showShortToast(R.string.home_need_fast_connection);
+            finish();
+        }
     }
 
     public void eventSave(View view) {

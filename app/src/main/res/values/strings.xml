@@ -110,5 +110,6 @@
     <string name="tuto_create_deepanse_4"><u><b>l\'INTITULE :</b></u> vous pouvez dire <b>ce que vous voulez</b>. Ce champs <b>n\'est pas obligatoire</b> non plus, vous n\'êtes donc pas obligé de saisir un intitulé même si c\'est <b>vivement conseillé</b>.</string>
     <string name="tuto_create_deepanse_5"><u><b>le MONTANT :</b></u> c\'est <b>le seul champs obligatoire</b> : 15 euros, 17 euros 30, 20 50 … évitez de dire le mot <b>\"centimes\"</b> il pourrait être pris en compte comme intitulé.</string>
     <string name="tuto_create_deepanse_6">Il n\'y a pas <b>d\'ordre particulier</b> de saisie, vous pouvez aussi bien dire <b>\"Hier nourriture 57 euros courses au supermarché\"</b> que <b>\"Courses au supermarché 57 euros hier nourriture\"</b>.</string>
+    <string name="home_need_fast_connection">Pour cette fonctionnalité vous devez être en 4G ou en WIFI.</string>
 
 </resources>
