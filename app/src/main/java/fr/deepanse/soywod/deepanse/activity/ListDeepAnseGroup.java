@@ -8,7 +8,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -76,6 +75,9 @@ public class ListDeepAnseGroup extends DeepAnse implements AdapterView.OnItemCli
             intent.putExtra("color", arrayDeepAnseGroup.get(position).getColor());
             startActivity(intent);
         }
+        else if (position == 0) {
+            showShortToast(R.string.toast_no_edit_possible);
+        }
     }
 
     @Override
@@ -89,7 +91,7 @@ public class ListDeepAnseGroup extends DeepAnse implements AdapterView.OnItemCli
                 public void execute() {
                     groupDb.updateAllById(arrayDeepAnseGroup.get(position).getId());
                     groupDb.delete(arrayDeepAnseGroup.get(position).getId());
-                    Toast.makeText(getApplicationContext(), getString(R.string.toast_deleted_group), Toast.LENGTH_SHORT).show();
+                    showShortToast(R.string.toast_deleted_group);
                     refreshData();
                     longClicked = false;
                 }

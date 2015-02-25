@@ -4,6 +4,7 @@
     android:scrollbars="vertical"
     android:fadeScrollbars="false"
     android:layout_weight="1"
+    android:scrollbarStyle="outsideOverlay"
     android:background="@drawable/background">
 
     <TableLayout
@@ -11,7 +12,7 @@
         android:layout_height="wrap_content"
         android:padding="20dp">
 
-        <TableRow android:layout_marginBottom="20dp">
+        <TableRow android:layout_marginBottom="10dp">
             <TextView style="@style/text_white"
                 android:layout_height="wrap_content"
                 android:layout_width="0dp"
@@ -27,7 +28,7 @@
             <TextView style="@style/HomeSubTitle" android:text="@string/home_deepanse"/>
         </TableRow>
 
-        <TableRow android:padding="7dp" android:layout_marginBottom="20dp">
+        <TableRow android:padding="7dp" android:layout_marginBottom="10dp">
             <Button style="@style/HomeButton"
                 android:id="@+id/button_add_deepanse_by_voice"
                 android:drawableTop="@drawable/add_deepanse_by_voice"
@@ -54,7 +55,7 @@
             <TextView style="@style/HomeSubTitle" android:text="@string/home_group"/>
         </TableRow>
 
-        <TableRow android:padding="7dp">
+        <TableRow android:padding="7dp" android:layout_marginBottom="10dp">
             <Button style="@style/HomeButton"
                 android:id="@+id/button_add_group"
                 android:drawableTop="@drawable/add_group"
@@ -67,9 +68,10 @@
                 android:id="@+id/button_import_group"
                 android:drawableTop="@drawable/import_group"
                 android:text="@string/home_import_group" />
+            <Button style="@style/HomeButton" />
         </TableRow>
 
-        <!--
+
         <TableRow>
             <TextView style="@style/Separator" />
         </TableRow>
@@ -80,18 +82,16 @@
 
         <TableRow android:padding="7dp">
             <Button style="@style/HomeButton"
-                android:id="@+id/button1"
-                android:drawableTop="@drawable/add_group"
-                android:text="@string/home_add_group" />
+                android:id="@+id/button_first_launch"
+                android:drawableTop="@drawable/help"
+                android:text="@string/home_first_launch" />
             <Button style="@style/HomeButton"
-                android:id="@+id/button2"
-                android:drawableTop="@drawable/view_group"
-                android:text="@string/home_list_group" />
-            <Button style="@style/HomeButton"
-                android:id="@+id/button3"
-                android:drawableTop="@drawable/add_group"
-                android:text="@string/home_import_group" />
+                android:id="@+id/button_create_deepanse_tuto"
+                android:drawableTop="@drawable/help"
+                android:text="@string/home_create_deepanse_tuto"/>
+            <Button style="@style/HomeButton" />
+            <Button style="@style/HomeButton" />
         </TableRow>
-        -->
+
     </TableLayout>
 </ScrollView>

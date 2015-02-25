@@ -1,12 +1,14 @@
 package fr.deepanse.soywod.deepanse.activity;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -89,22 +91,47 @@ public class EditDeepAnseGroup extends DeepAnse {
     }
 
     public void eventSave(View view) {
-        fr.deepanse.soywod.deepanse.model.DeepAnseGroup deepAnseGroup = new fr.deepanse.soywod.deepanse.model.DeepAnseGroup(
-                0,
-                editName.getText().toString(),
-                colorPicker.getColor()
-        );
+        if (!editName.getText().toString().isEmpty()) {
+            long error = 0;
+            fr.deepanse.soywod.deepanse.model.DeepAnseGroup deepAnseGroup = new fr.deepanse.soywod.deepanse.model.DeepAnseGroup(
+                    0,
+                    editName.getText().toString().toLowerCase(),
+                    colorPicker.getColor()
+            );
 
-        if (id == 0) {
-            groupDb.insert(deepAnseGroup);
-            Toast.makeText(getApplicationContext(), getString(R.string.toast_inserted_group), Toast.LENGTH_SHORT).show();
+            try {
+                if (id == 0)
+                    error = groupDb.insert(deepAnseGroup);
+                else
+                    groupDb.update(id, deepAnseGroup);
+            }
+            catch (Exception e) {
+                error = -1;
+            }
+
+            if(error == -1) {
+                showShortToast(R.string.toast_group_already_exist);
+
+                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(editName.getWindowToken(), 0);
+                editName.clearFocus();
+            }
+            else {
+                if (id == 0)
+                    showShortToast(R.string.toast_inserted_group);
+                else
+                    showShortToast(R.string.toast_updated_group);
+
+                finish();
+            }
         }
         else {
-            groupDb.update(id, deepAnseGroup);
-            Toast.makeText(getApplicationContext(), getString(R.string.toast_updated_group), Toast.LENGTH_SHORT).show();
-        }
+            showShortToast(R.string.toast_need_name);
 
-        finish();
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(editName.getWindowToken(), 0);
+            editName.clearFocus();
+        }
     }
 
     @Override

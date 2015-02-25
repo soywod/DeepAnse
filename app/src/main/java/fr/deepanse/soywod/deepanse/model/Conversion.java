@@ -2,6 +2,7 @@ package fr.deepanse.soywod.deepanse.model;
 
 import android.database.Cursor;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
@@ -205,5 +206,10 @@ public class Conversion {
             result += item + " ";
 
         return result.trim();
+    }
+
+    public static String numberFormatter(double number) {
+        DecimalFormat formatter = new DecimalFormat("###,###,###.## €");
+        return formatter.format(number);
     }
 }

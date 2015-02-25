@@ -8,7 +8,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
@@ -84,7 +83,7 @@ public class ListDeepAnseDetail extends DeepAnse implements AdapterView.OnItemCl
         adapter.notifyDataSetChanged();
 
         if (arrayDeepAnse.size() == 0) {
-            Toast.makeText(getApplicationContext(), getString(R.string.toast_no_result), Toast.LENGTH_SHORT).show();
+            showShortToast(R.string.toast_no_result);
             finish();
         }
 
@@ -120,7 +119,7 @@ public class ListDeepAnseDetail extends DeepAnse implements AdapterView.OnItemCl
             @Override
             public void execute() {
                 deepAnseDb.delete(arrayDeepAnse.get(position).getId());
-                Toast.makeText(getApplicationContext(), getString(R.string.toast_deleted_deepense), Toast.LENGTH_SHORT).show();
+                showShortToast(R.string.toast_deleted_deepense);
                 refreshData();
                 longClicked = false;
             }

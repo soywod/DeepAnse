@@ -1,16 +1,18 @@
 package fr.deepanse.soywod.deepanse.activity;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
+import android.widget.Toast;
 
 import java.sql.SQLException;
+import java.util.GregorianCalendar;
 
 import fr.deepanse.soywod.deepanse.R;
 import fr.deepanse.soywod.deepanse.database.DeepAnseSQLiteOpenHelper;
+import fr.deepanse.soywod.deepanse.model.Conversion;
 import fr.deepanse.soywod.deepanse.model.DeepAnseGroup;
 
 /**
@@ -33,9 +35,9 @@ abstract public class DeepAnse extends ActionBarActivity {
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         groupDb.close();
         deepAnseDb.close();
+        super.onDestroy();
     }
 
     private void initDatabase(Context context) {
@@ -52,7 +54,7 @@ abstract public class DeepAnse extends ActionBarActivity {
             e.printStackTrace();
         }
 
-        if (groupDb.select(1) == null) groupDb.insert(new DeepAnseGroup(1, "default", getResources().getColor(R.color.ColorBlue)));
+        if (groupDb.select(1) == null) groupDb.insert(new DeepAnseGroup(1, "divers", getResources().getColor(R.color.ColorBlue)));
     }
 
     private void initActionBar() {
@@ -70,5 +72,33 @@ abstract public class DeepAnse extends ActionBarActivity {
 
     public void eventCancel(View view) {
         finish();
+    }
+
+    protected String dateToStringFrExplicit(GregorianCalendar date) {
+
+        GregorianCalendar today = new GregorianCalendar();
+
+        int today_year = today.get(GregorianCalendar.YEAR);
+        int today_month = today.get(GregorianCalendar.MONTH);
+        int today_day = today.get(GregorianCalendar.DAY_OF_MONTH);
+
+        int date_year = date.get(GregorianCalendar.YEAR);
+        int date_month = date.get(GregorianCalendar.MONTH);
+        int date_day = date.get(GregorianCalendar.DAY_OF_MONTH);
+
+        if (date_year == today_year && date_month == today_month && date_day == today_day)
+            return getString(R.string.today);
+
+        if (date_year == today_year && date_month == today_month && date_day == (today_day+1))
+            return getString(R.string.tomorrow);
+
+        if (date_year == today_year && date_month == today_month && date_day == (today_day-1))
+            return getString(R.string.yesterday);
+
+        return Conversion.dateToStringDayMonthYearFr(date);
+    }
+
+    public void showShortToast(int stringRes) {
+        Toast.makeText(getApplicationContext(), getString(stringRes), Toast.LENGTH_SHORT).show();
     }
 }

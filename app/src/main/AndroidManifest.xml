@@ -4,11 +4,11 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@drawable/deepanse"
         android:label="@string/title_app"
         android:theme="@style/DeepAnseTheme" >
         <activity
-            android:name="fr.deepanse.soywod.deepanse.activity.Home"
+            android:name=".activity.Home"
             android:label="@string/title_app" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -17,31 +17,32 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="fr.deepanse.soywod.deepanse.activity.EditDeepAnse"
+            android:name=".activity.EditDeepAnse"
             android:label="@string/title_edit_deepanse" >
         </activity>
         <activity
-            android:name="fr.deepanse.soywod.deepanse.activity.EditDeepAnseGroup"
+            android:name=".activity.EditDeepAnseGroup"
             android:label="@string/title_edit_group" >
         </activity>
         <activity
-            android:name="fr.deepanse.soywod.deepanse.activity.FindDeepAnse"
+            android:name=".activity.FindDeepAnse"
             android:label="@string/title_find_deepanse" >
         </activity>
         <activity
-            android:name="fr.deepanse.soywod.deepanse.activity.CreateDeepAnse"
+            android:name=".activity.CreateDeepAnse"
             android:label="@string/title_create_deepanse" >
         </activity>
-        <activity
-            android:name="fr.deepanse.soywod.deepanse.activity.ListDeepAnse" >
+        <activity android:name=".activity.ListDeepAnse" >
+        </activity>
+        <activity android:name=".activity.ListDeepAnseDetail" >
         </activity>
         <activity
-            android:name="fr.deepanse.soywod.deepanse.activity.ListDeepAnseDetail" >
-        </activity>
-
-        <activity
-            android:name="fr.deepanse.soywod.deepanse.activity.ListDeepAnseGroup"
+            android:name=".activity.ListDeepAnseGroup"
             android:label="@string/title_list_group" >
+        </activity>
+        <activity
+            android:name=".activity.CreateDeepAnseTuto"
+            android:label="@string/title_create_deepanse_tuto" >
         </activity>
     </application>
 

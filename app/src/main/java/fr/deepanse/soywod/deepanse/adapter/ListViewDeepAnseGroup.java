@@ -10,6 +10,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import fr.deepanse.soywod.deepanse.R;
+import fr.deepanse.soywod.deepanse.model.Conversion;
 
 /**
  * Created by soywod on 05/02/2015.
@@ -32,7 +33,7 @@ public class ListViewDeepAnseGroup extends ArrayAdapter<fr.deepanse.soywod.deepa
 
         TextView textName = (TextView) convertView.findViewById(R.id.text_name);
 
-        textName.setText("["+deepAnseGroup.getName()+"]");
+        textName.setText("[" + Conversion.firstCharToUpperCase(deepAnseGroup.getName()) + "]");
         textName.setTextColor(deepAnseGroup.getColor());
 
         return convertView;

@@ -2,17 +2,13 @@ package fr.deepanse.soywod.deepanse.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ExpandableListView;
 import android.widget.Spinner;
-import android.widget.Toast;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.LinkedHashMap;
@@ -22,7 +18,6 @@ import java.util.Map;
 import fr.deepanse.soywod.deepanse.R;
 import fr.deepanse.soywod.deepanse.adapter.ExpandableListDeepAnse;
 import fr.deepanse.soywod.deepanse.adapter.SpinnerDate;
-import fr.deepanse.soywod.deepanse.database.DeepAnseSQLiteOpenHelper;
 import fr.deepanse.soywod.deepanse.model.Conversion;
 import fr.deepanse.soywod.deepanse.model.DateFR;
 
@@ -66,7 +61,7 @@ public class ListDeepAnse extends DeepAnse {
                             Integer.parseInt((String) spinnerYear.getSelectedItem()),
                             DateFR.findDateNumeric(((String) adapter.getGroup(groupPosition)[0]).split(" ")[1]),
                             Integer.parseInt(((String) adapter.getGroup(groupPosition)[0]).split(" ")[0]));
-                    String group = (String) adapter.getChild(groupPosition, childPosition)[0];
+                    String group = adapter.getChild(groupPosition, childPosition)[0].toString();
 
 
                     Intent intent = new Intent(ListDeepAnse.this, ListDeepAnseDetail.class);
@@ -298,7 +293,7 @@ public class ListDeepAnse extends DeepAnse {
             collapseAll();
         }
         else {
-            Toast.makeText(getApplicationContext(), getString(R.string.toast_no_result), Toast.LENGTH_SHORT).show();
+            showShortToast(R.string.toast_no_result);
             finish();
         }
     }

@@ -23,10 +23,8 @@ public class ListViewDeepAnseDetail extends ArrayAdapter<fr.deepanse.soywod.deep
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        // Get the data item for this position
         fr.deepanse.soywod.deepanse.model.DeepAnse deepAnse = getItem(position);
 
-        // Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.layout_listview_detail, parent, false);
         }
@@ -43,7 +41,7 @@ public class ListViewDeepAnseDetail extends ArrayAdapter<fr.deepanse.soywod.deep
 
         textDesc.setText(Conversion.firstCharToUpperCase(deepAnse.getComment()));
 
-        textAmount.setText(deepAnse.getAmount() + " €");
+        textAmount.setText(Conversion.numberFormatter(deepAnse.getAmount()));
 
         return convertView;
     }

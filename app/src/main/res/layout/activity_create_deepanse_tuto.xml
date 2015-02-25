@@ -1,0 +1,56 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_scroll"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:scrollbars="vertical"
+    android:scrollbarStyle="outsideOverlay"
+    android:fadeScrollbars="false"
+    android:padding="10dp"
+    android:background="@drawable/background">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView style="@style/text_white"
+            android:id="@+id/text_1"
+            android:layout_marginBottom="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/tuto_create_deepanse_1" />
+        <TextView style="@style/text_white"
+            android:id="@+id/text_2"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/tuto_create_deepanse_2" />
+        <TextView style="@style/text_white"
+            android:id="@+id/text_3"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/tuto_create_deepanse_3" />
+        <TextView style="@style/text_white"
+            android:id="@+id/text_4"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/tuto_create_deepanse_4" />
+        <TextView style="@style/text_white"
+            android:id="@+id/text_5"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/tuto_create_deepanse_5" />
+        <TextView style="@style/text_white"
+            android:id="@+id/text_6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/tuto_create_deepanse_6" />
+    </LinearLayout>
+</ScrollView>

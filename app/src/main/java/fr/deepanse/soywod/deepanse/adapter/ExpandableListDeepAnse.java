@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 import fr.deepanse.soywod.deepanse.R;
+import fr.deepanse.soywod.deepanse.model.Conversion;
 
 public class ExpandableListDeepAnse extends BaseExpandableListAdapter {
 
@@ -43,8 +44,8 @@ public class ExpandableListDeepAnse extends BaseExpandableListAdapter {
 
 
     public View getChildView(final int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-        String desc = (String) getChild(groupPosition, childPosition)[0];
-        String sum = String.valueOf(getChild(groupPosition, childPosition)[1]);
+        String desc = getChild(groupPosition, childPosition)[0].toString();
+        Double sum = Double.parseDouble(getChild(groupPosition, childPosition)[1].toString());
 
         LayoutInflater inflater = context.getLayoutInflater();
 
@@ -58,7 +59,7 @@ public class ExpandableListDeepAnse extends BaseExpandableListAdapter {
         textDesc.setText("[" + desc + "]");
         textDesc.setTextColor(groupDb.selectByName(desc).getColor());
 
-        textSum.setText(sum + " €");
+        textSum.setText(Conversion.numberFormatter(sum));
 
         return convertView;
     }
@@ -81,7 +82,7 @@ public class ExpandableListDeepAnse extends BaseExpandableListAdapter {
 
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
         String desc = (String) getGroup(groupPosition)[0];
-        String sum = String.valueOf(getGroup(groupPosition)[1]);
+        Double sum = Double.parseDouble(getGroup(groupPosition)[1].toString());
 
         if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -92,7 +93,7 @@ public class ExpandableListDeepAnse extends BaseExpandableListAdapter {
         TextView textSum = (TextView) convertView.findViewById(R.id.text_sum);
 
         textDesc.setText(desc);
-        textSum.setText(sum + " €");
+        textSum.setText(Conversion.numberFormatter(sum));
 
         return convertView;
     }

@@ -1,7 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:padding="10dp"
     android:focusable="true"
     android:focusableInTouchMode="true"
     android:background="@drawable/background">
@@ -12,6 +11,8 @@
         android:layout_height="wrap_content"
         android:scrollbars="vertical"
         android:fadeScrollbars="false"
+        android:padding="10dp"
+        android:scrollbarStyle="outsideOverlay"
         android:layout_above="@+id/layout_buttons"
         android:layout_alignParentTop="true">
 
@@ -26,24 +27,22 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:weightSum="3"
-                android:paddingBottom="10dp"
-                android:paddingTop="10dp"
-                android:layout_marginBottom="10dp">
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp">
 
                 <TextView style="@style/text_white"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="40dp"
                     android:layout_weight="1.3"
-                    android:paddingLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="10dp"
                     android:gravity="start|center_vertical"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="@string/date" />
 
-                <DatePicker style="@android:style/Widget.DatePicker"
-                    android:background="@drawable/edit_text"
-                    android:id="@+id/date_picker"
+                <Button style="@style/spinner"
+                    android:id="@+id/button_date_picker"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="40dp"
                     android:layout_weight="1.7" />
 
             </LinearLayout>
@@ -53,23 +52,23 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingBottom="10dp"
                 android:weightSum="3"
-                android:layout_marginBottom="10dp">
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp">
 
                 <TextView style="@style/text_white"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="40dp"
                     android:layout_weight="1.3"
-                    android:paddingLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="10dp"
                     android:gravity="start|center_vertical"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="@string/group" />
 
                 <Spinner style="@style/spinner"
                     android:id="@+id/spinner_group"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="40dp"
                     android:layout_weight="1.7" />
             </LinearLayout>
 
@@ -77,24 +76,24 @@
                 android:id="@+id/layout_amount"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="10dp"
                 android:orientation="horizontal"
                 android:weightSum="3"
-                android:layout_marginBottom="10dp">
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp">
 
                 <TextView style="@style/text_white"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="40dp"
                     android:layout_weight="1.3"
-                    android:paddingLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="10dp"
                     android:gravity="start|center_vertical"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="@string/amount" />
 
                 <EditText style="@style/edit_text"
                     android:id="@+id/edit_amount"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="40dp"
                     android:layout_weight="1.7"
                     android:padding="10dp"
                     android:inputType="numberDecimal"
@@ -107,21 +106,22 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:weightSum="3"
-                android:layout_marginBottom="10dp">
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp">
 
                 <TextView style="@style/text_white"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="40dp"
                     android:layout_weight="1.3"
-                    android:paddingLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="10dp"
                     android:gravity="start|center_vertical"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="@string/comment" />
 
                 <EditText style="@style/edit_text"
                     android:id="@+id/edit_comment"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="40dp"
                     android:layout_weight="1.7"
                     android:padding="10dp"
                     android:inputType="textMultiLine" />
@@ -135,7 +135,7 @@
         android:layout_height="40dp"
         android:orientation="horizontal"
         android:weightSum="3"
-        android:layout_marginTop="10dp"
+        android:layout_margin="10dp"
         android:layout_alignParentBottom="true">
 
         <Button style="@style/button"

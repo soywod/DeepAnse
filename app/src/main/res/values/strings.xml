@@ -14,11 +14,12 @@
     <string name="title_create_group">Créer une catégorie</string>
     <string name="title_edit_group">Editer une catégorie</string>
     <string name="title_list_group">Liste des catégories</string>
+    <string name="title_create_deepanse_tuto">Dicter une dépense</string>
 
     <!-- HOME -->
     <string name="home_add_deepanse_by_voice">Dicter une\ndépense</string>
     <string name="home_add_deepanse_by_hand">Ecrire une\ndépense</string>
-    <string name="home_list_deepanse">Liste des\ndépense</string>
+    <string name="home_list_deepanse">Liste des\ndépenses</string>
     <string name="home_find_deepanse">Rechercher\nune dépense</string>
     <string name="home_add_group">Créer une\ncatégorie</string>
     <string name="home_list_group">Liste des\ncatégories</string>
@@ -26,6 +27,9 @@
     <string name="home_desc"><b>DeepAnse</b> vous permet de saisir simplement et rapidement <b><u>à l\'oral</u></b> comme à l\'écrit vos <b>dépenses quotidiennes</b>, organisées par catégories entièrement <b>personnalisables</b>.</string>
     <string name="home_deepanse"><i>Gestion des dépenses</i></string>
     <string name="home_group"><i>Gestion des catégories</i></string>
+    <string name="home_help">Aide</string>
+    <string name="home_first_launch">Guide de\ndémarrage</string>
+    <string name="home_create_deepanse_tuto">Comment dicter\nune dépense</string>
 
     <!-- BUTTON -->
     <string name="cancel">Annuler</string>
@@ -35,6 +39,10 @@
     <string name="delete">Supprimer</string>
     <string name="yes">Oui</string>
     <string name="no">Non</string>
+    <string name="ok">OK</string>
+    <string name="today">Aujourd\'hui</string>
+    <string name="tomorrow">Demain</string>
+    <string name="yesterday">Hier</string>
 
     <!-- TEXTVIEW -->
     <string name="by_year">Par année</string>
@@ -54,8 +62,7 @@
     <string name="total">Total :</string>
     <string name="google_full_text">Text brut retourné par Google :</string>
     <string name="deepanse_reduce_text">Text corrigé par l\'application :</string>
-    <string name="deepanse_not_recognized">Aucune dépense reconnue (peut-être manque-t-il un montant ?), veuillez recommencer la saisie vocale.</string>
-    <string name="deepanse_recognized">Dépense reconnue :</string>
+    <string name="deepanse_not_recognized"><b>Aucune dépense reconnue !</b>\n\nSi vous voulez plus d\'informations sur comment saisir correctement une dépense, jetez un coup d\'oeil à la rubrique \"<b>Aide</b>\" du menu principal.</string>
 
     <!-- TOAST -->
     <string name="toast_inserted_deepense">Nouvelle dépense enregistrée.</string>
@@ -65,14 +72,43 @@
     <string name="toast_deleted_deepense">Dépense supprimée.</string>
     <string name="toast_deleted_group">Rubrique supprimée.</string>
     <string name="toast_no_result">Aucun résultat.</string>
+    <string name="toast_anim_add_group">Dans un premier temps, créez vos propres catégories.</string>
+    <string name="toast_anim_list_group">Vous pouvez éditer vos catégories à tout moment.</string>
+    <string name="toast_anim_import_group">Si vous ne savez pas quoi créer comme catégorie, jettez un oeil au \"Glossaire\"</string>
+    <string name="toast_anim_add_deepanse_by_hand">Ensuite ajoutez des dépenses soit en remplissant les champs manuellement …</string>
+    <string name="toast_anim_add_deepanse_by_voice">… soit en dictant la date, la catégorie, l\'intitulé et le montant (seul ce dernier est obligatoire).</string>
+    <string name="toast_anim_list_deepanse">Vous pouvez éditer vos dépenses à tout moment.</string>
+    <string name="toast_anim_find_deepanse">Enfin vous pouvez effectuer des recherches plus poussées.</string>
+    <string name="toast_more_help">Pour plus d\'infos sur chaque fonctionnalité, consultez la catégorie \"Aide\".</string>
+    <string name="toast_create_deepanse_sound_1">Pour dicter une dépense, vous devez saisir à l\'oral 4 éléments.</string>
+    <string name="toast_create_deepanse_sound_2">la DATE : par ex demain, hier, mardi prochain ou 14 février 2015.</string>
+    <string name="toast_create_deepanse_sound_3">la CATEGORIE qu\'il faudra créer et personnaliser avant.</string>
+    <string name="toast_create_deepanse_sound_4">le MONTANT : par ex 15€30, 12 40 ou 50€.</string>
+    <string name="toast_create_deepanse_sound_5">l\'INTITULE : vous pouvez dire ce que vous voulez.</string>
+    <string name="toast_create_deepanse_sound_6">Seul le montant est obligatoire, les autres éléments sont facultatifs.</string>
+    <string name="toast_create_deepanse_sound_7">Prenons par exemple : hier travail 15.30€ déjeuner avec mes collègues.</string>
+    <string name="toast_create_deepanse_sound_8">Chaque élément a bien été retrouvé.</string>
+    <string name="toast_need_amount">Une dépense requiert un montant.</string>
+    <string name="toast_need_name">Une catégorie requiert un nom.</string>
+    <string name="toast_no_edit_possible">Impossible de modifier la catégorie par défaut.</string>
 
     <!-- ALERTBOX -->
     <string name="prompt_create_deepanse">Dictez votre nouvelle dépense</string>
     <string name="prompt_del_deepanse">Voulez-vous vraiment supprimer cette dépense ?</string>
     <string name="prompt_del_group">Voulez-vous vraiment supprimer cette catégorie ? Toute dépense liée à cette catégorie sera transférée dans la catégorie par défaut.</string>
+    <string name="prompt_first_launch">Bienvenue sur DeepAnse !\n\nPour profiter pleinement de toutes ses fonctionnalités, il est fortement conseillé de consulter la rubrique \"Aide\" avant toute chose !\n</string>
 
     <!-- MENU -->
     <string name="menu_home">Retour au menu principal</string>
     <string name="menu_collapse">Réduire tous les groupes</string>
+    <string name="toast_group_already_exist">Cette catégorie existe déjà !</string>
+
+    <!-- CREATE DEEPANSE TUTO -->
+    <string name="tuto_create_deepanse_1">Pour <b>dicter</b> correctement <b>une dépense</b>, vous devez saisir <b>4 éléments :</b></string>
+    <string name="tuto_create_deepanse_2"><u><b>La DATE :</b></u> ça peut être demain, après-demain, hier, avant-hier, samedi prochain, dimanche dernier ou encore une date précise telle que 14 février 2015. Ce champs <b>n\'est pas obligatoire</b>, si vous ne le renseignez pas, c\'est <b>la date d\'aujourd\'hui</b> qui sera prise par défaut.</string>
+    <string name="tuto_create_deepanse_3"><u><b>La CATAGORIE :</b></u> il faut avoir <b>créé une catégorie au préalable avant</b> de la saisir dans une dépense. Par exemple, si vous avez créé une catégorie <b>\"Travail\"</b>, et que vous dîtes <b>\"Travail\"</b> pendant la saisie de votre dépense, alors cette catégorie sera prise en compte. Ce champs <b>n\'est pas obligatoire</b>, si vous ne le renseignez pas, c\'est la rubrique <b>\"Divers\"</b> qui sera prise par défaut.</string>
+    <string name="tuto_create_deepanse_4"><u><b>l\'INTITULE :</b></u> vous pouvez dire <b>ce que vous voulez</b>. Ce champs <b>n\'est pas obligatoire</b> non plus, vous n\'êtes donc pas obligé de saisir un intitulé même si c\'est <b>vivement conseillé</b>.</string>
+    <string name="tuto_create_deepanse_5"><u><b>le MONTANT :</b></u> c\'est <b>le seul champs obligatoire</b> : 15 euros, 17 euros 30, 20 50 … évitez de dire le mot <b>\"centimes\"</b> il pourrait être pris en compte comme intitulé.</string>
+    <string name="tuto_create_deepanse_6">Il n\'y a pas <b>d\'ordre particulier</b> de saisie, vous pouvez aussi bien dire <b>\"Hier nourriture 57 euros courses au supermarché\"</b> que <b>\"Courses au supermarché 57 euros hier nourriture\"</b>.</string>
 
 </resources>

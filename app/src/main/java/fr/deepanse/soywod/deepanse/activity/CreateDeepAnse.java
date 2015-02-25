@@ -1,16 +1,17 @@
 package fr.deepanse.soywod.deepanse.activity;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
@@ -30,8 +31,11 @@ public class CreateDeepAnse extends DeepAnse {
 
     private EditText editFull, editReduce, editAmout, editComment;
     private TextView textInfo;
-    private DatePicker datePicker;
+    private Button buttonDatePicker;
     private Spinner spinner;
+
+    private GregorianCalendar main_date;
+    private DatePickerDialog.OnDateSetListener datePickerListener;
 
     private Pattern regexGroup;
     private final Pattern regexAmount = Pattern.compile(".*?(([0-9]+?)( euro[s]?[ ]?|[^0-9])([0-9]*)).*?");
@@ -57,20 +61,42 @@ public class CreateDeepAnse extends DeepAnse {
         setContentView(R.layout.activity_create_deepanse);
 
         initComponent();
+
         initExtract(getIntent().getStringExtra("best_match"));
     }
 
     public void initComponent() {
         editFull = (EditText) findViewById(R.id.edit_full);
         editReduce = (EditText) findViewById(R.id.edit_reduce);
-        datePicker = (DatePicker) findViewById(R.id.date_picker);
+        buttonDatePicker = (Button) findViewById(R.id.button_date_picker);
         spinner = (Spinner) findViewById(R.id.spinner_group);
         editAmout = (EditText) findViewById(R.id.edit_amount);
         editComment = (EditText) findViewById(R.id.edit_comment);
         textInfo = (TextView) findViewById(R.id.text_info);
 
-        datePicker.setCalendarViewShown(false);
         spinner.setAdapter(new SpinnerDeepAnseGroup(CreateDeepAnse.this, groupDb.selectAll()));
+        datePickerListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int day) {
+                main_date.set(GregorianCalendar.YEAR, year);
+                main_date.set(GregorianCalendar.MONTH, month);
+                main_date.set(GregorianCalendar.DAY_OF_MONTH, day);
+
+                buttonDatePicker.setText(dateToStringFrExplicit(main_date));
+            }
+        };
+        buttonDatePicker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new DatePickerDialog(
+                        CreateDeepAnse.this,
+                        datePickerListener,
+                        main_date.get(GregorianCalendar.YEAR),
+                        main_date.get(GregorianCalendar.MONTH),
+                        main_date.get(GregorianCalendar.DAY_OF_MONTH))
+                        .show();
+            }
+        });
 
         findViewById(R.id.button_save).setEnabled(false);
     }
@@ -145,17 +171,19 @@ public class CreateDeepAnse extends DeepAnse {
         }
 
         if (group.trim().isEmpty()) {
-            group = "default";
+            group = "divers";
         }
 
         if (amount != 0) {
-            textInfo.setText(getString(R.string.deepanse_recognized));
+            textInfo.setVisibility(View.GONE);
+
             findViewById(R.id.layout_date).setVisibility(View.VISIBLE);
             findViewById(R.id.layout_group).setVisibility(View.VISIBLE);
             findViewById(R.id.layout_amount).setVisibility(View.VISIBLE);
             findViewById(R.id.layout_comment).setVisibility(View.VISIBLE);
 
-            datePicker.updateDate(date.get(GregorianCalendar.YEAR), date.get(GregorianCalendar.MONTH), date.get(GregorianCalendar.DAY_OF_MONTH));
+            main_date = new GregorianCalendar(date.get(GregorianCalendar.YEAR), date.get(GregorianCalendar.MONTH), date.get(GregorianCalendar.DAY_OF_MONTH));
+            buttonDatePicker.setText(dateToStringFrExplicit(main_date));
             spinner.setSelection(groupDb.selectAllGroupName().indexOf(group));
             editAmout.setText(amount+"");
             editComment.setText(bestMatch);
@@ -163,7 +191,8 @@ public class CreateDeepAnse extends DeepAnse {
             findViewById(R.id.button_save).setEnabled(true);
         }
         else {
-            textInfo.setText(getString(R.string.deepanse_not_recognized));
+            textInfo.setVisibility(View.VISIBLE);
+
             findViewById(R.id.layout_date).setVisibility(View.GONE);
             findViewById(R.id.layout_group).setVisibility(View.GONE);
             findViewById(R.id.layout_amount).setVisibility(View.GONE);
@@ -180,17 +209,23 @@ public class CreateDeepAnse extends DeepAnse {
     }
 
     public void eventSave(View view) {
-        fr.deepanse.soywod.deepanse.model.DeepAnse deepAnse = new fr.deepanse.soywod.deepanse.model.DeepAnse(
-                0,
-                Double.parseDouble(editAmout.getText().toString()),
-                new GregorianCalendar(datePicker.getYear(), datePicker.getMonth(), datePicker.getDayOfMonth()),
-                groupDb.selectByName(spinner.getSelectedItem().toString()),
-                editComment.getText().toString(),
-                false
-        );
-        deepAnseDb.insert(deepAnse);
-        Toast.makeText(getApplicationContext(), getString(R.string.toast_inserted_deepense), Toast.LENGTH_SHORT).show();
-        finish();
+        if (!editAmout.getText().toString().isEmpty()) {
+            fr.deepanse.soywod.deepanse.model.DeepAnse deepAnse = new fr.deepanse.soywod.deepanse.model.DeepAnse(
+                    0,
+                    Double.parseDouble(editAmout.getText().toString()),
+                    main_date,
+                    groupDb.selectByName(spinner.getSelectedItem().toString()),
+                    editComment.getText().toString(),
+                    false
+            );
+            deepAnseDb.insert(deepAnse);
+            showShortToast(R.string.toast_inserted_deepense);
+
+            finish();
+        }
+        else {
+            showShortToast(R.string.toast_need_amount);
+        }
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
