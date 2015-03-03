@@ -5,7 +5,7 @@
     android:orientation="horizontal"
     android:weightSum="3"
     android:padding="5dp"
-    android:background="@drawable/expandable_listview_parent">
+    android:background="@drawable/explistview_parent">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_height="wrap_content"
@@ -19,12 +19,12 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:textSize="13sp"
-            android:textStyle="bold"
             android:gravity="start|center_vertical" />
         <TextView
             android:id="@+id/text_date"
             android:layout_width="fill_parent"
-            android:textSize="12sp"
+            android:textSize="13sp"
+            android:textColor="@color/ColorDarkGray"
             android:layout_height="wrap_content"
             android:gravity="start|center_vertical" />
     </LinearLayout>
@@ -35,6 +35,7 @@
         android:layout_height="fill_parent"
         android:layout_weight="1"
         android:textStyle="italic"
+        android:textColor="@color/ColorDarkGray"
         android:gravity="start|center_vertical" />
 
 
@@ -44,7 +45,7 @@
         android:layout_height="fill_parent"
         android:layout_weight="1"
         android:textSize="17sp"
-        android:textStyle="bold"
+        android:textColor="#FFF"
         android:paddingRight="10dp"
         android:gravity="end|center_vertical" />
 

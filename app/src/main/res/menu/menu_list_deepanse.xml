@@ -4,14 +4,21 @@
     <item
         android:id="@+id/menu_collapse"
         android:title="@string/menu_collapse"
-        android:icon="@drawable/collapse_all"
+        android:icon="@mipmap/collapse"
         android:orderInCategory="100"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/home"
         android:title="@string/menu_home"
-        android:icon="@drawable/home"
+        android:icon="@mipmap/home"
         android:orderInCategory="100"
         app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/menu_export"
+        android:title="@string/menu_export"
+        android:icon="@mipmap/home"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
 </menu>

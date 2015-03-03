@@ -1,0 +1,170 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:background="@drawable/background">
+
+    <ScrollView
+        android:id="@+id/layout_scroll"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="vertical"
+        android:fadeScrollbars="false"
+        android:padding="10dp"
+        android:scrollbarStyle="outsideOverlay"
+        android:layout_above="@+id/layout_buttons"
+        android:layout_alignParentTop="true">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/layout_date"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp">
+
+                <CheckBox
+                    android:id="@+id/check_date"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1.3"
+                    android:textSize="13sp"
+                    android:onClick="eventCheckDate"
+                    android:gravity="start|center_vertical"
+                    android:text="@string/by_date" />
+
+                <Button style="@style/spinner"
+                    android:id="@+id/button_date_picker"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:enabled="false"
+                    android:layout_weight="1.7" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_group"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp">
+
+                <CheckBox
+                    android:id="@+id/check_group"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1.3"
+                    android:textSize="13sp"
+                    android:onClick="eventCheckGroup"
+                    android:gravity="start|center_vertical"
+                    android:text="@string/by_group" />
+
+                <Spinner style="@style/spinner"
+                    android:id="@+id/spinner_group"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:enabled="false"
+                    android:layout_weight="1.7" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_amount"
+                android:layout_width="fill_parent"
+                android:layout_height="41dp"
+                android:orientation="horizontal"
+                android:weightSum="3"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp">
+
+                <CheckBox
+                    android:id="@+id/check_amount"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1.3"
+                    android:textSize="13sp"
+                    android:onClick="eventCheckAmount"
+                    android:gravity="start|center_vertical"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="@string/by_amount" />
+
+                <EditText style="@style/edit_text"
+                    android:id="@+id/edit_amount"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1.7"
+                    android:enabled="false"
+                    android:padding="10dp"
+                    android:textStyle="bold"
+                    android:gravity="end"
+                    android:inputType="numberDecimal" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_comment"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp">
+
+                <CheckBox
+                    android:id="@+id/check_comment"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1.3"
+                    android:onClick="eventCheckComment"
+                    android:textSize="13sp"
+                    android:gravity="start|center_vertical"
+                    android:text="@string/by_comment" />
+
+                <EditText style="@style/edit_text"
+                    android:id="@+id/edit_comment"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1.7"
+                    android:padding="10dp"
+                    android:enabled="false"
+                    android:inputType="textMultiLine" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/layout_buttons"
+        android:layout_width="fill_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        android:layout_margin="10dp"
+        android:layout_alignParentBottom="true">
+
+        <Button style="@style/button"
+            android:id="@+id/button_cancel"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:text="@string/cancel"
+            android:layout_marginRight="5dp"
+            android:onClick="eventCancel" />
+
+        <Button style="@style/button"
+            android:id="@+id/button_save"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:layout_marginLeft="5dp"
+            android:text="@string/find"
+            android:onClick="eventSearch" />
+    </LinearLayout>
+
+</RelativeLayout>

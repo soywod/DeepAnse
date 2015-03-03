@@ -29,7 +29,7 @@
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="15dp">
 
-                <TextView style="@style/text_white"
+                <TextView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1.3"
@@ -54,7 +54,7 @@
                 android:weightSum="3"
                 android:layout_marginTop="15dp">
 
-                <TextView style="@style/text_white"
+                <TextView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1.3"
@@ -65,7 +65,7 @@
 
                 <com.larswerkman.holocolorpicker.ColorPicker
                     android:id="@+id/color_picker"
-                    android:background="@color/ColorTransWhite"
+                    android:background="@color/ColorLightGrayTrans"
                     android:layout_width="0dip"
                     android:layout_height="match_parent"
                     android:layout_weight="1.7" />
@@ -80,7 +80,7 @@
                 android:weightSum="3"
                 android:layout_marginBottom="15dp">
 
-                <TextView style="@style/text_white"
+                <TextView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1.3"
@@ -91,7 +91,7 @@
 
                 <com.larswerkman.holocolorpicker.SVBar
                     android:id="@+id/svbar"
-                    android:background="@color/ColorTransWhite"
+                    android:background="@color/ColorLightGrayTrans"
                     android:layout_width="0dip"
                     android:layout_height="match_parent"
                     android:layout_weight="1.7" />

@@ -1,0 +1,81 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/background">
+
+    <LinearLayout
+        android:id="@+id/layout_2_spinners"
+        android:layout_width="fill_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:layout_margin="10dp"
+        android:weightSum="2">
+
+        <Spinner style="@style/spinner"
+            android:id="@+id/spinner_month"
+            android:layout_weight="1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp" />
+
+        <Spinner style="@style/spinner"
+            android:id="@+id/spinner_year"
+            android:layout_weight="1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp" />
+
+    </LinearLayout>
+
+    <ExpandableListView
+        android:id="@+id/expandable_listview"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/layout_3_buttons"
+        android:layout_below="@+id/layout_2_spinners"
+        android:background="@drawable/explistview"
+        android:listSelector="@android:color/transparent"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:scrollbars="vertical"
+        android:fadeScrollbars="false"
+        android:scrollbarStyle="outsideOverlay" />
+
+    <LinearLayout
+        android:id="@+id/layout_3_buttons"
+        android:layout_width="fill_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:layout_margin="10dp"
+        android:weightSum="3">
+
+        <Button style="@style/button"
+            android:id="@+id/button_year"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:onClick="eventListByYear"
+            android:text="@string/by_year"
+            android:layout_weight="1" />
+
+        <Button style="@style/button"
+            android:id="@+id/button_month"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:onClick="eventListByMonth"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:text="@string/by_month"
+            android:layout_weight="1" />
+
+        <Button style="@style/button"
+            android:id="@+id/button_day"
+            android:onClick="eventListByDay"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:text="@string/by_day"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+
+</RelativeLayout>

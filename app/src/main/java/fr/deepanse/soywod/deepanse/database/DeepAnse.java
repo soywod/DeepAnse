@@ -359,8 +359,6 @@ public class DeepAnse {
 
         request += "1 = 1 ORDER BY " + DeepAnseSQLiteOpenHelper.DATE + " DESC, " + DeepAnseSQLiteOpenHelper.ID_GROUP + ", " + DeepAnseSQLiteOpenHelper.AMOUNT + " DESC";
 
-        System.out.println(request);
-
         Cursor cursor = sqLiteDatabase.rawQuery(request, null);
 
         if (cursor.getCount() != 0) {

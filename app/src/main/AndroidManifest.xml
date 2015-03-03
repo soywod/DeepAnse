@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="fr.deepanse.soywod.deepanse" >
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <application
         android:allowBackup="true"
         android:icon="@drawable/deepanse"
@@ -17,32 +18,36 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.EditDeepAnse"
+            android:name=".activity.Edit"
             android:label="@string/title_edit_deepanse" >
         </activity>
         <activity
-            android:name=".activity.EditDeepAnseGroup"
+            android:name=".activity.EditGroup"
             android:label="@string/title_edit_group" >
         </activity>
         <activity
-            android:name=".activity.FindDeepAnse"
+            android:name=".activity.Search"
             android:label="@string/title_find_deepanse" >
         </activity>
         <activity
-            android:name=".activity.CreateDeepAnse"
+            android:name=".activity.Create"
             android:label="@string/title_create_deepanse" >
         </activity>
-        <activity android:name=".activity.ListDeepAnse" >
+        <activity android:name=".activity.List" >
         </activity>
-        <activity android:name=".activity.ListDeepAnseDetail" >
+        <activity android:name=".activity.ListDetail" >
         </activity>
         <activity
-            android:name=".activity.ListDeepAnseGroup"
+            android:name=".activity.ListGroup"
             android:label="@string/title_list_group" >
         </activity>
         <activity
-            android:name=".activity.CreateDeepAnseTuto"
+            android:name=".activity.CreateTuto"
             android:label="@string/title_create_deepanse_tuto" >
+        </activity>
+        <activity
+            android:name=".activity.ImportGroup"
+            android:label="@string/title_import_deepanse_group" >
         </activity>
     </application>
 

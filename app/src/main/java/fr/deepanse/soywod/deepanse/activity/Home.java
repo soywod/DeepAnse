@@ -1,17 +1,14 @@
 package fr.deepanse.soywod.deepanse.activity;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.speech.RecognizerIntent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.telephony.TelephonyManager;
 import android.view.View;
 import android.widget.Toast;
 
@@ -36,9 +33,11 @@ public class Home extends ActionBarActivity implements View.OnClickListener {
         animRunning = false;
 
         ActionBar actionBar = getSupportActionBar();
+
         actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_TITLE);
         actionBar.setTitle(getString(R.string.title_home));
-        actionBar.setIcon(getResources().getDrawable(R.drawable.home));
+        actionBar.setIcon(getResources().getDrawable(R.mipmap.home));
+        actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.menu));
 
         findViewById(R.id.button_add_deepanse_by_voice).setOnClickListener(this);
         findViewById(R.id.button_add_deepanse_by_hand).setOnClickListener(this);
@@ -82,43 +81,45 @@ public class Home extends ActionBarActivity implements View.OnClickListener {
                         startActivityForResult(intent, 0);
                     }
                     else {
-                        Toast.makeText(getApplicationContext(), getString(R.string.home_need_fast_connection), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), getString(R.string.toast_need_fast_connection), Toast.LENGTH_SHORT).show();
                     }
                     break;
 
                 case R.id.button_add_deepanse_by_hand:
-                    intent = new Intent(Home.this, EditDeepAnse.class);
+                    intent = new Intent(Home.this, Edit.class);
                     intent.putExtra("new_deepanse", true);
                     startActivity(intent);
                     break;
 
                 case R.id.button_list_deepanse:
-                    intent = new Intent(Home.this, ListDeepAnse.class);
+                    intent = new Intent(Home.this, List.class);
                     startActivity(intent);
                     break;
 
                 case R.id.button_find_deepanse:
-                    intent = new Intent(Home.this, FindDeepAnse.class);
+                    intent = new Intent(Home.this, Search.class);
                     startActivity(intent);
                     break;
 
                 case R.id.button_add_group:
-                    intent = new Intent(Home.this, EditDeepAnseGroup.class);
+                    intent = new Intent(Home.this, EditGroup.class);
                     intent.putExtra("new_group", true);
                     startActivity(intent);
                     break;
 
                 case R.id.button_list_group:
-                    intent = new Intent(Home.this, ListDeepAnseGroup.class);
+                    intent = new Intent(Home.this, ListGroup.class);
                     startActivity(intent);
                     break;
 
                 case R.id.button_import_group:
                     Toast.makeText(getApplicationContext(), "En cours de développement", Toast.LENGTH_SHORT).show();
+                    //intent = new Intent(Home.this, ImportDeepAnseGroup.class);
+                    //startActivity(intent);
                     break;
 
                 case R.id.button_create_deepanse_tuto:
-                    intent = new Intent(Home.this, CreateDeepAnseTuto.class);
+                    intent = new Intent(Home.this, CreateTuto.class);
                     startActivity(intent);
                     break;
 
@@ -162,7 +163,7 @@ public class Home extends ActionBarActivity implements View.OnClickListener {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == 0 && resultCode == RESULT_OK) {
-            Intent intent = new Intent(Home.this, CreateDeepAnse.class);
+            Intent intent = new Intent(Home.this, Create.class);
             intent.putExtra("best_match", data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS).get(0).toLowerCase());
             intent.putExtra("tuto_mode", false);
             startActivity(intent);

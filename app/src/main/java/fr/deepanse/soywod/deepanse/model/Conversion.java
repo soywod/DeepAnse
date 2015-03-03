@@ -3,8 +3,11 @@ package fr.deepanse.soywod.deepanse.model;
 import android.database.Cursor;
 
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
+import java.util.Currency;
 import java.util.GregorianCalendar;
+import java.util.Locale;
 
 /**
  * Created by soywod on 05/02/2015.
@@ -208,8 +211,9 @@ public class Conversion {
         return result.trim();
     }
 
-    public static String numberFormatter(double number) {
-        DecimalFormat formatter = new DecimalFormat("###,###,###.## €");
+    public static String amountFormatter(double number) {
+        DecimalFormat formatter = new DecimalFormat("#,###.## €");
+        formatter.setMinimumFractionDigits(2);
         return formatter.format(number);
     }
 }

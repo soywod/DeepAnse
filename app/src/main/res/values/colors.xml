@@ -2,11 +2,16 @@
 <resources>
     <color name="ColorBlue">#2e87da</color>
     <color name="ColorDarkBlue">#315f89</color>
-    <color name="ColorDarkGray">#353535</color>
-    <color name="ColorGray">#757575</color>
+    <color name="ColorTransBlue">#222e87da</color>
+
+    <color name="ColorLightLightGray">#808080</color>
+    <color name="ColorLightGray">#505050</color>
+    <color name="ColorLightGrayTrans">#66505050</color>
+    <color name="ColorDarkGray">#303030</color>
+
     <color name="ColorWhite">#D1D1D1</color>
     <color name="ColorTransWhite">#22FFFFFF</color>
-    <color name="ColorTransBlue">#222e87da</color>
+
     <color name="ColorShadow">#101010</color>
     <color name="ColorLightShadow">#33101010</color>
 </resources>

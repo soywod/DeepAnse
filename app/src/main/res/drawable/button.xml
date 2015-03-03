@@ -6,7 +6,7 @@
                 <shape>
                     <solid android:color="@color/ColorDarkBlue" />
                     <corners android:radius="3dp" />
-                    <stroke android:color="@color/ColorShadow" android:width="1dp" />
+                    <stroke android:color="@color/ColorLightGray" android:width="1dp" />
                 </shape>
             </item>
         </layer-list>
@@ -16,9 +16,9 @@
         <layer-list>
             <item>
                 <shape>
-                    <solid android:color="@color/ColorTransWhite" />
+                    <solid android:color="@color/ColorLightGrayTrans" />
                     <corners android:radius="3dp" />
-                    <stroke android:color="@color/ColorShadow" android:width="1dp" />
+                    <stroke android:color="@color/ColorLightGray" android:width="1dp" />
                 </shape>
             </item>
         </layer-list>
@@ -30,7 +30,7 @@
                 <shape>
                     <gradient android:angle="90" android:startColor="@color/ColorDarkBlue" android:endColor="@color/ColorBlue" android:type="linear" />
                     <corners android:radius="3dp" />
-                    <stroke android:color="@color/ColorShadow" android:width="1dp" />
+                    <stroke android:color="@color/ColorLightGray" android:width="1dp" />
                 </shape>
             </item>
         </layer-list>

@@ -1,6 +1,7 @@
 package fr.deepanse.soywod.deepanse.activity;
 
 import android.content.Context;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
@@ -60,6 +61,7 @@ abstract public class DeepAnse extends ActionBarActivity {
     private void initActionBar() {
         actionBar = getSupportActionBar();
         actionBar.setDisplayOptions(ActionBar.DISPLAY_HOME_AS_UP | ActionBar.DISPLAY_SHOW_TITLE);
+        actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.menu));
     }
 
     protected void setActionBarIcon(int drawableRes) {
