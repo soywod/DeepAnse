@@ -335,14 +335,20 @@ public class DeepAnse {
      *  @return
      *      La liste des dépenses de la BDD de type ArrayList
      */
-    public ArrayList<fr.deepanse.soywod.deepanse.model.DeepAnse> selectAllBySearch(GregorianCalendar date, fr.deepanse.soywod.deepanse.model.DeepAnseGroup group, Double amount, String comment)
+    public ArrayList<fr.deepanse.soywod.deepanse.model.DeepAnse> selectAllBySearch(int year, int month, int day, fr.deepanse.soywod.deepanse.model.DeepAnseGroup group, Double amount, String comment)
     {
         String request = "SELECT * FROM " + DeepAnseSQLiteOpenHelper.TABLE_DEEPANSE + " WHERE ";
 
-        if (date != null) {
-            request = request + "strftime('%Y', " + DeepAnseSQLiteOpenHelper.DATE + ") = '" + date.get(GregorianCalendar.YEAR) + "' " +
-                "AND strftime('%m', " + DeepAnseSQLiteOpenHelper.DATE + ") = '" + ((date.get(GregorianCalendar.MONTH) < 9)?("0" + (date.get(GregorianCalendar.MONTH)+1)):("" + (date.get(GregorianCalendar.MONTH)+1))) + "' " +
-                "AND strftime('%d', " + DeepAnseSQLiteOpenHelper.DATE + ") = '" + ((date.get(GregorianCalendar.DAY_OF_MONTH) < 10)?("0" + date.get(GregorianCalendar.DAY_OF_MONTH)):("" + date.get(GregorianCalendar.DAY_OF_MONTH))) + "' AND ";
+        if (year != -1) {
+            request = request + "strftime('%Y', " + DeepAnseSQLiteOpenHelper.DATE + ") = '" + year + "' AND ";
+        }
+
+        if (month != -1) {
+            request = request + "strftime('%m', " + DeepAnseSQLiteOpenHelper.DATE + ") = '" + ((month < 9)?("0" + (month+1)):("" + (month+1))) + "' AND ";
+        }
+
+        if (day != -1) {
+            request = request + "strftime('%d', " + DeepAnseSQLiteOpenHelper.DATE + ") = '" + ((day < 10)?("0" + day):("" + day)) + "' AND ";
         }
 
         if (group != null) {

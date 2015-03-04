@@ -29,11 +29,13 @@ public class ListViewDetail extends ArrayAdapter<fr.deepanse.soywod.deepanse.mod
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.layout_listview_detail, parent, false);
         }
 
+        TextView textColor = (TextView) convertView.findViewById(R.id.text_color);
         TextView textGroup = (TextView) convertView.findViewById(R.id.text_group);
         TextView textDate = (TextView) convertView.findViewById(R.id.text_date);
         TextView textDesc = (TextView) convertView.findViewById(R.id.text_desc);
         TextView textAmount = (TextView) convertView.findViewById(R.id.text_amount);
 
+        textColor.setBackgroundColor(deepAnse.getGroup().getColor());
         textGroup.setText(Conversion.firstCharToUpperCase(deepAnse.getGroup().getName()));
         textGroup.setTextColor(deepAnse.getGroup().getColor());
 

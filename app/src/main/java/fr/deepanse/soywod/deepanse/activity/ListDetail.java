@@ -25,7 +25,7 @@ public class ListDetail extends DeepAnse implements AdapterView.OnItemClickListe
     private ListView listView;
     private ListViewDetail adapter;
 
-    private GregorianCalendar date;
+    private int year, month, day;
     private DeepAnseGroup group;
     private double amount;
     private String comment;
@@ -52,8 +52,14 @@ public class ListDetail extends DeepAnse implements AdapterView.OnItemClickListe
     public void initData() {
         Intent data = getIntent();
 
-        if (data.getStringExtra("date") != null) date = Conversion.stringToDate(data.getStringExtra("date"));
-        else date = null;
+        if (data.getIntExtra("year", -1) != -1) year = data.getIntExtra("year", -1);
+        else year = -1;
+
+        if (data.getIntExtra("month", -1) != -1) month = data.getIntExtra("month", -1);
+        else month = -1;
+
+        if (data.getIntExtra("day", -1) != -1) day = data.getIntExtra("day", -1);
+        else day = -1;
 
         if (data.getStringExtra("group") != null) group = groupDb.selectByName(data.getStringExtra("group"));
         else group = null;
@@ -90,7 +96,7 @@ public class ListDetail extends DeepAnse implements AdapterView.OnItemClickListe
     }
 
     private void createCollection() {
-        ArrayList<fr.deepanse.soywod.deepanse.model.DeepAnse> tmpArray = deepAnseDb.selectAllBySearch(date, group, amount, comment);
+        ArrayList<fr.deepanse.soywod.deepanse.model.DeepAnse> tmpArray = deepAnseDb.selectAllBySearch(year, month, day, group, amount, comment);
         if (tmpArray != null)
             for (fr.deepanse.soywod.deepanse.model.DeepAnse deepAnse : tmpArray)
                 arrayDeepAnse.add(deepAnse);

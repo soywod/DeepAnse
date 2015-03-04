@@ -21,17 +21,11 @@ public class ExpListView extends BaseExpandableListAdapter {
     private java.util.List<Object[]> laptops;
     private fr.deepanse.soywod.deepanse.database.DeepAnseGroup groupDb;
 
-    private boolean childSelectable = false;
-
     public ExpListView(Activity context, fr.deepanse.soywod.deepanse.database.DeepAnseGroup groupDb, java.util.List<Object[]> laptops, Map<Object[], java.util.List<Object[]>> laptopCollections) {
         this.context = context;
         this.laptopCollections = laptopCollections;
         this.laptops = laptops;
         this.groupDb = groupDb;
-    }
-
-    public void setChildSelectable(boolean bool) {
-        childSelectable = bool;
     }
 
     public Object[] getChild(int groupPosition, int childPosition) {
@@ -53,9 +47,11 @@ public class ExpListView extends BaseExpandableListAdapter {
             convertView = inflater.inflate(R.layout.layout_explistview_child, null);
         }
 
+        TextView textColor = (TextView) convertView.findViewById(R.id.text_color);
         TextView textDesc = (TextView) convertView.findViewById(R.id.text_desc);
         TextView textSum = (TextView) convertView.findViewById(R.id.text_sum);
 
+        textColor.setBackgroundColor(groupDb.selectByName(desc).getColor());
         textDesc.setText(Conversion.firstCharToUpperCase(desc));
         textDesc.setTextColor(groupDb.selectByName(desc).getColor());
 
@@ -103,6 +99,6 @@ public class ExpListView extends BaseExpandableListAdapter {
     }
 
     public boolean isChildSelectable(int groupPosition, int childPosition) {
-        return childSelectable;
+        return true;
     }
 }

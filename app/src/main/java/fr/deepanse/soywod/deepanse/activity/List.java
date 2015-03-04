@@ -1,6 +1,7 @@
 package fr.deepanse.soywod.deepanse.activity;
 
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -61,22 +62,30 @@ public class List extends DeepAnse {
         expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+                String group = adapter.getChild(groupPosition, childPosition)[0].toString();
 
-                if (ACTIVE_DISPLAY == 2) {
-                    GregorianCalendar date = new GregorianCalendar(
-                            Integer.parseInt((String) spinnerYear.getSelectedItem()),
-                            DateFR.findDateNumeric(((String) adapter.getGroup(groupPosition)[0]).split(" ")[1]),
-                            Integer.parseInt(((String) adapter.getGroup(groupPosition)[0]).split(" ")[0]));
-                    String group = adapter.getChild(groupPosition, childPosition)[0].toString();
+                Intent intent = new Intent(List.this, ListDetail.class);
+                intent.putExtra("title", R.string.title_detailed_list);
+                intent.putExtra("group", group);
 
+                switch (ACTIVE_DISPLAY) {
+                    case 0:
+                        intent.putExtra("year", Integer.parseInt(((String) adapter.getGroup(groupPosition)[0])));
+                        break;
 
-                    Intent intent = new Intent(List.this, ListDetail.class);
-                    intent.putExtra("title", R.string.title_detailed_list);
-                    intent.putExtra("date", Conversion.dateToString(date));
-                    intent.putExtra("group", group);
-                    startActivity(intent);
+                    case 1:
+                        intent.putExtra("year", Integer.parseInt((String) spinnerYear.getSelectedItem()));
+                        intent.putExtra("month", DateFR.findDateNumeric(((String) adapter.getGroup(groupPosition)[0]).toLowerCase()));
+                        break;
+
+                    case 2:
+                        intent.putExtra("year", Integer.parseInt((String) spinnerYear.getSelectedItem()));
+                        intent.putExtra("month", DateFR.findDateNumeric(((String) adapter.getGroup(groupPosition)[0]).split(" ")[1]));
+                        intent.putExtra("day", Integer.parseInt(((String) adapter.getGroup(groupPosition)[0]).split(" ")[0]));
+                        break;
                 }
 
+                startActivity(intent);
                 return false;
             }
         });
@@ -240,8 +249,6 @@ public class List extends DeepAnse {
         groupList.clear();
         deepAnseCollection.clear();
 
-        adapter.setChildSelectable(false);
-
         createCollectionForYear();
 
         adapter.notifyDataSetChanged();
@@ -261,8 +268,6 @@ public class List extends DeepAnse {
         deepAnseCollection.clear();
 
         Object tmpYear = ((Spinner) findViewById(R.id.spinner_year)).getSelectedItem();
-
-        adapter.setChildSelectable(false);
 
         createCollectionForMonth(tmpYear);
 
@@ -287,8 +292,6 @@ public class List extends DeepAnse {
         if (tmpYear != null) {
             String tmpMonth = (DateFR.findDateNumeric(((String)((Spinner) findViewById(R.id.spinner_month)).getSelectedItem()).toLowerCase())+1)+"";
             if (tmpMonth.length() == 1) tmpMonth = "0" + tmpMonth;
-
-            adapter.setChildSelectable(true);
 
             createCollectionForDay(tmpYear, tmpMonth);
 

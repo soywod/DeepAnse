@@ -113,9 +113,8 @@ public class Home extends ActionBarActivity implements View.OnClickListener {
                     break;
 
                 case R.id.button_import_group:
-                    Toast.makeText(getApplicationContext(), "En cours de développement", Toast.LENGTH_SHORT).show();
-                    //intent = new Intent(Home.this, ImportDeepAnseGroup.class);
-                    //startActivity(intent);
+                    intent = new Intent(Home.this, ImportGroup.class);
+                    startActivity(intent);
                     break;
 
                 case R.id.button_create_deepanse_tuto:

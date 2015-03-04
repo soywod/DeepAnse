@@ -100,8 +100,12 @@ public class Search extends DeepAnse {
 
             intent.putExtra("title", R.string.title_find_deepanse);
 
-            if (((CheckBox) findViewById(R.id.check_date)).isChecked())
-                intent.putExtra("date", Conversion.dateToString(main_date));
+            if (((CheckBox) findViewById(R.id.check_date)).isChecked()) {
+                intent.putExtra("year", main_date.get(GregorianCalendar.YEAR));
+                intent.putExtra("month", main_date.get(GregorianCalendar.MONTH));
+                intent.putExtra("day", main_date.get(GregorianCalendar.DAY_OF_MONTH));
+            }
+
             if (((CheckBox) findViewById(R.id.check_group)).isChecked())
                 intent.putExtra("group", spinner.getSelectedItem().toString());
             if (((CheckBox) findViewById(R.id.check_amount)).isChecked())

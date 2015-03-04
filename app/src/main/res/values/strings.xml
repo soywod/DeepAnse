@@ -15,7 +15,7 @@
     <string name="title_edit_group">Editer une catégorie</string>
     <string name="title_list_group">Liste des catégories</string>
     <string name="title_create_deepanse_tuto">Dicter une dépense</string>
-    <string name="title_import_deepanse_group">Importer des rubriques</string>
+    <string name="title_import_deepanse_group">Importer des catégories</string>
 
     <!-- HOME -->
     <string name="home_add_deepanse_by_voice">Dicter</string>
@@ -54,7 +54,7 @@
     <string name="by_amount">Par montant :</string>
     <string name="by_comment">Par commentaire :</string>
     <string name="date">Date :</string>
-    <string name="group">Rubrique :</string>
+    <string name="group">Catégorie :</string>
     <string name="amount">Montant :</string>
     <string name="comment">Commentaire :</string>
     <string name="name">Nom :</string>
@@ -70,9 +70,9 @@
     <string name="toast_inserted_deepense">Nouvelle dépense enregistrée.</string>
     <string name="toast_inserted_group">Nouvelle catégorie enregistrée.</string>
     <string name="toast_updated_deepense">Dépense modifiée.</string>
-    <string name="toast_updated_group">Rubrique modifiée.</string>
+    <string name="toast_updated_group">Catégorie modifiée.</string>
     <string name="toast_deleted_deepense">Dépense supprimée.</string>
-    <string name="toast_deleted_group">Rubrique supprimée.</string>
+    <string name="toast_deleted_group">Catégorie supprimée.</string>
     <string name="toast_no_result">Aucun résultat.</string>
     <string name="toast_anim_add_group">Dans un premier temps, créez vos propres catégories.</string>
     <string name="toast_anim_list_group">Vous pouvez éditer vos catégories à tout moment.</string>
@@ -96,6 +96,9 @@
     <string name="toast_group_already_exist">Cette catégorie existe déjà !</string>
     <string name="toast_start_playing">Lecture en cours</string>
     <string name="toast_need_fast_connection">Pour cette fonctionnalité vous devez être en Wifi ou en 4G.</string>
+    <string name="toast_group_imported">Catégories importées.</string>
+    <string name="toast_no_group_selected">Aucune catégorie n\'a été sélectionnée !</string>
+    <string name="toast_no_import_possible">Toutes les catégories ont déjà été ajoutées !</string>
 
     <!-- ALERTBOX -->
     <string name="prompt_create_deepanse">Dictez votre nouvelle dépense</string>
@@ -106,6 +109,7 @@
     <!-- MENU -->
     <string name="menu_home">Retour au menu principal</string>
     <string name="menu_collapse">Réduire tous les groupes</string>
+    <string name="menu_export">Exporter données</string>
 
     <!-- CREATE DEEPANSE TUTO -->
     <string name="tuto_create_deepanse_0"><u>/!\\ Vous devez être en Wifi ou en 4G /!\\</u></string>
@@ -117,19 +121,27 @@
     <string name="tuto_create_deepanse_6">Il n\'y a pas <b>d\'ordre particulier</b> de saisie, vous pouvez aussi bien dire <b>\"Hier nourriture 57 euros courses au supermarché\"</b> que <b>\"Courses au supermarché 57 euros hier nourriture\"</b>.</string>
     <string name="tuto_create_deepanse_7">Votre dictée doit être <b>rapide</b>, <b>claire</b> et <b>sans accroche</b>, sinon DeepAnse n\'arrivera pas à vous comprendre. Pensez à l\'avance à ce que vous voulez dicter.</string>
     <string name="tuto_create_deepanse_8">Voici quelques exemples de diction :</string>
-    <string name="tuto_create_deepanse_9">Dépense de 15 € dans la rubrique \"Travail\" aujourd\'hui avec commentaire \"Déjeuner avec les collègues\" :</string>
-    <string name="tuto_create_deepanse_10">Dépense de 27.30 € hier dans la rubrique \"Divers\" sans commentaire :</string>
-    <string name="tuto_create_deepanse_11">Dépense du 15 février 2015 de 37.07 € dans la rubrique \"Divers\" avec commentaire \"Achat d\'une lampe\" :</string>
-    <string name="tuto_create_deepanse_12">Dépense de 0.80 € dans la rubrique \"Parking\" sans commentaire</string>
-    <string name="menu_export">Exporter données</string>
+    <string name="tuto_create_deepanse_9">Dépense de 15 € dans la catégorie \"Travail\" aujourd\'hui avec commentaire \"Déjeuner avec les collègues\" :</string>
+    <string name="tuto_create_deepanse_10">Dépense de 27.30 € hier dans la catégorie \"Divers\" sans commentaire :</string>
+    <string name="tuto_create_deepanse_11">Dépense du 15 février 2015 de 37.07 € dans la catégorie \"Divers\" avec commentaire \"Achat d\'une lampe\" :</string>
+    <string name="tuto_create_deepanse_12">Dépense de 0.80 € dans la catégorie \"Parking\" sans commentaire</string>
 
     <!-- IMPORT GROUP -->
     <string-array name="import_group">
-        <item>Travail</item>
         <item>Santé</item>
         <item>Nourriture</item>
         <item>Voiture</item>
-        <item>Cadeaux</item>
+        <item>Cadeau</item>
+        <item>Travail</item>
+        <item>Professionnel</item>
+        <item>Informatique</item>
+        <item>Loisir</item>
+        <item>Jeux</item>
+        <item>Sport</item>
+        <item>Restaurant</item>
+        <item>Transport</item>
+        <item>Facture</item>
+        <item>Loyer</item>
     </string-array>
 
 </resources>

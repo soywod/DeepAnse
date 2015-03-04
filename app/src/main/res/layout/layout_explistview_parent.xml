@@ -18,7 +18,8 @@
         android:layout_width="fill_parent"
         android:layout_height="40dp"
         android:textSize="17sp"
-        android:textColor="#FFF"
+        android:textStyle="bold"
+        android:textColor="@color/ColorDarkGray"
         android:gravity="end|center_vertical"
         android:paddingRight="10dp" />
 
