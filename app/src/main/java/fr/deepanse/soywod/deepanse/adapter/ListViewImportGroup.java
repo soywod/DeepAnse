@@ -11,7 +11,6 @@ import java.util.ArrayList;
 
 import fr.deepanse.soywod.deepanse.R;
 import fr.deepanse.soywod.deepanse.model.Conversion;
-import fr.deepanse.soywod.deepanse.model.DeepAnseGroup;
 
 /**
  * Created by soywod on 27/02/2015.

@@ -42,27 +42,6 @@
                 android:inputType="textMultiLine" />
 
             <TextView
-                android:id="@+id/text_reduce"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="5dp"
-                android:gravity="start|center_vertical"
-                android:text="@string/deepanse_reduce_text" />
-
-            <EditText style="@style/edit_text"
-                android:id="@+id/edit_reduce"
-                android:textStyle="italic"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:clickable="false"
-                android:cursorVisible="false"
-                android:focusable="false"
-                android:focusableInTouchMode="false"
-                android:padding="10dp"
-                android:inputType="textMultiLine" />
-
-            <TextView
                 android:id="@+id/text_info"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -129,7 +108,7 @@
                 <LinearLayout
                     android:id="@+id/layout_amount"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="41dp"
                     android:orientation="horizontal"
                     android:weightSum="3"
                     android:layout_marginTop="15dp"

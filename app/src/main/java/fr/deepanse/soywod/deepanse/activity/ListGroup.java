@@ -1,6 +1,7 @@
 package fr.deepanse.soywod.deepanse.activity;
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -13,7 +14,6 @@ import java.util.ArrayList;
 
 import fr.deepanse.soywod.deepanse.R;
 import fr.deepanse.soywod.deepanse.adapter.ListViewGroup;
-import fr.deepanse.soywod.deepanse.model.AlertBox;
 
 public class ListGroup extends DeepAnse implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
 
@@ -85,9 +85,8 @@ public class ListGroup extends DeepAnse implements AdapterView.OnItemClickListen
             longClicked = true;
             AlertDialog.Builder builder = new AlertDialog.Builder(ListGroup.this, 2);
             builder.setMessage(getString(R.string.prompt_del_group));
-            builder.setPositiveButton(getString(R.string.yes), new AlertBox() {
-                @Override
-                public void execute() {
+            builder.setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int whichButton) {
                     groupDb.updateAllById(arrayDeepAnseGroup.get(position).getId());
                     groupDb.delete(arrayDeepAnseGroup.get(position).getId());
                     showShortToast(R.string.toast_deleted_group);
@@ -95,9 +94,8 @@ public class ListGroup extends DeepAnse implements AdapterView.OnItemClickListen
                     longClicked = false;
                 }
             });
-            builder.setNegativeButton(getString(R.string.no), new AlertBox() {
-                @Override
-                public void execute() {
+            builder.setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int whichButton) {
                     longClicked = false;
                 }
             });
@@ -108,7 +106,7 @@ public class ListGroup extends DeepAnse implements AdapterView.OnItemClickListen
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_edit_deepanse, menu);
+        getMenuInflater().inflate(R.menu.menu_standard, menu);
         return true;
     }
 
@@ -119,7 +117,7 @@ public class ListGroup extends DeepAnse implements AdapterView.OnItemClickListen
                 finish();
                 break;
 
-            case R.id.home :
+            case R.id.menu_home :
                 Intent intent = new Intent(ListGroup.this, Home.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);

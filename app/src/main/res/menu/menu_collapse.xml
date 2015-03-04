@@ -1,0 +1,17 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menu_collapse"
+        android:title="@string/menu_collapse"
+        android:icon="@mipmap/collapse"
+        android:orderInCategory="100"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/menu_home"
+        android:title="@string/menu_home"
+        android:icon="@mipmap/home"
+        android:orderInCategory="100"
+        app:showAsAction="ifRoom" />
+</menu>

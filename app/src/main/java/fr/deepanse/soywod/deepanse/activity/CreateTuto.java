@@ -31,7 +31,7 @@ public class CreateTuto extends DeepAnse {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_edit_deepanse, menu);
+        getMenuInflater().inflate(R.menu.menu_standard, menu);
         return true;
     }
 

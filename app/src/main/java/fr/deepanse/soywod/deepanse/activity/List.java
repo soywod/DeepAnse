@@ -1,10 +1,7 @@
 package fr.deepanse.soywod.deepanse.activity;
 
 import android.content.Intent;
-import android.graphics.drawable.ColorDrawable;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,13 +9,7 @@ import android.widget.AdapterView;
 import android.widget.ExpandableListView;
 import android.widget.Spinner;
 
-import com.opencsv.CSVWriter;
-
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -309,7 +300,7 @@ public class List extends DeepAnse {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_list_deepanse, menu);
+        getMenuInflater().inflate(R.menu.menu_collapse, menu);
         return true;
     }
 
@@ -324,35 +315,11 @@ public class List extends DeepAnse {
                 finish();
                 break;
 
-            case R.id.home :
+            case R.id.menu_home :
                 Intent intent = new Intent(List.this, Home.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 finish();
-                break;
-
-            case R.id.menu_export :
-
-                File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/test.csv");
-                System.out.println(file.getAbsolutePath());
-                try {
-                    CSVWriter writer = new CSVWriter(new FileWriter(file));
-                    String[] entries = "first#second#third".split("#"); // array of your values
-                    writer.writeNext(entries);
-                    writer.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-                Intent intentMail = new Intent(Intent.ACTION_SEND);
-                //intentMail.setType("vnd.android.cursor.dir/email");
-                intentMail.setType("plain/text");
-                intentMail.putExtra(Intent.EXTRA_EMAIL, new String[]{"clementdouin21@gmail.com"});
-                intentMail.putExtra(Intent.EXTRA_STREAM, Uri.parse("file://" + file));
-                intentMail.putExtra(Intent.EXTRA_SUBJECT, "Subject");
-                startActivity(intentMail);
-
-
                 break;
         }
 

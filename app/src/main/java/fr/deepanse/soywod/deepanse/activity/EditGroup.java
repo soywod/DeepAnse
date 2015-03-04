@@ -2,6 +2,7 @@ package fr.deepanse.soywod.deepanse.activity;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -17,7 +18,6 @@ import com.larswerkman.holocolorpicker.ColorPicker;
 import com.larswerkman.holocolorpicker.SVBar;
 
 import fr.deepanse.soywod.deepanse.R;
-import fr.deepanse.soywod.deepanse.model.AlertBox;
 
 /**
  * Created by soywod on 11/02/2015.
@@ -59,7 +59,6 @@ public class EditGroup extends DeepAnse {
             editName.setText(data.getStringExtra("name"));
             colorPicker.setColor(data.getIntExtra("color", Color.GREEN));
 
-            setActionBarIcon(R.drawable.edit_group);
             setActionBarTitle(R.string.title_edit_group);
         }
         else {
@@ -77,9 +76,8 @@ public class EditGroup extends DeepAnse {
     public void eventDelete(View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(EditGroup.this, 2);
         builder.setMessage(getString(R.string.prompt_del_group));
-        builder.setPositiveButton(getString(R.string.yes), new AlertBox() {
-            @Override
-            public void execute() {
+        builder.setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
                 groupDb.updateAllById(id);
                 groupDb.delete(id);
                 Toast.makeText(getApplicationContext(), getString(R.string.toast_deleted_group), Toast.LENGTH_SHORT).show();
@@ -136,7 +134,7 @@ public class EditGroup extends DeepAnse {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_edit_deepanse, menu);
+        getMenuInflater().inflate(R.menu.menu_standard, menu);
         return true;
     }
 
@@ -147,7 +145,7 @@ public class EditGroup extends DeepAnse {
                 finish();
                 break;
 
-            case R.id.home :
+            case R.id.menu_home :
                 Intent intent = new Intent(EditGroup.this, Home.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);

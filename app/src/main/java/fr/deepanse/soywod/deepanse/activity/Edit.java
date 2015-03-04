@@ -3,6 +3,7 @@ package fr.deepanse.soywod.deepanse.activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -19,7 +20,6 @@ import java.util.GregorianCalendar;
 
 import fr.deepanse.soywod.deepanse.R;
 import fr.deepanse.soywod.deepanse.adapter.SpinnerGroup;
-import fr.deepanse.soywod.deepanse.model.AlertBox;
 import fr.deepanse.soywod.deepanse.model.Conversion;
 
 /**
@@ -107,9 +107,8 @@ public class Edit extends DeepAnse {
     public void eventDelete(View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(Edit.this, 2);
         builder.setMessage(getString(R.string.prompt_del_deepanse));
-        builder.setPositiveButton(getString(R.string.yes), new AlertBox() {
-            @Override
-            public void execute() {
+        builder.setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
                 deepAnseDb.delete(id);
                 showShortToast(R.string.toast_deleted_deepense);
                 finish();
@@ -151,7 +150,7 @@ public class Edit extends DeepAnse {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_edit_deepanse, menu);
+        getMenuInflater().inflate(R.menu.menu_standard, menu);
         return true;
     }
 
@@ -162,7 +161,7 @@ public class Edit extends DeepAnse {
                 eventCancel(null);
                 break;
 
-            case R.id.home :
+            case R.id.menu_home :
                 Intent intent = new Intent(Edit.this, Home.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);

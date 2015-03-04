@@ -30,7 +30,7 @@ import fr.deepanse.soywod.deepanse.model.DeepAnseGroup;
  */
 public class Create extends DeepAnse {
 
-    private EditText editFull, editReduce, editAmout, editComment;
+    private EditText editFull, editAmout, editComment;
     private TextView textInfo;
     private Button buttonDatePicker;
     private Spinner spinner;
@@ -68,7 +68,6 @@ public class Create extends DeepAnse {
 
     public void initComponent() {
         editFull = (EditText) findViewById(R.id.edit_full);
-        editReduce = (EditText) findViewById(R.id.edit_reduce);
         buttonDatePicker = (Button) findViewById(R.id.button_date_picker);
         spinner = (Spinner) findViewById(R.id.spinner_group);
         editAmout = (EditText) findViewById(R.id.edit_amount);
@@ -108,8 +107,6 @@ public class Create extends DeepAnse {
         editFull.setText(bestMatch);
 
         bestMatch = Conversion.spellOutToNumber(bestMatch);
-        editReduce.setText(bestMatch);
-
         Matcher matcherDate = regexDate.matcher(bestMatch);
 
         double amount = 0;
@@ -268,7 +265,7 @@ public class Create extends DeepAnse {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_edit_deepanse, menu);
+        getMenuInflater().inflate(R.menu.menu_standard, menu);
         return true;
     }
 
@@ -279,7 +276,7 @@ public class Create extends DeepAnse {
                 finish();
                 break;
 
-            case R.id.home :
+            case R.id.menu_home :
                 Intent intent = new Intent(Create.this, Home.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);

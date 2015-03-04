@@ -1,13 +1,11 @@
 package fr.deepanse.soywod.deepanse.activity;
 
 import android.app.DatePickerDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
@@ -18,7 +16,6 @@ import java.util.GregorianCalendar;
 
 import fr.deepanse.soywod.deepanse.R;
 import fr.deepanse.soywod.deepanse.adapter.SpinnerGroup;
-import fr.deepanse.soywod.deepanse.model.Conversion;
 
 /**
  * Created by soywod on 11/02/2015.
@@ -122,7 +119,7 @@ public class Search extends DeepAnse {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_edit_deepanse, menu);
+        getMenuInflater().inflate(R.menu.menu_standard, menu);
         return true;
     }
 
@@ -133,7 +130,7 @@ public class Search extends DeepAnse {
                 finish();
                 break;
 
-            case R.id.home :
+            case R.id.menu_home :
                 Intent intent = new Intent(Search.this, Home.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);

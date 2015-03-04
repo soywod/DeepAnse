@@ -2,13 +2,14 @@ package fr.deepanse.soywod.deepanse.activity;
 
 import android.app.AlertDialog;
 import android.content.Intent;
-import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.speech.RecognizerIntent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -174,5 +175,25 @@ public class Home extends ActionBarActivity implements View.OnClickListener {
         MediaPlayer sound9 = MediaPlayer.create(this, getResources().getIdentifier("sound9", "raw", getPackageName()));
         Toast.makeText(getApplicationContext(), getString(R.string.toast_more_help), Toast.LENGTH_LONG).show();
         sound9.start();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_home, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(!animRunning) {
+            switch (item.getItemId()) {
+                case R.id.menu_config:
+                    Intent intent = new Intent(Home.this, Config.class);
+                    startActivity(intent);
+                    break;
+            }
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

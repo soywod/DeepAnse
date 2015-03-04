@@ -3,11 +3,8 @@ package fr.deepanse.soywod.deepanse.model;
 import android.database.Cursor;
 
 import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
-import java.util.Currency;
 import java.util.GregorianCalendar;
-import java.util.Locale;
 
 /**
  * Created by soywod on 05/02/2015.

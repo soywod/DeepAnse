@@ -21,7 +21,7 @@ public class HomeAnimation extends TranslateAnimation implements Animation.Anima
     private HomeAnimation nextAnim;
 
     public HomeAnimation(MediaPlayer sound, Context context, View nextView, HomeAnimation nextAnim, String message) {
-        super(0, 0, 0, -25);
+        super(0, 0, 0, -15);
 
         this.message = message;
         this.context = context;

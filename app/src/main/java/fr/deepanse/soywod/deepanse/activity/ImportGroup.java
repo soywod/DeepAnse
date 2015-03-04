@@ -1,7 +1,10 @@
 package fr.deepanse.soywod.deepanse.activity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -12,7 +15,6 @@ import java.util.Collections;
 import java.util.Random;
 
 import fr.deepanse.soywod.deepanse.R;
-import fr.deepanse.soywod.deepanse.adapter.ListViewGroup;
 import fr.deepanse.soywod.deepanse.model.DeepAnseGroup;
 
 /**
@@ -91,5 +93,28 @@ public class ImportGroup extends DeepAnse implements AdapterView.OnItemClickList
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if (arrayGroupSelected.contains(arrayGroup.get(position))) arrayGroupSelected.remove(arrayGroup.get(position));
         else arrayGroupSelected.add(arrayGroup.get(position));
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_standard, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home :
+                eventCancel(null);
+                break;
+
+            case R.id.menu_home :
+                Intent intent = new Intent(ImportGroup.this, Home.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                finish();
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

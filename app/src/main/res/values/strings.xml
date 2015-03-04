@@ -4,18 +4,19 @@
     <!-- TITLE -->
     <string name="title_app">DeepAnse</string>
     <string name="title_home">Menu principal</string>
-    <string name="title_create_deepanse">Créer une dépense</string>
+    <string name="title_create_deepanse">Création</string>
     <string name="title_by_year">Liste par année</string>
     <string name="title_by_month">Liste par mois</string>
     <string name="title_by_day">Liste par jour</string>
     <string name="title_detailed_list">Liste détaillée</string>
-    <string name="title_edit_deepanse">Editer une dépense</string>
-    <string name="title_find_deepanse">Rechercher une dépense</string>
-    <string name="title_create_group">Créer une catégorie</string>
-    <string name="title_edit_group">Editer une catégorie</string>
-    <string name="title_list_group">Liste des catégories</string>
-    <string name="title_create_deepanse_tuto">Dicter une dépense</string>
-    <string name="title_import_deepanse_group">Importer des catégories</string>
+    <string name="title_edit_deepanse">Edition</string>
+    <string name="title_find_deepanse">Recherche</string>
+    <string name="title_create_group">Création</string>
+    <string name="title_edit_group">Edition</string>
+    <string name="title_list_group">Liste</string>
+    <string name="title_create_deepanse_tuto">Diction</string>
+    <string name="title_import_deepanse_group">Import</string>
+    <string name="title_config">Configuration</string>
 
     <!-- HOME -->
     <string name="home_add_deepanse_by_voice">Dicter</string>
@@ -49,22 +50,24 @@
     <string name="by_year">Par année</string>
     <string name="by_month">Par mois</string>
     <string name="by_day">Par jour</string>
-    <string name="by_date">Par date :</string>
-    <string name="by_group">Par catégorie :</string>
-    <string name="by_amount">Par montant :</string>
-    <string name="by_comment">Par commentaire :</string>
-    <string name="date">Date :</string>
-    <string name="group">Catégorie :</string>
-    <string name="amount">Montant :</string>
-    <string name="comment">Commentaire :</string>
-    <string name="name">Nom :</string>
-    <string name="color">Couleur :</string>
-    <string name="saturation">Saturation :</string>
-    <string name="total">Total :</string>
+    <string name="by_date">Par date</string>
+    <string name="by_group">Par catégorie</string>
+    <string name="by_amount">Par montant</string>
+    <string name="by_comment">Par commentaire</string>
+    <string name="date">Date</string>
+    <string name="group">Catégorie</string>
+    <string name="amount">Montant</string>
+    <string name="comment">Commentaire</string>
+    <string name="name">Nom</string>
+    <string name="color">Couleur</string>
+    <string name="saturation">Saturation</string>
+    <string name="total">Total</string>
     <string name="google_full_text">Text brut retourné par Google :</string>
     <string name="deepanse_reduce_text">Text corrigé par l\'application :</string>
     <string name="read_example">Lire l\'exemple</string>
     <string name="deepanse_not_recognized"><b>Aucune dépense reconnue !</b>\n\nSi vous voulez plus d\'informations sur comment saisir correctement une dépense, jetez un coup d\'oeil à la rubrique \"<b>Aide</b>\" du menu principal.</string>
+    <string name="email">Email :</string>
+    <string name="default_mail">Email par défaut\n(pour l\'export) :</string>
 
     <!-- TOAST -->
     <string name="toast_inserted_deepense">Nouvelle dépense enregistrée.</string>
@@ -99,17 +102,20 @@
     <string name="toast_group_imported">Catégories importées.</string>
     <string name="toast_no_group_selected">Aucune catégorie n\'a été sélectionnée !</string>
     <string name="toast_no_import_possible">Toutes les catégories ont déjà été ajoutées !</string>
+    <string name="toast_config_updated">Configuration mise à jour.</string>
 
     <!-- ALERTBOX -->
     <string name="prompt_create_deepanse">Dictez votre nouvelle dépense</string>
     <string name="prompt_del_deepanse">Voulez-vous vraiment supprimer cette dépense ?</string>
     <string name="prompt_del_group">Voulez-vous vraiment supprimer cette catégorie ? Toute dépense liée à cette catégorie sera transférée dans la catégorie par défaut.</string>
     <string name="prompt_first_launch">Bienvenue sur DeepAnse !\n\nPour profiter pleinement de toutes ses fonctionnalités, il est fortement conseillé de consulter la rubrique \"Aide\" avant toute chose !\n</string>
+    <string name="prompt_set_default_email">Aucune adresse email par défaut n\'est enregistrée pour l\'envoi des exports. Veuillez la saisir dans le champ ci-dessous :</string>
 
     <!-- MENU -->
     <string name="menu_home">Retour au menu principal</string>
     <string name="menu_collapse">Réduire tous les groupes</string>
-    <string name="menu_export">Exporter données</string>
+    <string name="menu_export">Exporter les données</string>
+    <string name="menu_config">Configuration</string>
 
     <!-- CREATE DEEPANSE TUTO -->
     <string name="tuto_create_deepanse_0"><u>/!\\ Vous devez être en Wifi ou en 4G /!\\</u></string>
@@ -143,5 +149,11 @@
         <item>Facture</item>
         <item>Loyer</item>
     </string-array>
+
+    <!-- EXPORT DEEPANSE -->
+    <string name="export_text">Cher Utilisateur,\nVous trouverez en pièce jointe l\'export demandé trié :\n</string>
+    <string name="export_full_text">Cher Utilisateur,\nVous trouverez en pièce jointe l\'export de toutes vos dépenses.</string>
+    <string name="export_subject">[DeepAnse] Export créé le</string>
+    <string name="export_signature">\n\nCordialement,\nL\'équipe DeepAnse</string>
 
 </resources>
