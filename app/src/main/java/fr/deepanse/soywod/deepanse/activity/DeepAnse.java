@@ -17,6 +17,9 @@ import fr.deepanse.soywod.deepanse.model.DeepAnseGroup;
 
 /**
  * Created by soywod on 23/02/2015.
+ * Abstract activity extended by almost all DeepAnse activities. Give database access and common functions
+ *
+ * @author soywod
  */
 abstract public class DeepAnse extends ActionBarActivity {
 
@@ -40,6 +43,11 @@ abstract public class DeepAnse extends ActionBarActivity {
         super.onDestroy();
     }
 
+    /**
+     *  Database initializer.
+     *
+     *  @param context      The main context
+     */
     private void initDatabase(Context context) {
         DeepAnseSQLiteOpenHelper deepAnseSQLiteOpenHelper = new DeepAnseSQLiteOpenHelper(context);
 
@@ -57,6 +65,9 @@ abstract public class DeepAnse extends ActionBarActivity {
         if (groupDb.select(1) == null) groupDb.insert(new DeepAnseGroup(1, "divers", getResources().getColor(R.color.ColorBlue)));
     }
 
+    /**
+     *  ActionBar initializer.
+     */
     private void initActionBar() {
         actionBar = getSupportActionBar();
         actionBar.setDisplayOptions(ActionBar.DISPLAY_HOME_AS_UP | ActionBar.DISPLAY_SHOW_TITLE);
@@ -71,10 +82,23 @@ abstract public class DeepAnse extends ActionBarActivity {
         actionBar.setTitle(getResources().getString(stringRes));
     }
 
+    /**
+     *  Event triggered by clicking on the cancel button.
+     *
+     *  Close the current activity.
+     *
+     *  @param view     The view concerned
+     */
     public void eventCancel(View view) {
         finish();
     }
 
+    /**
+     *  Function that transforms a GregorianCalendar in String (French)
+     *
+     *  @param date     The GregorianCalendar date
+     *  @return         The date transformed in String
+     */
     protected String dateToStringFrExplicit(GregorianCalendar date) {
 
         GregorianCalendar today = new GregorianCalendar();
@@ -99,6 +123,11 @@ abstract public class DeepAnse extends ActionBarActivity {
         return Conversion.dateToStringDayMonthYearFr(date);
     }
 
+    /**
+     *  Function that shows a short Toast.
+     *
+     *  @param stringRes     The string resource the Toast has to show.
+     */
     public void showShortToast(int stringRes) {
         Toast.makeText(getApplicationContext(), getString(stringRes), Toast.LENGTH_SHORT).show();
     }

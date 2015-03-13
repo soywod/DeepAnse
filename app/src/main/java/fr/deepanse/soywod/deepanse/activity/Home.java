@@ -21,9 +21,15 @@ import fr.deepanse.soywod.deepanse.model.HomeAnimation;
 
 /**
  * Created by soywod on 18/02/2015.
+ * Main activity.
+ *
+ * @author soywod
  */
 public class Home extends ActionBarActivity implements View.OnClickListener {
 
+    /**
+     *  Boolean if animation is running or not
+     */
     private boolean animRunning;
 
     @Override
@@ -55,6 +61,9 @@ public class Home extends ActionBarActivity implements View.OnClickListener {
         checkFirstRun();
     }
 
+    /**
+     *  Function that checks if it is the first time user runs DeepAnse. If so, show a message.
+     */
     public void checkFirstRun() {
         boolean isFirstRun = getSharedPreferences("PREFERENCE", MODE_PRIVATE).getBoolean("isFirstRun", true);
         if (isFirstRun){
@@ -67,12 +76,19 @@ public class Home extends ActionBarActivity implements View.OnClickListener {
         }
     }
 
+    /**
+     *  onClick implements.
+     *
+     *  Start right activity according to the button clicked.
+     *
+     *  @param view     The view concerned
+     */
     @Override
-    public void onClick(View v) {
+    public void onClick(View view) {
         if(!animRunning) {
             Intent intent;
 
-            switch (v.getId()) {
+            switch (view.getId()) {
                 case R.id.button_add_deepanse_by_voice:
                     if (Connectivity.isConnectedFast(Home.this)) {
                         intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
@@ -158,6 +174,15 @@ public class Home extends ActionBarActivity implements View.OnClickListener {
         }
     }
 
+    /**
+     *  Event triggered on activity result.
+     *
+     *  Start Create activity with the Google bestMatch.
+     *
+     *  @param requestCode      The request code
+     *  @param resultCode       The result code
+     *  @param data             Data
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -165,7 +190,6 @@ public class Home extends ActionBarActivity implements View.OnClickListener {
         if (requestCode == 0 && resultCode == RESULT_OK) {
             Intent intent = new Intent(Home.this, Create.class);
             intent.putExtra("best_match", data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS).get(0).toLowerCase());
-            intent.putExtra("tuto_mode", false);
             startActivity(intent);
         }
     }
@@ -185,8 +209,12 @@ public class Home extends ActionBarActivity implements View.OnClickListener {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
         if(!animRunning) {
+
             switch (item.getItemId()) {
+
+                // If config clicked, start new Config activity
                 case R.id.menu_config:
                     Intent intent = new Intent(Home.this, Config.class);
                     startActivity(intent);

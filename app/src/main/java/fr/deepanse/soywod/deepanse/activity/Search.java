@@ -19,14 +19,35 @@ import fr.deepanse.soywod.deepanse.adapter.SpinnerGroup;
 
 /**
  * Created by soywod on 11/02/2015.
+ * Activity that permits user to search expense(s) according to a date, an amount, a group and a comment, extends activity.DeepAnse
+ *
+ * @author soywod
  */
 public class Search extends DeepAnse {
 
+    /**
+     *  EditTexts that contain amount and comment
+     */
     private EditText editAmout, editComment;
-    private Button buttonDatePicker;
-    private Spinner spinner;
 
-    private GregorianCalendar main_date;
+    /**
+     *  Button that allows date changing
+     */
+    private Button buttonDatePicker;
+
+    /**
+     *  Spinner that allows group changing
+     */
+    private Spinner spinnerGroup;
+
+    /**
+     *  Main date selected
+     */
+    private GregorianCalendar mainDate;
+
+    /**
+     *  Listener for the datePicker
+     */
     private DatePickerDialog.OnDateSetListener datePickerListener;
 
     @Override
@@ -38,22 +59,25 @@ public class Search extends DeepAnse {
         initData();
     }
 
+    /**
+     *  Components initializer.
+     */
     public void initComponent() {
         buttonDatePicker = (Button) findViewById(R.id.button_date_picker);
-        spinner = (Spinner) findViewById(R.id.spinner_group);
+        spinnerGroup = (Spinner) findViewById(R.id.spinner_group);
         editAmout = (EditText) findViewById(R.id.edit_amount);
         editComment = (EditText) findViewById(R.id.edit_comment);
 
-        spinner.setAdapter(new SpinnerGroup(Search.this, groupDb.selectAll()));
-        spinner.setEnabled(false);
+        spinnerGroup.setAdapter(new SpinnerGroup(Search.this, groupDb.selectAll()));
+        spinnerGroup.setEnabled(false);
         datePickerListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int day) {
-                main_date.set(GregorianCalendar.YEAR, year);
-                main_date.set(GregorianCalendar.MONTH, month);
-                main_date.set(GregorianCalendar.DAY_OF_MONTH, day);
+                mainDate.set(GregorianCalendar.YEAR, year);
+                mainDate.set(GregorianCalendar.MONTH, month);
+                mainDate.set(GregorianCalendar.DAY_OF_MONTH, day);
 
-                buttonDatePicker.setText(dateToStringFrExplicit(main_date));
+                buttonDatePicker.setText(dateToStringFrExplicit(mainDate));
             }
         };
         buttonDatePicker.setOnClickListener(new View.OnClickListener() {
@@ -62,35 +86,73 @@ public class Search extends DeepAnse {
                 new DatePickerDialog(
                         Search.this,
                         datePickerListener,
-                        main_date.get(GregorianCalendar.YEAR),
-                        main_date.get(GregorianCalendar.MONTH),
-                        main_date.get(GregorianCalendar.DAY_OF_MONTH))
+                        mainDate.get(GregorianCalendar.YEAR),
+                        mainDate.get(GregorianCalendar.MONTH),
+                        mainDate.get(GregorianCalendar.DAY_OF_MONTH))
                         .show();
             }
         });
     }
 
+    /**
+     *  Data initializer.
+     */
     public void initData() {
-        main_date = new GregorianCalendar();
-        buttonDatePicker.setText(dateToStringFrExplicit(main_date));
+        mainDate = new GregorianCalendar();
+        buttonDatePicker.setText(dateToStringFrExplicit(mainDate));
     }
 
+    /**
+     *  Event triggered by clicking on the date checkBox.
+     *
+     *  Enable the date picker button.
+     *
+     *  @param view     The view concerned
+     */
     public void eventCheckDate(View view) {
         findViewById(R.id.button_date_picker).setEnabled(((CheckBox) view).isChecked());
     }
 
+    /**
+     *  Event triggered by clicking on the group checkBox.
+     *
+     *  Enable the group spinner.
+     *
+     *  @param view     The view concerned
+     */
     public void eventCheckGroup(View view) {
         findViewById(R.id.spinner_group).setEnabled(((CheckBox) view).isChecked());
     }
 
+    /**
+     *  Event triggered by clicking on the amount checkBox.
+     *
+     *  Enable the amount EditText.
+     *
+     *  @param view     The view concerned
+     */
     public void eventCheckAmount(View view) {
         findViewById(R.id.edit_amount).setEnabled(((CheckBox) view).isChecked());
     }
 
+    /**
+     *  Event triggered by clicking on the comment checkBox.
+     *
+     *  Enable the comment EditText.
+     *
+     *  @param view     The view concerned
+     */
     public void eventCheckComment(View view) {
         findViewById(R.id.edit_comment).setEnabled(((CheckBox) view).isChecked());
     }
 
+    /**
+     *  Event triggered by clicking on the search button.
+     *
+     *  If the amount is not empty or not checked, start a new ListDetail activity with selected parameters.
+     *
+     *  @param view     The view concerned
+     */
     public void eventSearch(View view) {
         if (!(((CheckBox) findViewById(R.id.check_amount)).isChecked() && editAmout.getText().length() == 0)) {
             Intent intent = new Intent(Search.this, ListDetail.class);
@@ -98,13 +160,13 @@ public class Search extends DeepAnse {
             intent.putExtra("title", R.string.title_find_deepanse);
 
             if (((CheckBox) findViewById(R.id.check_date)).isChecked()) {
-                intent.putExtra("year", main_date.get(GregorianCalendar.YEAR));
-                intent.putExtra("month", main_date.get(GregorianCalendar.MONTH));
-                intent.putExtra("day", main_date.get(GregorianCalendar.DAY_OF_MONTH));
+                intent.putExtra("year", mainDate.get(GregorianCalendar.YEAR));
+                intent.putExtra("month", mainDate.get(GregorianCalendar.MONTH));
+                intent.putExtra("day", mainDate.get(GregorianCalendar.DAY_OF_MONTH));
             }
 
             if (((CheckBox) findViewById(R.id.check_group)).isChecked())
-                intent.putExtra("group", spinner.getSelectedItem().toString());
+                intent.putExtra("group", spinnerGroup.getSelectedItem().toString());
             if (((CheckBox) findViewById(R.id.check_amount)).isChecked())
                 intent.putExtra("amount", Double.parseDouble(editAmout.getText().toString()));
             if (((CheckBox) findViewById(R.id.check_comment)).isChecked())
@@ -125,16 +187,21 @@ public class Search extends DeepAnse {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
         switch (item.getItemId()) {
+
+            // If back arrow clicked, close this activity
             case android.R.id.home:
                 finish();
                 break;
 
+            // If home clicked, start new Home activity deleting the others and close this one
             case R.id.menu_home :
                 Intent intent = new Intent(Search.this, Home.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 finish();
+                break;
         }
 
         return super.onOptionsItemSelected(item);

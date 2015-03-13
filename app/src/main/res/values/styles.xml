@@ -1,10 +1,10 @@
 <resources>
-    <style name="DeepAnseTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="deepanse_theme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="android:textColor">@color/ColorLightGray</item>
         <item name="android:textSize">14sp</item>
     </style>
 
-    <style name="Title">
+    <style name="title">
         <item name="android:layout_width">0dip</item>
         <item name="android:layout_weight">1</item>
         <item name="android:gravity">start|center_vertical</item>
@@ -18,18 +18,7 @@
         <item name="android:shadowRadius">3</item>
     </style>
 
-    <style name="Button">
-        <item name="android:layout_width">0dip</item>
-        <item name="android:layout_weight">1</item>
-        <item name="android:background">@color/ColorTransWhite</item>
-        <item name="android:textColor">@color/ColorWhite</item>
-        <item name="android:shadowColor">@color/ColorLightGray</item>
-        <item name="android:shadowDx">-4</item>
-        <item name="android:shadowDy">4</item>
-        <item name="android:shadowRadius">3</item>
-    </style>
-
-    <style name="HomeButton">
+    <style name="home_button">
         <item name="android:layout_width">0dip</item>
         <item name="android:layout_weight">1</item>
         <item name="android:background">@android:color/transparent</item>
@@ -37,11 +26,7 @@
         <item name="android:textSize">10sp</item>
     </style>
 
-
-
-
-
-    <style name="HomeSubTitle">
+    <style name="home_subtitle">
         <item name="android:layout_width">0dip</item>
         <item name="android:layout_weight">1</item>
         <item name="android:gravity">start|top</item>
@@ -51,8 +36,7 @@
         <item name="android:layout_marginLeft">5dp</item>
     </style>
 
-
-    <style name="Separator">
+    <style name="separator">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">1dp</item>
         <item name="android:layout_weight">1</item>
@@ -79,6 +63,5 @@
         <item name="android:shadowDy">2</item>
         <item name="android:shadowRadius">1</item>
     </style>
-
 
 </resources>

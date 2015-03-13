@@ -19,12 +19,25 @@ import fr.deepanse.soywod.deepanse.model.DeepAnseGroup;
 
 /**
  * Created by soywod on 27/02/2015.
+ * Activity that permits user to import expense group, extends activity.DeepAnse
+ *
+ * @author soywod
  */
 public class ImportGroup extends DeepAnse implements AdapterView.OnItemClickListener {
 
+    /**
+     *  ListView of groups
+     */
     private ListView listView;
-    private ArrayAdapter adapter;
+
+    /**
+     *  ArrayList<String> of all groups
+     */
     private ArrayList<String> arrayGroup;
+
+    /**
+     *  ArrayList<String> of selected groups
+     */
     private ArrayList<String> arrayGroupSelected;
 
 
@@ -37,11 +50,17 @@ public class ImportGroup extends DeepAnse implements AdapterView.OnItemClickList
         initData();
     }
 
+    /**
+     *  Components initializer.
+     */
     public void initComponent() {
         listView = (ListView) findViewById(R.id.listview);
         listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
     }
 
+    /**
+     *  Data initializer.
+     */
     public void initData() {
         arrayGroup = new ArrayList<>();
         arrayGroupSelected = new ArrayList<>();
@@ -50,12 +69,15 @@ public class ImportGroup extends DeepAnse implements AdapterView.OnItemClickList
         Collections.sort(arrayGroup);
         arrayGroup = deleteExistingGroup();
 
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_multiple_choice, arrayGroup);
-
-        listView.setAdapter(adapter);
+        listView.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_multiple_choice, arrayGroup));
         listView.setOnItemClickListener(this);
     }
 
+    /**
+     *  Function that deletes from arrayGroup the existing groups.
+     *
+     *  @return     The arrayGroup modified
+     */
     public ArrayList<String> deleteExistingGroup() {
         ArrayList<String> arrayTemp = new ArrayList<>();
 
@@ -73,6 +95,13 @@ public class ImportGroup extends DeepAnse implements AdapterView.OnItemClickList
         return arrayTemp;
     }
 
+    /**
+     *  Event triggered by clicking on the import button.
+     *
+     *  If at least 1 group is selected, inserts it into the database with a random color.
+     *
+     *  @param view     The view concerned
+     */
     public void eventImport(View view) {
         Random random = new Random();
 
@@ -89,10 +118,21 @@ public class ImportGroup extends DeepAnse implements AdapterView.OnItemClickList
         }
     }
 
+    /**
+     *  Event triggered by clicking on a ListView item.
+     *
+     *  If item already selected, removes it, else adds it.
+     *
+     *  @param parent       The parent adapter
+     *  @param position     The child position
+     *  @param id           The child id
+     */
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if (arrayGroupSelected.contains(arrayGroup.get(position))) arrayGroupSelected.remove(arrayGroup.get(position));
-        else arrayGroupSelected.add(arrayGroup.get(position));
+        if (arrayGroupSelected.contains(arrayGroup.get(position)))
+            arrayGroupSelected.remove(arrayGroup.get(position));
+        else
+            arrayGroupSelected.add(arrayGroup.get(position));
     }
 
     @Override
@@ -103,16 +143,21 @@ public class ImportGroup extends DeepAnse implements AdapterView.OnItemClickList
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
         switch (item.getItemId()) {
-            case android.R.id.home :
-                eventCancel(null);
+
+            // If back arrow clicked, close this activity
+            case android.R.id.home:
+                finish();
                 break;
 
+            // If home clicked, start new Home activity deleting the others and close this one
             case R.id.menu_home :
                 Intent intent = new Intent(ImportGroup.this, Home.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 finish();
+                break;
         }
 
         return super.onOptionsItemSelected(item);

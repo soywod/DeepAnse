@@ -27,17 +27,45 @@ import fr.deepanse.soywod.deepanse.model.DeepAnseGroup;
 
 /**
  * Created by soywod on 11/02/2015.
+ * Activity that permits user to create new expense by voice, extends activity.DeepAnse
+ *
+ * @author soywod
  */
 public class Create extends DeepAnse {
 
+    /**
+     *  EditTexts that contain full text recognized by Google, amount and comment
+     */
     private EditText editFull, editAmout, editComment;
-    private TextView textInfo;
-    private Button buttonDatePicker;
-    private Spinner spinner;
 
-    private GregorianCalendar main_date;
+    /**
+     *  TextView that contains information about expense recognition
+     */
+    private TextView textInfo;
+
+    /**
+     *  Button that allows date changing
+     */
+    private Button buttonDatePicker;
+
+    /**
+     *  Spinner that allows group changing
+     */
+    private Spinner spinnerGroup;
+
+    /**
+     *  Main date selected
+     */
+    private GregorianCalendar mainDate;
+
+    /**
+     *  Listener for the datePicker
+     */
     private DatePickerDialog.OnDateSetListener datePickerListener;
 
+    /**
+     *  Patterns for regex group, amount and date
+     */
     private Pattern regexGroup;
     private final Pattern regexAmount = Pattern.compile(".*?(([0-9]+?)( euro[s]?[ ]?|[^0-9])([0-9]*)).*?");
     private final Pattern regexDate = Pattern.compile(
@@ -62,27 +90,29 @@ public class Create extends DeepAnse {
         setContentView(R.layout.activity_create);
 
         initComponent();
-
         initExtract(getIntent().getStringExtra("best_match"));
     }
 
+    /**
+     *  Components initializer
+     */
     public void initComponent() {
         editFull = (EditText) findViewById(R.id.edit_full);
         buttonDatePicker = (Button) findViewById(R.id.button_date_picker);
-        spinner = (Spinner) findViewById(R.id.spinner_group);
+        spinnerGroup = (Spinner) findViewById(R.id.spinner_group);
         editAmout = (EditText) findViewById(R.id.edit_amount);
         editComment = (EditText) findViewById(R.id.edit_comment);
         textInfo = (TextView) findViewById(R.id.text_info);
 
-        spinner.setAdapter(new SpinnerGroup(Create.this, groupDb.selectAll()));
+        spinnerGroup.setAdapter(new SpinnerGroup(Create.this, groupDb.selectAll()));
         datePickerListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int day) {
-                main_date.set(GregorianCalendar.YEAR, year);
-                main_date.set(GregorianCalendar.MONTH, month);
-                main_date.set(GregorianCalendar.DAY_OF_MONTH, day);
+                mainDate.set(GregorianCalendar.YEAR, year);
+                mainDate.set(GregorianCalendar.MONTH, month);
+                mainDate.set(GregorianCalendar.DAY_OF_MONTH, day);
 
-                buttonDatePicker.setText(dateToStringFrExplicit(main_date));
+                buttonDatePicker.setText(dateToStringFrExplicit(mainDate));
             }
         };
         buttonDatePicker.setOnClickListener(new View.OnClickListener() {
@@ -91,9 +121,9 @@ public class Create extends DeepAnse {
                 new DatePickerDialog(
                         Create.this,
                         datePickerListener,
-                        main_date.get(GregorianCalendar.YEAR),
-                        main_date.get(GregorianCalendar.MONTH),
-                        main_date.get(GregorianCalendar.DAY_OF_MONTH))
+                        mainDate.get(GregorianCalendar.YEAR),
+                        mainDate.get(GregorianCalendar.MONTH),
+                        mainDate.get(GregorianCalendar.DAY_OF_MONTH))
                         .show();
             }
         });
@@ -101,17 +131,31 @@ public class Create extends DeepAnse {
         findViewById(R.id.button_save).setEnabled(false);
     }
 
+    /**
+     *  Extract initializer.
+     *
+     *  Extract date, amount, group and comment from the Google bestMatch
+     *
+     *  @param bestMatch    The best match recognized by Google
+     */
     public void initExtract(String bestMatch) {
-        initRegexGroup();
 
-        editFull.setText(bestMatch);
-
-        bestMatch = Conversion.spellOutToNumber(bestMatch);
-        Matcher matcherDate = regexDate.matcher(bestMatch);
-
+        // Init amount, group and date recognized
         double amount = 0;
         String group = "";
         GregorianCalendar date = new GregorianCalendar();
+
+        // Init regex group, EditText editFull and String bestMatch
+        initRegexGroup();
+        editFull.setText(bestMatch);
+        bestMatch = Conversion.spellOutToNumber(bestMatch);
+
+
+
+
+
+        // Extract date form the Google bestMatch (if exists)
+        Matcher matcherDate = regexDate.matcher(bestMatch);
 
         if (matcherDate.matches()) {
             if (matcherDate.group(1) != null)
@@ -146,6 +190,11 @@ public class Create extends DeepAnse {
 
         }
 
+
+
+
+
+        // Extract amount form the Google bestMatch
         Matcher matcherAmount = regexAmount.matcher(bestMatch);
 
         if (matcherAmount.matches()) {
@@ -159,6 +208,11 @@ public class Create extends DeepAnse {
                 amount += (Double.parseDouble(matcherAmount.group(4)) / 100);
         }
 
+
+
+
+
+        // Extract group form the Google bestMatch (if exists)
         if(regexGroup != null) {
             Matcher matcherGroup = regexGroup.matcher(bestMatch);
 
@@ -172,6 +226,14 @@ public class Create extends DeepAnse {
             group = "divers";
         }
 
+
+
+
+
+        // If the amount is not null, set date - group - amount - comment layouts visible,
+        // set save button enable,
+        // and show data extracted from Google bestMatch
+        // else hide date - group - amount - comment layouts and set save button disable
         if (amount != 0) {
             textInfo.setVisibility(View.GONE);
 
@@ -180,9 +242,9 @@ public class Create extends DeepAnse {
             findViewById(R.id.layout_amount).setVisibility(View.VISIBLE);
             findViewById(R.id.layout_comment).setVisibility(View.VISIBLE);
 
-            main_date = new GregorianCalendar(date.get(GregorianCalendar.YEAR), date.get(GregorianCalendar.MONTH), date.get(GregorianCalendar.DAY_OF_MONTH));
-            buttonDatePicker.setText(dateToStringFrExplicit(main_date));
-            spinner.setSelection(groupDb.selectAllGroupName().indexOf(group));
+            mainDate = new GregorianCalendar(date.get(GregorianCalendar.YEAR), date.get(GregorianCalendar.MONTH), date.get(GregorianCalendar.DAY_OF_MONTH));
+            buttonDatePicker.setText(dateToStringFrExplicit(mainDate));
+            spinnerGroup.setSelection(groupDb.selectAllGroupName().indexOf(group));
             editAmout.setText(amount+"");
             editComment.setText(bestMatch);
 
@@ -200,6 +262,14 @@ public class Create extends DeepAnse {
         }
     }
 
+    /**
+     *  Event triggered by clicking on the again button.
+     *
+     *  If connectivity is fast enough, start a new activity RecognizerIntent, else close this one.
+     *
+     *  @param view     The view concerned
+     *  @see fr.deepanse.soywod.deepanse.activity.Create#onActivityResult(int, int, android.content.Intent)
+     */
     public void eventAgain(View view) {
         if (Connectivity.isConnectedFast(Create.this)) {
             Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
@@ -212,13 +282,20 @@ public class Create extends DeepAnse {
         }
     }
 
+    /**
+     *  Event triggered by clicking on the save button.
+     *
+     *  If amount is not null, save this new expense extracted from Google bestMatch
+     *
+     *  @param view     The view concerned
+     */
     public void eventSave(View view) {
         if (!editAmout.getText().toString().isEmpty()) {
             fr.deepanse.soywod.deepanse.model.DeepAnse deepAnse = new fr.deepanse.soywod.deepanse.model.DeepAnse(
                     0,
                     Double.parseDouble(editAmout.getText().toString()),
-                    main_date,
-                    groupDb.selectByName(spinner.getSelectedItem().toString()),
+                    mainDate,
+                    groupDb.selectByName(spinnerGroup.getSelectedItem().toString()),
                     editComment.getText().toString(),
                     false
             );
@@ -232,6 +309,15 @@ public class Create extends DeepAnse {
         }
     }
 
+    /**
+     *  Event triggered on activity result.
+     *
+     *  Restart the extraction from the Google bestMatch
+     *
+     *  @param requestCode      The request code
+     *  @param resultCode       The result code
+     *  @param data             Data
+     */
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
@@ -240,11 +326,20 @@ public class Create extends DeepAnse {
         }
     }
 
+    /**
+     *  Initialize regex group.
+     */
     public void initRegexGroup() {
         ArrayList<DeepAnseGroup> tmpArrayGroup = groupDb.selectAllWithOutDefault();
         regexGroup = ((tmpArrayGroup == null)?(null):(Pattern.compile(getRegexGroup(tmpArrayGroup))));
     }
 
+    /**
+     *  Create the regex group from a DeepAnseGroup ArrayList.
+     *
+     *  @param array    The DeepAnseGroup ArrayList
+     *  @return         The regex group as String
+     */
     public String getRegexGroup(ArrayList<DeepAnseGroup> array)
     {
         if (array != null) {
@@ -271,16 +366,21 @@ public class Create extends DeepAnse {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
         switch (item.getItemId()) {
+
+            // If back arrow clicked, close this activity
             case android.R.id.home:
                 finish();
                 break;
 
+            // If home clicked, start new Home activity deleting the others and close this one
             case R.id.menu_home :
                 Intent intent = new Intent(Create.this, Home.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 finish();
+                break;
         }
 
         return super.onOptionsItemSelected(item);

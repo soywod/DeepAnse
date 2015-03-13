@@ -2,6 +2,7 @@ package fr.deepanse.soywod.deepanse.model;
 
 /**
  * Created by soywod on 09/02/2015.
+ * @author soywod
  */
 public enum DateFR {
     janvier("janvier", 0),

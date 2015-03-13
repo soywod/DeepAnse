@@ -13,22 +13,23 @@ import java.util.Map;
 import fr.deepanse.soywod.deepanse.R;
 import fr.deepanse.soywod.deepanse.model.Conversion;
 
+
 public class ExpListView extends BaseExpandableListAdapter {
 
     private Activity context;
-    private Map<Object[], java.util.List<Object[]>> laptopCollections;
-    private java.util.List<Object[]> laptops;
+    private Map<Object[], java.util.List<Object[]>> deepAnseCollections;
+    private java.util.List<Object[]> group;
     private fr.deepanse.soywod.deepanse.database.DeepAnseGroup groupDb;
 
-    public ExpListView(Activity context, fr.deepanse.soywod.deepanse.database.DeepAnseGroup groupDb, java.util.List<Object[]> laptops, Map<Object[], java.util.List<Object[]>> laptopCollections) {
+    public ExpListView(Activity context, fr.deepanse.soywod.deepanse.database.DeepAnseGroup groupDb, java.util.List<Object[]> group, Map<Object[], java.util.List<Object[]>> deepAnseCollections) {
         this.context = context;
-        this.laptopCollections = laptopCollections;
-        this.laptops = laptops;
+        this.deepAnseCollections = deepAnseCollections;
+        this.group = group;
         this.groupDb = groupDb;
     }
 
     public Object[] getChild(int groupPosition, int childPosition) {
-        return laptopCollections.get(laptops.get(groupPosition)).get(childPosition);
+        return deepAnseCollections.get(group.get(groupPosition)).get(childPosition);
     }
 
     public long getChildId(int groupPosition, int childPosition) {
@@ -60,15 +61,15 @@ public class ExpListView extends BaseExpandableListAdapter {
     }
 
     public int getChildrenCount(int groupPosition) {
-        return laptopCollections.get(laptops.get(groupPosition)).size();
+        return deepAnseCollections.get(group.get(groupPosition)).size();
     }
 
     public Object[] getGroup(int groupPosition) {
-        return laptops.get(groupPosition);
+        return group.get(groupPosition);
     }
 
     public int getGroupCount() {
-        return laptops.size();
+        return group.size();
     }
 
     public long getGroupId(int groupPosition) {

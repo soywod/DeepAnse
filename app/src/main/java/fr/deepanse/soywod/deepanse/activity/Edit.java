@@ -24,17 +24,46 @@ import fr.deepanse.soywod.deepanse.model.Conversion;
 
 /**
  * Created by soywod on 11/02/2015.
+ * Activity that permits user to edit expense or create new one by hand, extends activity.DeepAnse
+ *
+ * @author soywod
  */
 public class Edit extends DeepAnse {
 
-    private Spinner spinner;
+    /**
+     *  The id of the expense
+     */
+    private long id;
+
+    /**
+     *  EditTexts that contain amount and comment
+     */
     private EditText editAmout, editComment;
+
+    /**
+     *  Button that allows date changing
+     */
     private Button buttonDatePicker;
 
-    private GregorianCalendar main_date;
+    /**
+     *  Spinner that allows group changing
+     */
+    private Spinner spinnerGroup;
+
+    /**
+     *  Main date selected
+     */
+    private GregorianCalendar mainDate;
+
+    /**
+     *  Listener for the datePicker
+     */
     private DatePickerDialog.OnDateSetListener datePickerListener;
+
+    /**
+     *  Boolean if new expense by hand or edit expense
+     */
     private boolean newDeepAnse;
-    private long id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,21 +74,24 @@ public class Edit extends DeepAnse {
         initData();
     }
 
+    /**
+     *  Components initializer.
+     */
     public void initComponent() {
         buttonDatePicker = (Button) findViewById(R.id.button_date_picker);
-        spinner = (Spinner) findViewById(R.id.spinner_group);
+        spinnerGroup = (Spinner) findViewById(R.id.spinner_group);
         editAmout = (EditText) findViewById(R.id.edit_amount);
         editComment = (EditText) findViewById(R.id.edit_comment);
 
-        spinner.setAdapter(new SpinnerGroup(Edit.this, groupDb.selectAll()));
+        spinnerGroup.setAdapter(new SpinnerGroup(Edit.this, groupDb.selectAll()));
         datePickerListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int day) {
-                main_date.set(GregorianCalendar.YEAR, year);
-                main_date.set(GregorianCalendar.MONTH, month);
-                main_date.set(GregorianCalendar.DAY_OF_MONTH, day);
+                mainDate.set(GregorianCalendar.YEAR, year);
+                mainDate.set(GregorianCalendar.MONTH, month);
+                mainDate.set(GregorianCalendar.DAY_OF_MONTH, day);
 
-                buttonDatePicker.setText(dateToStringFrExplicit(main_date));
+                buttonDatePicker.setText(dateToStringFrExplicit(mainDate));
             }
         };
         buttonDatePicker.setOnClickListener(new View.OnClickListener() {
@@ -68,33 +100,36 @@ public class Edit extends DeepAnse {
                 new DatePickerDialog(
                         Edit.this,
                         datePickerListener,
-                        main_date.get(GregorianCalendar.YEAR),
-                        main_date.get(GregorianCalendar.MONTH),
-                        main_date.get(GregorianCalendar.DAY_OF_MONTH))
+                        mainDate.get(GregorianCalendar.YEAR),
+                        mainDate.get(GregorianCalendar.MONTH),
+                        mainDate.get(GregorianCalendar.DAY_OF_MONTH))
                         .show();
             }
         });
     }
 
+    /**
+     *  Data initializer.
+     */
     public void initData() {
         Intent data = getIntent();
 
-
         newDeepAnse = data.getBooleanExtra("new_deepanse", true);
 
+        // If it is an expense edit, retrieve expense data, else create a new one
         if (!newDeepAnse) {
-            main_date = Conversion.stringToDate(data.getStringExtra("date"));
             id = data.getLongExtra("id", 0);
-            spinner.setSelection(groupDb.selectAllGroupName().indexOf(data.getStringExtra("group")));
+            mainDate = Conversion.stringToDate(data.getStringExtra("date"));
+            spinnerGroup.setSelection(groupDb.selectAllGroupName().indexOf(data.getStringExtra("group")));
             editAmout.setText(data.getDoubleExtra("amount", 0) + "");
             editComment.setText(data.getStringExtra("comment"));
-            buttonDatePicker.setText(dateToStringFrExplicit(main_date));
+            buttonDatePicker.setText(dateToStringFrExplicit(mainDate));
 
             setActionBarTitle(R.string.title_edit_deepanse);
         }
         else {
-            main_date = new GregorianCalendar();
             id = 0;
+            mainDate = new GregorianCalendar();
             buttonDatePicker.setText(getString(R.string.today));
 
             findViewById(R.id.button_delete).setVisibility(View.GONE);
@@ -104,6 +139,13 @@ public class Edit extends DeepAnse {
         }
     }
 
+    /**
+     *  Event triggered by clicking on the delete button.
+     *
+     *  Ask user to confirm deletion, if accepted then delete current expense.
+     *
+     *  @param view     The view concerned
+     */
     public void eventDelete(View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(Edit.this, 2);
         builder.setMessage(getString(R.string.prompt_del_deepanse));
@@ -118,18 +160,25 @@ public class Edit extends DeepAnse {
         builder.show();
     }
 
+    /**
+     *  Event triggered by clicking on the save button.
+     *
+     *  If the amount is not null, then update the expense (in edit mode) else create the new one (in creation mode).
+     *
+     *  @param view     The view concerned
+     */
     public void eventSave(View view) {
         if (!editAmout.getText().toString().isEmpty()) {
             fr.deepanse.soywod.deepanse.model.DeepAnse deepAnse = new fr.deepanse.soywod.deepanse.model.DeepAnse(
                     0,
                     Double.parseDouble(editAmout.getText().toString()),
-                    main_date,
-                    groupDb.selectByName(spinner.getSelectedItem().toString()),
+                    mainDate,
+                    groupDb.selectByName(spinnerGroup.getSelectedItem().toString()),
                     editComment.getText().toString(),
                     false
             );
 
-            if (id == 0) {
+            if (newDeepAnse) {
                 deepAnseDb.insert(deepAnse);
                 showShortToast(R.string.toast_inserted_deepense);
             } else {
@@ -156,16 +205,21 @@ public class Edit extends DeepAnse {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
         switch (item.getItemId()) {
-            case android.R.id.home :
-                eventCancel(null);
+
+            // If back arrow clicked, close this activity
+            case android.R.id.home:
+                finish();
                 break;
 
+            // If home clicked, start new Home activity deleting the others and close this one
             case R.id.menu_home :
                 Intent intent = new Intent(Edit.this, Home.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 finish();
+                break;
         }
 
         return super.onOptionsItemSelected(item);

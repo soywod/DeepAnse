@@ -21,14 +21,31 @@ import fr.deepanse.soywod.deepanse.R;
 
 /**
  * Created by soywod on 11/02/2015.
+ * Activity that permits user to edit expense group or create new one, extends activity.DeepAnse
+ *
+ * @author soywod
  */
 public class EditGroup extends DeepAnse {
 
-    private boolean newGroup;
+    /**
+     *  The id of the expense group
+     */
     private long id;
 
-    private ColorPicker colorPicker;
+    /**
+     *  EditText that contains the expense group name
+     */
     private EditText editName;
+
+    /**
+     *  ColorPicker that contains the expense group color
+     */
+    private ColorPicker colorPicker;
+
+    /**
+     *  Boolean if new expense group or edit one
+     */
+    private boolean newGroup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +57,9 @@ public class EditGroup extends DeepAnse {
 
     }
 
+    /**
+     *  Components initializer.
+     */
     public void initComponent() {
         colorPicker = (ColorPicker) findViewById(R.id.color_picker);
         editName = (EditText) findViewById(R.id.edit_name);
@@ -49,11 +69,15 @@ public class EditGroup extends DeepAnse {
         colorPicker.setShowOldCenterColor(false);
     }
 
+    /**
+     *  Data initializer.
+     */
     public void initData() {
         Intent data = getIntent();
 
         newGroup = data.getBooleanExtra("new_group", true);
 
+        // If it is an expense group edit, retrieve expense group data, else create a new one
         if (!newGroup) {
             id = data.getLongExtra("id", 0);
             editName.setText(data.getStringExtra("name"));
@@ -73,6 +97,13 @@ public class EditGroup extends DeepAnse {
         }
     }
 
+    /**
+     *  Event triggered by clicking on the delete button.
+     *
+     *  Ask user to confirm deletion, if accepted then delete current expense group.
+     *
+     *  @param view     The view concerned
+     */
     public void eventDelete(View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(EditGroup.this, 2);
         builder.setMessage(getString(R.string.prompt_del_group));
@@ -88,6 +119,13 @@ public class EditGroup extends DeepAnse {
         builder.show();
     }
 
+    /**
+     *  Event triggered by clicking on the save button.
+     *
+     *  If the name is not null, then update the expense group (in edit mode) or create the new one (in creation mode).
+     *
+     *  @param view     The view concerned
+     */
     public void eventSave(View view) {
         if (!editName.getText().toString().isEmpty()) {
             long error = 0;
@@ -98,7 +136,7 @@ public class EditGroup extends DeepAnse {
             );
 
             try {
-                if (id == 0)
+                if (newGroup)
                     error = groupDb.insert(deepAnseGroup);
                 else
                     groupDb.update(id, deepAnseGroup);
@@ -140,16 +178,21 @@ public class EditGroup extends DeepAnse {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
         switch (item.getItemId()) {
+
+            // If back arrow clicked, close this activity
             case android.R.id.home:
                 finish();
                 break;
 
+            // If home clicked, start new Home activity deleting the others and close this one
             case R.id.menu_home :
                 Intent intent = new Intent(EditGroup.this, Home.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 finish();
+                break;
         }
 
         return super.onOptionsItemSelected(item);

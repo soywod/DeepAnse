@@ -13,85 +13,90 @@
         android:padding="20dp">
 
         <TableRow android:layout_marginBottom="20dp">
-            <TextView
-                android:layout_height="wrap_content"
-                android:layout_width="0dp"
-                android:textSize="13sp"
+            <Button style="@style/button"
+                android:id="@+id/button_add_deepanse_by_voice"
+                android:width="0dp"
                 android:layout_weight="1"
-                android:text="@string/home_desc" />
+                android:padding="15dp"
+                android:layout_marginRight="10dp"
+                android:textSize="16sp"
+                android:drawableTop="@drawable/add_deepanse_by_voice"
+                android:text="@string/home_add_deepanse_by_voice" />
+            <Button style="@style/button"
+                android:id="@+id/button_add_deepanse_by_hand"
+                android:width="0dp"
+                android:layout_weight="1"
+                android:padding="15dp"
+                android:layout_marginLeft="10dp"
+                android:textSize="16sp"
+                android:drawableTop="@drawable/add_deepanse_by_hand"
+                android:text="@string/home_add_deepanse_by_hand" />
         </TableRow>
 
         <TableRow>
-            <TextView style="@style/Separator" />
+            <TextView style="@style/separator" />
         </TableRow>
 
         <TableRow>
-            <TextView style="@style/HomeSubTitle" android:text="@string/home_deepanse"/>
+            <TextView style="@style/home_subtitle" android:text="@string/home_deepanse"/>
         </TableRow>
 
         <TableRow android:padding="7dp" android:layout_marginBottom="20dp">
-            <Button style="@style/HomeButton"
-                android:id="@+id/button_add_deepanse_by_voice"
-                android:drawableTop="@drawable/add_deepanse_by_voice"
-                android:text="@string/home_add_deepanse_by_voice" />
-            <Button style="@style/HomeButton"
-                android:id="@+id/button_add_deepanse_by_hand"
-                android:drawableTop="@drawable/add_deepanse_by_hand"
-                android:text="@string/home_add_deepanse_by_hand" />
-            <Button style="@style/HomeButton"
+            <Button style="@style/home_button"
                 android:id="@+id/button_list_deepanse"
                 android:drawableTop="@drawable/list_deepanse"
                 android:text="@string/home_list_deepanse" />
-            <Button style="@style/HomeButton"
+            <Button style="@style/home_button"
                 android:id="@+id/button_find_deepanse"
                 android:drawableTop="@drawable/find_deepanse"
                 android:text="@string/home_find_deepanse" />
+            <Button style="@style/home_button" />
+            <Button style="@style/home_button" />
         </TableRow>
 
         <TableRow>
-            <TextView style="@style/Separator" />
+            <TextView style="@style/separator" />
         </TableRow>
 
         <TableRow>
-            <TextView style="@style/HomeSubTitle" android:text="@string/home_group"/>
+            <TextView style="@style/home_subtitle" android:text="@string/home_group"/>
         </TableRow>
 
         <TableRow android:padding="7dp" android:layout_marginBottom="20dp">
-            <Button style="@style/HomeButton"
+            <Button style="@style/home_button"
                 android:id="@+id/button_add_group"
                 android:drawableTop="@drawable/add_group"
                 android:text="@string/home_add_group" />
-            <Button style="@style/HomeButton"
+            <Button style="@style/home_button"
                 android:id="@+id/button_list_group"
                 android:drawableTop="@drawable/list_group"
                 android:text="@string/home_list_deepanse" />
-            <Button style="@style/HomeButton"
+            <Button style="@style/home_button"
                 android:id="@+id/button_import_group"
                 android:drawableTop="@drawable/import_group"
                 android:text="@string/home_import_group" />
-            <Button style="@style/HomeButton" />
-        </TableRow>
-
-
-        <TableRow>
-            <TextView style="@style/Separator" />
+            <Button style="@style/home_button" />
         </TableRow>
 
         <TableRow>
-            <TextView style="@style/HomeSubTitle" android:text="@string/home_help"/>
+            <TextView style="@style/separator" />
+        </TableRow>
+
+        <TableRow>
+            <TextView style="@style/home_subtitle" android:text="@string/home_help"/>
         </TableRow>
 
         <TableRow android:padding="7dp">
-            <Button style="@style/HomeButton"
+            <Button style="@style/home_button"
                 android:id="@+id/button_first_launch"
                 android:drawableTop="@drawable/help"
                 android:text="@string/home_first_launch" />
-            <Button style="@style/HomeButton"
+            <Button style="@style/home_button"
                 android:id="@+id/button_create_deepanse_tuto"
                 android:drawableTop="@drawable/help"
                 android:text="@string/home_create_deepanse_tuto"/>
-            <Button style="@style/HomeButton" />
-            <Button style="@style/HomeButton" />
+            <Button style="@style/home_button" />
+            <Button style="@style/home_button" />
         </TableRow>
 
     </TableLayout>

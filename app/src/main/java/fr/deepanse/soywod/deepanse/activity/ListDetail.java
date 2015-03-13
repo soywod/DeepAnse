@@ -27,18 +27,52 @@ import fr.deepanse.soywod.deepanse.model.Conversion;
 import fr.deepanse.soywod.deepanse.model.DateFR;
 import fr.deepanse.soywod.deepanse.model.DeepAnseGroup;
 
+/**
+ * Created by soywod on 27/02/2015.
+ * Activity that permits user to list in detailed expenses according to a date, an amount, a group and a comment, extends activity.DeepAnse
+ *
+ * @author soywod
+ */
 public class ListDetail extends DeepAnse implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
 
-    private ArrayList<fr.deepanse.soywod.deepanse.model.DeepAnse> arrayDeepAnse = new ArrayList<>();
+    /**
+     * ArrayList<DeepAnse> of expenses
+     */
+    private ArrayList<fr.deepanse.soywod.deepanse.model.DeepAnse> arrayDeepAnse;
 
+    /**
+     * ListView of data
+     */
     private ListView listView;
+
+    /**
+     * ListView's adapter
+     */
     private ListViewDetail adapter;
 
+    /**
+     * Int current year, month and day
+     */
     private int year, month, day;
+
+    /**
+     * DeepAnseGroup current group
+     */
     private DeepAnseGroup group;
+
+    /**
+     * Double current amount
+     */
     private double amount;
+
+    /**
+     * String current comment
+     */
     private String comment;
 
+    /**
+     * Boolean if long clicked or not
+     */
     private static boolean longClicked = false;
 
     @Override
@@ -50,6 +84,9 @@ public class ListDetail extends DeepAnse implements AdapterView.OnItemClickListe
         initData();
     }
 
+    /**
+     * Components initializer.
+     */
     public void initComponent() {
         listView = (ListView) findViewById(R.id.listview);
 
@@ -58,9 +95,15 @@ public class ListDetail extends DeepAnse implements AdapterView.OnItemClickListe
         listView.setOnItemLongClickListener(this);
     }
 
+    /**
+     * Data initializer.
+     */
     public void initData() {
+        arrayDeepAnse = new ArrayList<>();
+
         Intent data = getIntent();
 
+        // Retrieves all data from source intent (if exist)
         if (data.getIntExtra("year", -1) != -1) year = data.getIntExtra("year", -1);
         else year = -1;
 
@@ -92,6 +135,9 @@ public class ListDetail extends DeepAnse implements AdapterView.OnItemClickListe
         refreshData();
     }
 
+    /**
+     * Function that refreshes all data
+     */
     public void refreshData() {
         arrayDeepAnse.clear();
         createCollection();
@@ -104,6 +150,9 @@ public class ListDetail extends DeepAnse implements AdapterView.OnItemClickListe
 
     }
 
+    /**
+     * Function that creates the collection of expenses according to a year, a month, a day, a group, an amount and a comment.
+     */
     private void createCollection() {
         ArrayList<fr.deepanse.soywod.deepanse.model.DeepAnse> tmpArray = deepAnseDb.selectAllBySearch(year, month, day, group, amount, comment);
         if (tmpArray != null)
@@ -111,6 +160,15 @@ public class ListDetail extends DeepAnse implements AdapterView.OnItemClickListe
                 arrayDeepAnse.add(deepAnse);
     }
 
+    /**
+     *  Event triggered by clicking on a ListView item.
+     *
+     *  If it is not in long click mode, start a new Edit activity with current expense selected.
+     *
+     *  @param parent       The parent adapter
+     *  @param position     The child position
+     *  @param id           The child id
+     */
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if (!longClicked) {
@@ -125,6 +183,15 @@ public class ListDetail extends DeepAnse implements AdapterView.OnItemClickListe
         }
     }
 
+    /**
+     *  Event triggered by long-clicking on a ListView item.
+     *
+     *  Delete the current expense.
+     *
+     *  @param parent       The parent adapter
+     *  @param position     The child position
+     *  @param id           The child id
+     */
     @Override
     public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
         longClicked = true;
@@ -148,13 +215,16 @@ public class ListDetail extends DeepAnse implements AdapterView.OnItemClickListe
         return false;
     }
 
+    /**
+     *  Function that exports the entire list of expense into a CSV file and sends it by mail.
+     */
     public void exportData() {
         GregorianCalendar date = new GregorianCalendar();
-        File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/deepanse_export_" + Conversion.dateToString(date) + ".csv");
+        File CSVfile = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/deepanse_export_" + Conversion.dateToString(date) + ".csv");
         String emailText;
 
         try {
-            CSVWriter writer = new CSVWriter(new FileWriter(file));
+            CSVWriter writer = new CSVWriter(new FileWriter(CSVfile));
 
             writer.writeNext((getString(R.string.date) + "#" +
                     getString(R.string.group) + "#" +
@@ -190,7 +260,7 @@ public class ListDetail extends DeepAnse implements AdapterView.OnItemClickListe
 
         Intent intentMail = new Intent(Intent.ACTION_SEND);
         intentMail.setType("plain/text");
-        intentMail.putExtra(Intent.EXTRA_STREAM, Uri.parse("file://" + file));
+        intentMail.putExtra(Intent.EXTRA_STREAM, Uri.parse("file://" + CSVfile));
         intentMail.putExtra(Intent.EXTRA_EMAIL, new String[]{getSharedPreferences("PREFERENCE", MODE_PRIVATE).getString("defaultMail", "")});
         intentMail.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.export_subject) + " " + Conversion.dateToStringDayMonthYearFr(date));
         intentMail.putExtra(Intent.EXTRA_TEXT, emailText);
@@ -205,11 +275,15 @@ public class ListDetail extends DeepAnse implements AdapterView.OnItemClickListe
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
         switch (item.getItemId()) {
+
+            // If back arrow clicked, close this activity
             case android.R.id.home:
                 finish();
                 break;
 
+            // If home clicked, start new Home activity deleting the others and close this one
             case R.id.menu_home :
                 Intent intent = new Intent(ListDetail.this, Home.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -217,6 +291,7 @@ public class ListDetail extends DeepAnse implements AdapterView.OnItemClickListe
                 finish();
                 break;
 
+            // If export clicked, start export function
             case R.id.menu_export :
                 if (getSharedPreferences("PREFERENCE", MODE_PRIVATE).getString("defaultMail", "").isEmpty()) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(ListDetail.this, 2);
